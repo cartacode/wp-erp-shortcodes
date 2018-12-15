@@ -59,3 +59,34 @@ ul.erp-latest-contact-list li .details p.contact-stage {
   color: #afafaf;
   font-style: italic;
 }
+
+ul.erp-crm-dashbaord-todays-schedules,
+ul.erp-crm-dashbaord-upcoming-schedules {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+ul.erp-crm-dashbaord-todays-schedules li,
+ul.erp-crm-dashbaord-upcoming-schedules li {
+  line-height: 22px;
+}
+ul.erp-crm-dashbaord-todays-schedules li a,
+ul.erp-crm-dashbaord-upcoming-schedules li a {
+  text-decoration: none;
+}
+ul.erp-crm-dashbaord-todays-schedules li a:hover,
+ul.erp-crm-dashbaord-upcoming-schedules li a:hover {
+  text-decoration: underline;
+}
+ul.erp-crm-dashbaord-todays-schedules li span,
+ul.erp-crm-dashbaord-upcoming-schedules li span {
+  display: inline-block;
+  color: #0073aa;
+  cursor: pointer;
+  float: none !important;
+}
+ul.erp-crm-dashbaord-todays-schedules p,
+ul.erp-crm-dashbaord-upcoming-schedules p {
+  padding: 0px;
+  margin: 0px;
+}

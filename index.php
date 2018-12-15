@@ -10,14 +10,4 @@ add_action( 'wp_enqueue_scripts', function() {
 } );
 
 
-
-add_shortcode( 'crm_dashboard_recently_added', function() {
-	if ( function_exists( 'erp_crm_dashboard_widget_latest_contact' ) ) {
-		erp_crm_dashboard_widget_latest_contact();
-	}
-} );
-
-add_shortcode( 'crm_dashboard_total_inbound_emails', function() {
-	if ( function_exists( 'erp_crm_dashboard_widget_inbound_emails' ) )
-		erp_crm_dashboard_widget_inbound_emails();
-} );
+require_once( dirname( __FILE__ ) . '/includes/crm-dashboard.php' );
