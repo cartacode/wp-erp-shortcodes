@@ -10,4 +10,7 @@ add_action( 'wp_enqueue_scripts', function() {
 } );
 
 
-require_once( dirname( __FILE__ ) . '/includes/crm-dashboard.php' );
+
+if ( is_plugin_active('wp-erp/wp-erp.php') ) {
+	require_once( dirname( __FILE__ ) . '/includes/crm-dashboard.php' );
+}
