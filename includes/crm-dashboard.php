@@ -162,7 +162,49 @@ add_shortcode( 'crm_todays_schedules', function() {
 } );
 
 add_shortcode( 'crm_upcoming_schedules', function() {
-	if ( function_exists( 'erp_crm_dashboard_widget_upcoming_schedules' ) ) {
-		erp_crm_dashboard_widget_upcoming_schedules();
-	}
+	$upcoming_schedules = erp_crm_get_next_seven_day_schedules_activities( get_current_user_id() );
+
+	$template = '';
+
+    if ( $upcoming_schedules ): 
+        $template .= '<ul class="erp-list list-two-side list-sep erp-crm-dashbaord-upcoming-schedules">';
+
+        foreach ( $upcoming_schedules as $key => $schedule ) : 
+            $template .= '<li>';
+
+                $users_text   = '';
+                $invite_users = isset( $schedule['extra']['invite_contact'] ) ? $schedule['extra']['invite_contact'] : [];
+                $contact_user = $schedule['contact']['first_name'] . ' ' . $schedule['contact']['last_name'];
+
+                array_walk( $invite_users, function( &$val ) {
+                    $val = get_the_author_meta( 'display_name', $val );
+                });
+
+                if ( count( $invite_users) == 1 ) {
+                    $users_text = sprintf( '%s <span>%s</span>', __( 'and', 'erp' ), reset( $invite_users ) );
+                } else if ( count( $invite_users) > 1 ) {
+                    $users_text = sprintf( '%s <span class="erp-tips" title="%s">%d %s</span>', __( 'and', 'erp' ), implode( '<br>', $invite_users ), count( $invite_users ), __( 'Others') );
+                }
+
+                if ( $schedule['log_type'] == 'meeting' ) {
+                    $template .= sprintf( '%s <a href="%s">%s</a> %s %s %s %s %s', __( '<i class="fa fa-calendar"></i> Meeting with', 'erp' ), erp_crm_get_details_url( $schedule['contact']['id'], $schedule['contact']['types'] ), $contact_user, $users_text, __( 'on', 'erp' ), erp_format_date( $schedule['start_date'] ), __( 'at', 'erp' ), date( 'g:ia', strtotime( $schedule['start_date'] ) ) ) . " <a href='#' data-schedule_id=' " . $schedule['id'] . " ' data-title='" . $schedule['extra']['schedule_title'] . "' class='erp-crm-dashbaord-show-details-schedule'>" . __( 'Details &rarr;', 'erp' ) . "</a>";
+                }
+
+                if ( $schedule['log_type'] == 'call' ) {
+                    $template .= sprintf( '%s <a href="%s">%s</a> %s %s %s %s %s', __( '<i class="fa fa-phone"></i> Call to', 'erp' ), erp_crm_get_details_url( $schedule['contact']['id'], $schedule['contact']['types'] ), $contact_user, $users_text, __( 'on', 'erp' ), erp_format_date( $schedule['start_date'] ), __( 'at', 'erp' ), date( 'g:ia', strtotime( $schedule['start_date'] ) ) ) . " <a href='#' data-schedule_id=' " . $schedule['id'] . " ' data-title='" . $schedule['extra']['schedule_title'] . "' class='erp-crm-dashbaord-show-details-schedule'>" . __( 'Details &rarr;', 'erp' ) . "</a>";
+                }
+                
+            $template .= '</li>';
+            
+        endforeach; 
+        
+        $template .= '</ul>';
+
+    else : 
+        
+        $template .= 'No schedules found';
+
+    endif;
+
+    return $template;
 } );
