@@ -61,7 +61,7 @@ add_shortcode( 'crm_dashboard_recently_added', function() {
 add_shortcode( 'crm_dashboard_total_inbound_emails', function() {
     $total_emails_count = get_option( 'wp_erp_inbound_email_count', 0 );
 
-    return '<h1 style="text-align: center;">' . $total_emails_count . '</h1>';
+    return '<h1 style="text-align: center; font-size: 50px;">' . $total_emails_count . '</h1>';
 } );
 
 // todays' schedules
@@ -161,6 +161,7 @@ add_shortcode( 'crm_todays_schedules', function() {
     return $template;
 } );
 
+// upcoming schedules
 add_shortcode( 'crm_upcoming_schedules', function() {
 	$upcoming_schedules = erp_crm_get_next_seven_day_schedules_activities( get_current_user_id() );
 
@@ -205,6 +206,147 @@ add_shortcode( 'crm_upcoming_schedules', function() {
         $template .= 'No schedules found';
 
     endif;
+
+    return $template;
+} );
+
+// show all contacts
+add_shortcode( 'view_all_contacts', function() {
+    $contacts_count  = erp_crm_customer_get_status_count( 'contact' );
+    $companies_count = erp_crm_customer_get_status_count( 'company' );
+
+    $template = '';
+    $template .= '<div class="erp-info-box-item">
+        <div class="erp-info-box-item-inner">
+            <div class="erp-info-box-content">
+                <div class="erp-info-box-content-row">
+                    <div class="erp-info-box-content-left">';
+
+                        $template .= '<h3>' . number_format_i18n( $contacts_count['all']['count'], 0 ) . '</h3>';
+                        $template .= '<p>' . sprintf( _n( 'Contact', 'Contacts', $contacts_count['all']['count'], 'erp' ), number_format_i18n( $companies_count['all']['count'] ), 0 ) . '</p>';
+                    $template .= '</div>';
+
+                    $template .= '<div class="erp-info-box-content-right">
+                        <ul class="erp-info-box-list">';
+
+                            foreach ( $contacts_count as $contact_key => $contact_value ) {
+                                if ( $contact_key == 'all' || $contact_key == 'trash' ) {
+                                    continue;
+                                }
+
+                                $template .= '<li>
+                                    <a href="' . add_query_arg( [ 'page' => 'erp-crm','section' => 'contacts', 'status' => $contact_key ], admin_url( 'admin.php' ) ) . '">
+                                        <i class="fa fa-square" aria-hidden="true"></i>&nbsp;';
+
+                                            $singular = $contact_value['label'];
+                                            $plural = erp_pluralize( $singular );
+
+                                            $plural = apply_filters( "erp_crm_life_stage_plural_of_{$contact_key}", $plural, $singular );
+
+                                            $template .= sprintf( _n( "%s {$singular}", "%s {$plural}", $contact_value['count'], 'erp' ), number_format_i18n( $contact_value['count'] ), 0 );
+                                    $template .= '</a>
+                                </li>';
+                            }
+                        $template .= '</ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>';
+
+    return $template;
+} );
+
+// show all companies created
+add_shortcode( 'view_all_companies', function() {
+    $companies_count = erp_crm_customer_get_status_count( 'company' );
+    
+    $template = '';
+
+    $template .= '<div class="erp-info-box-item">
+            <div class="erp-info-box-item-inner">
+                <div class="erp-info-box-content">
+                    <div class="erp-info-box-content-row">
+                        <div class="erp-info-box-content-left">
+                            <h3>' . number_format_i18n( $companies_count['all']['count'], 0 ) . '</h3>';
+                        
+                        $template .= '<p>' . sprintf( _n( 'Company', 'Companies', $companies_count['all']['count'], 'erp' ), number_format_i18n( $companies_count['all']['count'] ), 0 ) . '</p>';
+
+                    $template .= '</div>
+                    <div class="erp-info-box-content-right">
+                        <ul class="erp-info-box-list">';
+
+                            foreach ( $companies_count as $company_key => $company_value ) {
+                                if ( $company_key == 'all' || $company_key == 'trash' ) {
+                                    continue;
+                                }
+                                $template .= '<li>
+                                    <a href="' . add_query_arg( [ 'page' => 'erp-crm', 'section' => 'companies', 'status' => $company_key ], admin_url( 'admin.php' ) ) . '">
+                                        <i class="fa fa-square" aria-hidden="true"></i>&nbsp;';
+                                        
+
+                                            $singular = $company_value['label'];
+                                            $plural = erp_pluralize( $singular );
+
+                                            $plural = apply_filters( "erp_crm_life_stage_plural_of_{$company_key}", $plural, $singular );
+
+                                            $template .= sprintf( _n( "%s {$singular}", "%s {$plural}", $company_value['count'], 'erp' ), number_format_i18n( $company_value['count'] ), 0 );
+                                $template .= '</a>
+                                </li>';
+                            }
+                        $template .= '</ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>';
+
+    return $template;
+} );
+
+// show my schedules in the dashbaord
+add_shortcode( 'show_my_schedules', function() {
+    $user_id        = is_user_logged_in() ? get_current_user_id() : -1;
+    $args           = [
+        'created_by' => $user_id,
+        'number'     => -1,
+        'type'       => 'log_activity'
+    ];
+
+    $schedules      = erp_crm_get_feed_activity( $args );
+    $schedules_data = erp_crm_prepare_calendar_schedule_data( $schedules );
+
+    $template = '';
+
+    $template .= '<style>
+        .fc-time {
+            display:none;
+        }
+        .fc-title {
+            cursor: pointer;
+        }
+        .fc-day-grid-event .fc-content {
+            white-space: normal;
+        }
+    </style>
+
+    <div id="erp-crm-calendar"></div>';
+
+    $template .= "
+    <script>
+        ;jQuery(document).ready(function($) {
+            $('#erp-crm-calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                editable: false,
+                eventLimit: true,
+                events: " . json_encode( $schedules_data ) . ",
+            });
+        });
+    </script>";
 
     return $template;
 } );

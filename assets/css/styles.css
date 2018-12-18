@@ -90,3 +90,83 @@ ul.erp-crm-dashbaord-upcoming-schedules p {
   padding: 0px;
   margin: 0px;
 }
+
+
+
+.erp-info-box-item {
+  padding-left: 12px;
+  padding-right: 12px;
+  flex: 1;
+  margin-bottom: 20px;
+}
+.erp-info-box-item .erp-info-box-item-inner {
+  position: relative;
+  height: 100%;
+  background-color: #fff;
+}
+.erp-info-box-item .erp-info-box-item-inner .erp-info-box-content {
+  height: 100%;
+}
+.erp-info-box-item .erp-info-box-item-inner .erp-info-box-content .erp-info-box-content-row {
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.erp-info-box-item .erp-info-box-item-inner .erp-info-box-content .erp-info-box-content-row .erp-info-box-content-left {
+  flex: 1;
+  padding: 12px;
+  align-self: center;
+  text-align: center;
+}
+.erp-info-box-item .erp-info-box-item-inner .erp-info-box-content .erp-info-box-content-row .erp-info-box-content-left h3 {
+  font-size: 50px;
+  margin: 10px 0 10px 0;
+  line-height: 1;
+}
+.erp-info-box-item .erp-info-box-item-inner .erp-info-box-content .erp-info-box-content-row .erp-info-box-content-left p {
+  font-size: 16px;
+}
+.erp-info-box-item .erp-info-box-item-inner .erp-info-box-content .erp-info-box-content-row .erp-info-box-content-right {
+  flex: 1;
+  padding: 20px 12px;
+}
+.erp-info-box-item .erp-info-box-item-inner .erp-info-box-content .erp-info-box-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.erp-info-box-item .erp-info-box-item-inner .erp-info-box-content .erp-info-box-list li {
+  margin-bottom: 5px;
+}
+.erp-info-box-item .erp-info-box-item-inner .erp-info-box-content .erp-info-box-list li a {
+  text-decoration: none;
+  color: #124f7e;
+}
+.erp-info-box-item .erp-info-box-item-inner .erp-info-box-content .erp-info-box-list li a:hover {
+  color: #0881df;
+}
+.erp-info-box-item .erp-info-box-item-inner .erp-info-box-content .erp-info-box-list li:last-child {
+  margin-bottom: 0;
+}
+.erp-info-box-item .erp-info-box-item-inner .erp-info-box-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.erp-info-box-item .erp-info-box-item-inner .erp-info-box-footer a {
+  display: block;
+  background-color: #0073aa;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  padding: 6px;
+}
+.erp-info-box-item .erp-info-box-item-inner .erp-info-box-footer a:hover {
+  background-color: #005177;
+}
+
+.fc-view-container table {
+  margin-bottom: 0px;
+}
