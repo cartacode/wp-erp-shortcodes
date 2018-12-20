@@ -6,26 +6,45 @@
 **/
 
 add_action( 'wp_enqueue_scripts', function() {
-	wp_enqueue_style( 'styles', plugins_url( '/assets/css/styles.css', __FILE__ ), false );
+    // css for all shortcodes
+    $css_files = array(
+        'crm' => array( 'recently-added', 'todays-schedules', 'upcoming-schedules', 'w-all-contacts' )
+    );
 
-    wp_register_script( 'erp-select2',  WPERP_ASSETS . '/vendor//select2/select2.full.min.js', array( 'jquery' ), '1.0.0', true );
+    foreach ( $css_files as $type => $files ) {
+        foreach ( $files as $file ) {
+    	   wp_register_style( $file, plugins_url( '/assets/css/' . $type . '/' . $file . '.css', __FILE__ ), false );
+        }
+    }
+
+    // global scripts
+    wp_register_script( 'erp-select2',  WPERP_ASSETS . '/vendor/select2/select2.full.min.js', array( 'jquery' ), '1.0.0', true );
+
+    // js resources for schedules calendar
 	wp_register_script( 'erp-momentjs', WPERP_ASSETS . '/vendor/moment/moment.min.js', false, '1.0.0', true );
 	wp_register_script( 'erp-popup', WPERP_ASSETS . '/js/jquery-popup.min.js', array( 'jquery' ), '1.0.0', true );
     wp_register_script( 'erp-fullcalendar', WPERP_ASSETS . '/vendor/fullcalendar/fullcalendar.min.js', array( 'jquery', 'erp-momentjs', 'erp-popup' ), '1.0.0', true );
     wp_register_script( 'erp-js', WPERP_ASSETS . '/js/erp.min.js', array( 'jquery', 'erp-fullcalendar', 'backbone', 'underscore', 'wp-util', 'jquery-ui-datepicker', 'erp-select2' ), '1.0.0', true );
-    wp_enqueue_script( 'erp-js' );
 
+    // css for schedules calendar
     wp_register_style( 'erp-fullcalendar', WPERP_ASSETS . '/vendor/fullcalendar/fullcalendar.min.css', false, '1.0.0' );
-    wp_enqueue_style( 'erp-fullcalendar' );
-    
     wp_register_style( 'erp-select2', WPERP_ASSETS . '/vendor/select2/select2.min.css', false, '1.0.0' );
-    wp_enqueue_style( 'erp-select2' );
 
-	erp_get_js_template( WPERP_CRM_JS_TMPL . '/single-schedule-details.php', 'erp-crm-single-schedule-details' );
+    // js resources for contacts list table
+    $WP_ERP_MODULES_URL = WPERP_URL . '/modules';
+    wp_register_script( 'erp-vuejs', WPERP_ASSETS . '/vendor/vue/vue.min.js', array( 'jquery' ), '1.0.0', true );
+    wp_register_script( 'erp-vue-table', $WP_ERP_MODULES_URL . "/crm/assets/js/vue-table.js", array( 'erp-vuejs', 'jquery' ), date( 'Ymd' ), true );
+    wp_register_script( 'erp-script', WPERP_ASSETS . '/js/erp.min.js', array( 'jquery', 'backbone', 'underscore', 'wp-util', 'jquery-ui-datepicker', 'erp-select2' ), '1.0.0', true );
+    wp_register_script( 'erp-tiptip', WPERP_ASSETS . '/vendor/tiptip/jquery.tipTip.min.js', array( 'jquery' ), '1.0.0', true );
+    wp_register_script( 'erp-crm-contact', $WP_ERP_MODULES_URL . "/crm/assets/js/crm-contacts.js", array( 'erp-vue-table', 'erp-script', 'erp-vuejs', 'underscore', 'erp-tiptip', 'jquery', 'erp-select2' ), date( 'Ymd' ), true );
+
+    // css for contact list table
+    wp_register_style( 'erp-tiptip', WPERP_ASSETS . '/vendor/tiptip/tipTip.css', false, '1.0.0' );
 } );
 
 
 
 if ( is_plugin_active('wp-erp/wp-erp.php') ) {
-	require_once( dirname( __FILE__ ) . '/includes/crm-dashboard.php' );
+    require_once( dirname( __FILE__ ) . '/includes/crm/dashboard.php' );
+	require_once( dirname( __FILE__ ) . '/includes/crm/contacts.php' );
 }
