@@ -8,7 +8,7 @@
 add_action( 'wp_enqueue_scripts', function() {
     // css for all shortcodes
     $css_files = array(
-        'crm' => array( 'recently-added', 'todays-schedules', 'upcoming-schedules', 'w-all-contacts' )
+        'crm' => array( 'recently-added', 'todays-schedules', 'upcoming-schedules', 'w-all-contacts', 'table-view' )
     );
 
     foreach ( $css_files as $type => $files ) {

@@ -1,0 +1,118 @@
+@import url('/wp-admin/css/common.css');
+@import url('/wp-admin/css/forms.css');
+@import url('/wp-admin/css/list-tables.css');
+
+/* table nav */
+.tablenav .actions select {
+	font-size: 14px;
+	border-radius: 0px;
+	padding: 2px!important;
+	background-color: #fff;
+	min-height: auto;
+	width: auto;
+	height: 28px;
+}
+
+input[type="submit"] {
+	display: inline-block;
+	text-decoration: none;
+	font-size: 13px;
+	line-height: 26px;
+	height: 28px;
+	margin: 0;
+	padding: 0 10px 1px;
+	cursor: pointer;
+	border-width: 1px;
+	border-style: solid;
+	-webkit-appearance: none;
+	border-radius: 3px;
+	white-space: nowrap;
+	box-sizing: border-box;
+	color: #555;
+	border-color: #cccccc;
+	background: #f7f7f7;
+	box-shadow: 0 1px 0 #cccccc;
+	vertical-align: top;
+	text-transform: capitalize;
+}
+
+table thead,
+table tfoot {
+	background-color: #184f7e;
+}
+
+table th {
+	text-transform: capitalize;
+}
+
+.widefat th.sortable, .widefat th.sorted {
+    padding: 0!important;
+}
+
+th.sortable a,
+th.sorted a,
+.sorting-indicator:before {
+	color: #67e2fd;
+}
+
+.widefat thead tr th,
+.widefat tfoot tr th {
+	color: #fff;
+}
+
+.widefat thead td input,
+.widefat tfoot td input {
+	background-color: transparent;
+	border: 2px solid #fff;
+	border-radius: 4px;
+}
+
+.widefat thead td.check-column,
+.widefat tfoot td.check-column {
+	padding: 5px 0 0 3px!important;	
+}
+.widefat tbody th.check-column {
+	padding: 11px 0 0 3px!important;
+}
+
+.widefat td, .widefat th {
+    padding: 8px 10px!important;
+}
+
+/* table content */
+.vtable-wrap .vtbale-table-wrapper {
+	position: relative;
+}
+.vtable-wrap .vtbale-table-wrapper table.vtable {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+.vtable-wrap .vtbale-table-wrapper table.vtable tbody.vtbale-tbody tr.vtable-ajax-loading {
+	height: 50px;
+}
+.vtable-wrap .vtbale-table-wrapper .vtable-loader-bg {
+	width: 100%;
+	height: 100%;
+	background: #fafafa;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	opacity: 0.4;
+}
+.vtable-wrap .vtbale-table-wrapper .vtable-loader {
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	background: url('../../images/spinner-2x.gif') center center no-repeat;
+	z-index: 99;
+	background-size: 30px;
+	top: 38%;
+	left: 50%;
+}
+
+.erp-crm-customer table.wp-list-table .column-name img, .erp-crm-subscriber-contact table.wp-list-table .column-name img {
+	float: left;
+	margin-right: 10px;
+	margin-top: 1px;
+}
