@@ -22,8 +22,8 @@ add_action( 'wp_enqueue_scripts', function() {
 
     // js resources for schedules calendar
 	wp_register_script( 'erp-momentjs', WPERP_ASSETS . '/vendor/moment/moment.min.js', false, '1.0.0', true );
-	wp_register_script( 'erp-popup', WPERP_ASSETS . '/js/jquery-popup.min.js', array( 'jquery' ), '1.0.0', true );
-    wp_register_script( 'erp-fullcalendar', WPERP_ASSETS . '/vendor/fullcalendar/fullcalendar.min.js', array( 'jquery', 'erp-momentjs', 'erp-popup' ), '1.0.0', true );
+	wp_register_script( 'erp-popup', WPERP_ASSETS . '/js/jquery-popup.js', array( 'jquery' ), '1.0.0', true );
+    wp_register_script( 'erp-fullcalendar', WPERP_ASSETS . '/vendor/fullcalendar/fullcalendar.min.js', array( 'jquery', 'erp-momentjs' ), '1.0.0', true );
     wp_register_script( 'erp-js', WPERP_ASSETS . '/js/erp.min.js', array( 'jquery', 'erp-fullcalendar', 'backbone', 'underscore', 'wp-util', 'jquery-ui-datepicker', 'erp-select2' ), '1.0.0', true );
 
     // css for schedules calendar
@@ -40,6 +40,16 @@ add_action( 'wp_enqueue_scripts', function() {
 
     // css for contact list table
     wp_register_style( 'erp-tiptip', WPERP_ASSETS . '/vendor/tiptip/tipTip.css', false, '1.0.0' );
+
+    wp_register_script( 'erp-timepicker', WPERP_ASSETS . '/vendor/timepicker/jquery.timepicker.min.js', array( 'jquery', 'erp-momentjs' ), date( 'Ymd' ), true );
+    wp_register_style( 'erp-timepicker', WPERP_ASSETS . '/vendor/timepicker/jquery.timepicker.css', false, date( 'Ymd' ) );
+    wp_register_script( 'erp-crm', $WP_ERP_MODULES_URL . "/crm/assets/js/crm.js", array( 'erp-script', 'erp-timepicker' ), date( 'Ymd' ), true );
+
+
+
+    wp_enqueue_script( 'erp-select2' );
+    wp_enqueue_script( 'erp-popup' );
+    wp_enqueue_script( 'erp-script' );
 } );
 
 

@@ -1,0 +1,507 @@
+.erp-modal {
+	background: #fff;
+	position: fixed;
+	top: 10%;
+	bottom: 10%;
+	right: 15%;
+	left: 15%;
+	display: none;
+	box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1);
+	z-index: 160000;
+}
+.erp-modal * {
+	box-sizing: border-box;
+}
+.erp-modal.smaller {
+	bottom: 30%;
+	top: 15%;
+	left: 30%;
+	right: 30%;
+}
+.erp-modal.medium {
+	bottom: 20%;
+	top: 10%;
+	left: 25%;
+	right: 25%;
+}
+.erp-modal .loader {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #fff url('../../assets/images/spinner-2x.gif') center center no-repeat;
+	z-index: 99;
+	display: none;
+	background-size: 20px;
+}
+.erp-modal .close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font: 300 1.71429em "dashicons" !important;
+	color: #777;
+	content: '\f335';
+	display: inline-block;
+	padding: 10px 20px;
+	z-index: 5;
+	text-decoration: none;
+	height: 50px;
+	border-left: 1px solid #ddd;
+}
+.erp-modal .close:hover {
+	background: #eee;
+	opacity: 0.8;
+}
+.erp-modal .close:active {
+	background: #eee;
+	opacity: 0.4;
+}
+.erp-modal .modal-header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 50px;
+	z-index: 4;
+	border-bottom: 1px solid #ddd;
+	padding-left: 15px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+.erp-modal .modal-header h2 {
+	line-height: 50px;
+	text-align: left;
+	margin-top: 0;
+	color: #5d6d74;
+	font-size: 20px;
+	text-shadow: 0 1px 1px #fff;
+}
+.erp-modal .modal-header .modal-suggession {
+	position: absolute;
+	top: 50px;
+	left: 0px;
+	padding: 10px;
+	color: #8a6d3b;
+	background-color: #fcf8e3;
+	border: 1px solid #faebcc;
+	width: 100%;
+}
+.erp-modal .content-container {
+	position: absolute;
+	top: 50px;
+	right: 0;
+	bottom: 50px;
+	left: 0;
+	overflow: auto;
+	padding: 2.14286em 5em;
+}
+.erp-modal .content {
+	margin: 0 auto;
+	max-width: 900px;
+	text-align: left;
+}
+.erp-modal .content .row {
+	margin-bottom: 12px;
+}
+.erp-modal .content .row:before,
+.erp-modal .content .row:after {
+	content: " ";
+	display: table;
+}
+.erp-modal .content .row:after {
+	clear: both;
+}
+.erp-modal .content .row:before,
+.erp-modal .content .row:after {
+	content: " ";
+	display: table;
+}
+.erp-modal .content .row:after {
+	clear: both;
+}
+.erp-modal .content .row label {
+	min-width: 130px;
+	line-height: 1.5em;
+	display: inline-block;
+	vertical-align: top;
+	float: left;
+}
+.erp-modal .content .row label.block {
+	display: block;
+}
+.erp-modal .content .row select {
+	max-width: 62%;
+}
+.erp-modal .content .row span.checkbox {
+	float: left;
+	width: 63%;
+}
+.erp-modal .content .row span.checkbox label {
+	margin-bottom: 10px;
+	min-width: 100%;
+}
+.erp-modal .content .row span.description {
+	display: block;
+	margin-left: 130px;
+	padding: 5px 0 0 0;
+}
+.erp-modal .content img {
+	max-width: 100%;
+	height: auto;
+}
+.erp-modal p {
+	font-size: 1.10em;
+}
+.erp-modal footer {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	padding: 12px 20px;
+	border-top: 1px solid #ddd;
+	background: #fff;
+	text-align: right;
+}
+.erp-modal footer ul {
+	margin: 0;
+}
+.erp-modal footer li {
+	display: inline-block;
+	margin: 0;
+}
+.erp-modal footer li .erp-loader {
+	position: relative;
+	margin-right: 7px;
+	padding-top: 18px;
+	top: 5px;
+}
+.erp-modal .button-secondary,
+.erp-modal .button-primary:active {
+	vertical-align: baseline;
+}
+.erp-modal-backdrop {
+	position: fixed;
+	z-index: 159999;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	min-height: 360px;
+	background: #000;
+	opacity: .7;
+	display: none;
+}
+
+.erp-grid-container {
+	width: 100%;
+}
+.erp-grid-container * {
+	box-sizing: border-box;
+}
+.erp-grid-container .row:before,
+.erp-grid-container .row:after {
+	content: " ";
+	display: table;
+}
+.erp-grid-container .row:after {
+	clear: both;
+}
+.erp-grid-container .row:before,
+.erp-grid-container .row:after {
+	content: " ";
+	display: table;
+}
+.erp-grid-container .row:after {
+	clear: both;
+}
+.erp-grid-container [class*='col-'] {
+	float: left;
+	min-height: 1px;
+	width: 16.66%;
+	padding: 12px;
+}
+.erp-grid-container .col-1 {
+	width: 16.66%;
+}
+.erp-grid-container .col-2 {
+	width: 33.33%;
+}
+.erp-grid-container .col-3 {
+	width: 50%;
+}
+.erp-grid-container .col-4 {
+	width: 66.66%;
+}
+.erp-grid-container .col-5 {
+	width: 83.33%;
+}
+.erp-grid-container .col-6 {
+	width: 100%;
+}
+@media all and (max-width: 800px) {
+	.erp-grid-container .col-1 {
+		width: 33.33%;
+	}
+	.erp-grid-container .col-2 {
+		width: 50%;
+	}
+	.erp-grid-container .col-3 {
+		width: 83.33%;
+	}
+	.erp-grid-container .col-4 {
+		width: 100%;
+	}
+	.erp-grid-container .col-5 {
+		width: 100%;
+	}
+	.erp-grid-container .col-6 {
+		width: 100%;
+	}
+	.erp-grid-container .row .col-2:last-of-type {
+		width: 100%;
+	}
+	.erp-grid-container .row .col-5 ~ .col-1 {
+		width: 100%;
+	}
+}
+@media all and (max-width: 650px) {
+	.erp-grid-container .col-1 {
+		width: 50%;
+	}
+	.erp-grid-container .col-2 {
+		width: 100%;
+	}
+	.erp-grid-container .col-3 {
+		width: 100%;
+	}
+	.erp-grid-container .col-4 {
+		width: 100%;
+	}
+	.erp-grid-container .col-5 {
+		width: 100%;
+	}
+	.erp-grid-container .col-6 {
+		width: 100%;
+	}
+}
+
+.erp-customer-form fieldset.genaral-info li {
+	margin-top: 7px;
+}
+.erp-customer-form ol,
+.erp-customer-form li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.erp-customer-form .photo-container {
+	display: inline-block;
+	width: 128px;
+	position: relative;
+}
+.erp-customer-form .photo-container img {
+	max-width: 80px;
+	height: auto;
+}
+.erp-customer-form .photo-container .erp-remove-photo {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.5);
+	width: 80px;
+	height: 80px;
+	color: red;
+	text-align: center;
+	text-decoration: none;
+	font-size: 50px;
+	padding-top: 30px;
+	display: none;
+}
+.erp-customer-form .photo-container:hover .erp-remove-photo {
+	display: inline-block;
+}
+.erp-customer-form ol.form-fields:before,
+.erp-customer-form ol.form-fields:after {
+	content: " ";
+	display: table;
+}
+.erp-customer-form ol.form-fields:after {
+	clear: both;
+}
+.erp-customer-form ol.form-fields:before,
+.erp-customer-form ol.form-fields:after {
+	content: " ";
+	display: table;
+}
+.erp-customer-form ol.form-fields:after {
+	clear: both;
+}
+.erp-customer-form ol.form-fields > li {
+	float: left;
+	width: 100%;
+	padding-bottom: 5px;
+}
+.erp-customer-form ol.form-fields > li > label {
+	width: 15%;
+	display: inline-block;
+	vertical-align: top;
+}
+.erp-customer-form ol.form-fields > li select {
+	max-width: 55%;
+}
+.erp-customer-form ol.form-fields.two-col li {
+	width: 50%;
+}
+.erp-customer-form ol.form-fields.two-col li label {
+	width: 30%;
+}
+.erp-customer-form ol.form-fields.two-col li:nth-child(2n+1) {
+	clear: both;
+}
+.erp-customer-form ol.form-fields li.name-container {
+	width: 100%;
+	float: none;
+}
+.erp-customer-form ol.form-fields li.name-container > label {
+	float: left;
+	width: 15%;
+	margin-top: 22px;
+}
+.erp-customer-form ol.form-fields li.name-container ol {
+	float: left;
+	width: 85%;
+}
+.erp-customer-form ol.form-fields li.name-container ol label {
+	display: block;
+	color: #aaa;
+	width: 100%;
+}
+.erp-customer-form ol.form-fields li.name-container ol li.middle-name {
+	width: 185px;
+}
+.erp-customer-form ol.form-fields li.name-container ol li.middle-name input {
+	width: 98%;
+}
+.erp-customer-form fieldset {
+	margin-bottom: 20px;
+	padding-top: 15px;
+	border-top: 1px solid #eee;
+}
+.erp-customer-form fieldset.no-border {
+	border-top: none;
+}
+.erp-customer-form fieldset legend {
+	font-weight: bold;
+	padding-right: 20px;
+	margin-bottom: 10px;
+	padding-left: 10px;
+}
+.erp-customer-form ol.fields-inline li {
+	display: inline-block;
+}
+
+
+
+.erp-customer-form .photo-container {
+	height: 150px;
+	width: 150px;
+}
+
+.erp-customer-form .left-column {
+	width: 22%;
+	min-width: 180px;
+}
+
+.erp-customer-form .right-column {
+	width: 78%;
+	min-width: 180px;
+}
+
+.erp-modal .content img {
+	max-width: 100%;
+	height: auto;
+}
+
+.erp-customer-form #erp-set-customer-photo {
+	display: inline-block;
+	font-size: 13px;
+	line-height: 26px;
+	height: 28px;
+	margin: 0;
+	padding: 0 10px 1px;
+	cursor: pointer;
+	border-width: 1px;
+	border-style: solid;
+	-webkit-appearance: none;
+	border-radius: 3px;
+	white-space: nowrap;
+	box-sizing: border-box;
+	background: #0085ba;
+	border-color: #0073aa #006799 #006799;
+	box-shadow: 0 1px 0 #006799;
+	color: #fff;
+	text-decoration: none;
+	text-shadow: 0 -1px 1px #006799, 1px 0 1px #006799, 0 1px 1px #006799, -1px 0 1px #006799;
+	vertical-align: top;
+	width: 150px;
+	margin-top: 10px;
+	text-align: center;
+	font-weight: normal;
+	text-transform: none;
+	letter-spacing: inherit;
+}
+
+.erp-customer-form .right-column .erp-crm-modal-right {
+	border: 1px solid rgba(221, 221, 221, 0.4) !important;
+}
+
+.erp-customer-form span.required {
+    margin: 10px 10px 0;
+    display: inline-block;
+    font-size: 13px;
+    top: inherit;
+    color: red;
+}
+
+.erp-modal .content .row label {
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+#erp-crm-new-contact .select2.select2-container.select2-container--default {
+    width: 100% !important;
+}
+
+.erp-customer-form .advanced-fields {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+
+.erp-customer-form .employee-work,
+.erp-customer-form .employee-personal,
+.erp-customer-form .others-info,
+.erp-customer-form .contact-group,
+.erp-customer-form .additional-info,
+.erp-customer-form .social-info {
+  display: none;
+}
+
+.erp-customer-form fieldset legend {
+	font-weight: bold;
+    padding-right: 20px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    width: auto;
+    border: none;
+}
+
+form input[type="number"] {
+    max-width: inherit;
+    padding: 5px; 
+}
+
+.erp-customer-form .photo-container .erp-remove-photo {
+	padding-top: 45%;
+    width: 100%;
+    height: 100%;
+}

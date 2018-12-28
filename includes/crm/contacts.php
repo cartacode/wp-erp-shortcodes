@@ -1,5 +1,7 @@
 <?php
 add_shortcode( 'contacts-list-table', function() {
+	wp_enqueue_media();
+	
 	$localize_script = apply_filters( 'erp_crm_localize_script', array(
 		'ajaxurl'               => admin_url( 'admin-ajax.php' ),
 		'nonce'                 => wp_create_nonce( 'wp-erp-crm-nonce' ),
@@ -61,8 +63,17 @@ add_shortcode( 'contacts-list-table', function() {
 		'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		'nonce'   => wp_create_nonce( 'wp-erp-vue-table' )
 	] );
+
+	if( function_exists( 'erp_get_js_template' ) ) {
+		erp_get_js_template( WPERP_MODULES . '/crm/views/js-templates/new-customer.php', 'erp-crm-new-contact' );
+	}
+
+	wp_enqueue_script( 'erp-crm' );
+	wp_localize_script( 'erp-crm', 'wpErpCrm', $localize_script );
+	
 	wp_enqueue_script( 'erp-crm-contact' );
 	wp_localize_script( 'erp-crm-contact', 'wpErpCrm', $localize_script );
+
 	wp_enqueue_style( 'erp-tiptip' );
 	wp_enqueue_style( 'erp-select2' );
 	wp_enqueue_style( 'table-view' );
@@ -74,6 +85,9 @@ add_shortcode( 'contacts-list-table', function() {
 	$template = '';
 
 	$template .= '<div class="wrap erp-crm-customer erp-crm-customer-listing" id="wp-erp" v-cloak>';
+
+	if ( current_user_can( 'erp_crm_add_contact' ) )
+		$template .= '<a href="#" @click.prevent="addContact( \'contact\', \'Add New Contact\' )" id="erp-customer-new" class="erp-contact-new add-new-h2">Add New Contact</a>';
 
 	$template .= '<advance-search :show-hide-segment="showHideSegment"></advance-search>';
 
@@ -99,6 +113,8 @@ add_shortcode( 'contacts-list-table', function() {
 		></vtable>';
 
 	$template .= '</div>';
+
+	$template .= file_get_contents( dirname( __FILE__ ) . '/demo-modal.php' );
 
 	return $template;
 } );

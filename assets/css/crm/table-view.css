@@ -1,6 +1,7 @@
 @import url('/wp-admin/css/common.css');
 @import url('/wp-admin/css/forms.css');
 @import url('/wp-admin/css/list-tables.css');
+@import url('./erp-modal.css');
 
 /* table nav */
 .tablenav .actions select {
