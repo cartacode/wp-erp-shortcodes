@@ -1,5 +1,5 @@
 <?php
-add_shortcode( 'contacts-list-table', function() {
+add_shortcode( 'contact-list-table', function() {
 	wp_enqueue_media();
 	
 	$localize_script = apply_filters( 'erp_crm_localize_script', array(
@@ -58,7 +58,6 @@ add_shortcode( 'contacts-list-table', function() {
 	$country = \WeDevs\ERP\Countries::instance();
 	wp_localize_script( 'erp-script', 'wpErpCountries', $country->load_country_states() );
 	
-
 	wp_localize_script( 'erp-vue-table', 'wpVueTable', [
 		'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		'nonce'   => wp_create_nonce( 'wp-erp-vue-table' )
@@ -99,7 +98,7 @@ add_shortcode( 'contacts-list-table', function() {
 			row-checkbox-name="customer_id"
 			action="erp-crm-get-contacts"
 			:wpnonce="wpnonce"
-			page = "' . add_query_arg( array('type' => 'contact'), home_url( '/dashboard/contacts' ) ). '"
+			page = "' . home_url( '/dashboard/contacts' ) . '"
 			per-page="20"
 			:fields=fields
 			:item-row-actions=itemRowActions
