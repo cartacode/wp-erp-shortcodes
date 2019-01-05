@@ -55,7 +55,8 @@ add_action( 'wp_enqueue_scripts', function() {
 
 
 if ( is_plugin_active('wp-erp/wp-erp.php') ) {
-    require_once( dirname( __FILE__ ) . '/includes/crm/dashboard.php' );
-	require_once( dirname( __FILE__ ) . '/includes/crm/contacts.php' );
     require_once( dirname( __FILE__ ) . '/includes/hr/dashboard.php' );
+    require_once( dirname( __FILE__ ) . '/includes/crm/dashboard.php' );
+    require_once( dirname( __FILE__ ) . '/includes/crm/contacts.php' );
+    require_once( dirname( __FILE__ ) . '/includes/crm/companies.php' );
 }
