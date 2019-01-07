@@ -8,7 +8,7 @@
 add_action( 'wp_enqueue_scripts', function() {
     // css for all shortcodes
     $css_files = array(
-        'crm' => array( 'recently-added', 'todays-schedules', 'upcoming-schedules', 'w-all-contacts', 'table-view' )
+        'crm' => array( 'recently-added', 'todays-schedules', 'upcoming-schedules', 'w-all-contacts', 'table-view', 'activities' )
     );
 
     foreach ( $css_files as $type => $files ) {
@@ -45,8 +45,16 @@ add_action( 'wp_enqueue_scripts', function() {
     wp_register_style( 'erp-timepicker', WPERP_ASSETS . '/vendor/timepicker/jquery.timepicker.css', false, date( 'Ymd' ) );
     wp_register_script( 'erp-crm', $WP_ERP_MODULES_URL . "/crm/assets/js/crm.js", array( 'erp-script', 'erp-timepicker' ), date( 'Ymd' ), true );
 
+    // for activities
+    wp_register_script( 'erp-nprogress', WPERP_ASSETS . '/vendor/nprogress/nprogress.js', array( 'jquery' ), date( 'Ymd' ), true );
+    wp_register_style( 'erp-nprogress', WPERP_ASSETS . '/vendor/nprogress/nprogress.css', false, date( 'Ymd' ) );
 
+    wp_register_script( 'wp-erp-crm-vue-component', $WP_ERP_MODULES_URL . "/crm/assets/js/crm-components.js", array( 'erp-nprogress', 'erp-script', 'erp-vuejs', 'underscore', 'erp-select2', 'erp-tiptip' ), date( 'Ymd' ), true );
 
+    wp_register_script( 'wp-erp-crm-vue-customer', $WP_ERP_MODULES_URL . "/crm/assets/js/crm-app.js", array( 'wp-erp-crm-vue-component' ), date( 'Ymd' ), true );
+
+    wp_enqueue_style( 'jquery-ui', WPERP_ASSETS . '/vendor/jquery-ui/jquery-ui-1.9.1.custom.css' );
+    // for global
     wp_enqueue_script( 'erp-select2' );
     wp_enqueue_script( 'erp-popup' );
     wp_enqueue_script( 'erp-script' );
@@ -56,7 +64,9 @@ add_action( 'wp_enqueue_scripts', function() {
 
 if ( is_plugin_active('wp-erp/wp-erp.php') ) {
     require_once( dirname( __FILE__ ) . '/includes/hr/dashboard.php' );
+
     require_once( dirname( __FILE__ ) . '/includes/crm/dashboard.php' );
     require_once( dirname( __FILE__ ) . '/includes/crm/contacts.php' );
     require_once( dirname( __FILE__ ) . '/includes/crm/companies.php' );
+    require_once( dirname( __FILE__ ) . '/includes/crm/activities.php' );
 }
