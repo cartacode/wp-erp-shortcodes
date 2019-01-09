@@ -54,6 +54,9 @@ add_action( 'wp_enqueue_scripts', function() {
     wp_register_script( 'wp-erp-crm-vue-customer', $WP_ERP_MODULES_URL . "/crm/assets/js/crm-app.js", array( 'wp-erp-crm-vue-component' ), date( 'Ymd' ), true );
 
     wp_enqueue_style( 'jquery-ui', WPERP_ASSETS . '/vendor/jquery-ui/jquery-ui-1.9.1.custom.css' );
+    // Scripts for HR Section
+    wp_register_style( 'erp-sweetalert', WPERP_ASSETS . '/vendor/sweetalert/sweetalert.css', false, '1.4.1' );
+    wp_register_script( 'erp-sweetalert', WPERP_ASSETS . '/vendor/sweetalert/sweetalert.min.js', array( 'jquery' ), '1.4.1', true );
     // for global
     wp_enqueue_script( 'erp-select2' );
     wp_enqueue_script( 'erp-popup' );
@@ -64,6 +67,7 @@ add_action( 'wp_enqueue_scripts', function() {
 
 if ( is_plugin_active('wp-erp/wp-erp.php') ) {
     require_once( dirname( __FILE__ ) . '/includes/hr/dashboard.php' );
+    require_once( dirname( __FILE__ ) . '/includes/hr/employees.php' );
 
     require_once( dirname( __FILE__ ) . '/includes/crm/dashboard.php' );
     require_once( dirname( __FILE__ ) . '/includes/crm/contacts.php' );
