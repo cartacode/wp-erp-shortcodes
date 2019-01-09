@@ -8,7 +8,7 @@
 add_action( 'wp_enqueue_scripts', function() {
     // css for all shortcodes
     $css_files = array(
-        'crm' => array( 'recently-added', 'todays-schedules', 'upcoming-schedules', 'w-all-contacts', 'table-view', 'activities', 'circles' )
+        'crm' => array( 'recently-added', 'todays-schedules', 'upcoming-schedules', 'w-all-contacts', 'table-view', 'activities', 'circles', 'schedules' )
     );
 
     foreach ( $css_files as $type => $files ) {
@@ -57,6 +57,11 @@ add_action( 'wp_enqueue_scripts', function() {
     // Scripts for HR Section
     wp_register_style( 'erp-sweetalert', WPERP_ASSETS . '/vendor/sweetalert/sweetalert.css', false, '1.4.1' );
     wp_register_script( 'erp-sweetalert', WPERP_ASSETS . '/vendor/sweetalert/sweetalert.min.js', array( 'jquery' ), '1.4.1', true );
+
+  // calendar
+    wp_register_script( 'erp-trix-editor', WPERP_ASSETS . '/vendor/trix/trix.js', array( 'jquery' ), date( 'Ymd' ), true );
+    wp_register_style( 'erp-trix-editor', WPERP_ASSETS . '/vendor/trix/trix.css', false, date( 'Ymd' ) );
+
     // for global
     wp_enqueue_script( 'erp-select2' );
     wp_enqueue_script( 'erp-popup' );
@@ -74,4 +79,5 @@ if ( is_plugin_active('wp-erp/wp-erp.php') ) {
     require_once( dirname( __FILE__ ) . '/includes/crm/companies.php' );
     require_once( dirname( __FILE__ ) . '/includes/crm/activities.php' );
     require_once( dirname( __FILE__ ) . '/includes/crm/circles.php' );
+    require_once( dirname( __FILE__ ) . '/includes/crm/schedules.php' );
 }
