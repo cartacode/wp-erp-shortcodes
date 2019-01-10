@@ -116,4 +116,7 @@ input[type=checkbox], input[type=radio] {
     border-radius: 3px;
     height: 33px;
 }
+.erp-employee-modal-left .photo-container {
+    text-align: center;
+}
 </style>

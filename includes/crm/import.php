@@ -573,7 +573,7 @@ function erp_import_export_download_sample_action_1() {
                             $result = $wpdb->query($query_1);
                             //extract from wp_erp_peoples and insert into wp_erp_people_type_relations
                             $get_last_id = $wpdb->insert_id;
-                            $query_2 = "INSERT INTO ".$wpdb->prefix."erp_people_type_relations(`people_id`,`people_types_id`) values('".$get_last_id."','".$user_details->ID."')";
+                            $query_2 = "INSERT INTO ".$wpdb->prefix."erp_people_type_relations(`people_id`,`people_types_id`) values('".$get_last_id."','1')";
                             $wpdb->query($query_2); 
                             //insert data into contact_subscriber table
                             if($group_id != 'select')
