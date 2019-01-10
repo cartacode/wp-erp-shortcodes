@@ -53,6 +53,10 @@
 	background-color: #f4f4f4;
 }
 
+#erp-email-campaign-edit table {
+	margin-bottom: 0px;
+}
+
 #erp-email-campaign-edit table th {
 	text-transform: none;
     vertical-align: top;

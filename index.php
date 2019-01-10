@@ -19,6 +19,7 @@ add_action( 'wp_enqueue_scripts', function() {
 
     $WP_ERP_MODULES_URL = WPERP_URL . '/modules';
 
+    wp_enqueue_script( 'my_custom_script', plugin_dir_url( __FILE__ ) . 'assets/js/custom.js' );
     // global scripts
     wp_register_style( 'erp-select2', WPERP_ASSETS . '/vendor/select2/select2.min.css', false, '1.0.0' );
     wp_register_script( 'erp-select2',  WPERP_ASSETS . '/vendor/select2/select2.full.min.js', array( 'jquery' ), '1.0.0', true );
