@@ -58,6 +58,7 @@ add_action( 'wp_enqueue_scripts', function() {
     // Scripts for HR Section
     wp_register_style( 'erp-sweetalert', WPERP_ASSETS . '/vendor/sweetalert/sweetalert.css', false, '1.4.1' );
     wp_register_script( 'erp-sweetalert', WPERP_ASSETS . '/vendor/sweetalert/sweetalert.min.js', array( 'jquery' ), '1.4.1', true );
+   wp_register_script( 'wp-erp-hr', $WP_ERP_MODULES_URL . "/hrm/assets/js/hrm.min.js", array( 'erp-script' ), date( 'Ymd' ), true );
 
     // calendar
     wp_register_script( 'erp-trix-editor', WPERP_ASSETS . '/vendor/trix/trix.js', array( 'jquery' ), date( 'Ymd' ), true );
@@ -122,6 +123,8 @@ if ( is_plugin_active('wp-erp/wp-erp.php') ) {
     require_once( dirname( __FILE__ ) . '/includes/crm/activities.php' );
     require_once( dirname( __FILE__ ) . '/includes/crm/circles.php' );
     require_once( dirname( __FILE__ ) . '/includes/crm/schedules.php' );
+  
+    require_once( dirname( __FILE__ ) . '/includes/crm/import.php' );
 
 
     if ( is_plugin_active('erp-email-campaign/wp-erp-email-campaign.php') ) {
