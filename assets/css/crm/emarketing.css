@@ -23,7 +23,8 @@
 	padding-left: 20px;
 }
 
-#erp-email-campaign-edit button {
+#erp-email-campaign-edit .ecamp-page-title button,
+#erp-email-campaign-edit .erp-grid-container+p button {
     color: #555;
     border-color: #ccc;
     background: #f7f7f7;
