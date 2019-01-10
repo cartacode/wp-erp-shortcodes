@@ -24,7 +24,8 @@
 }
 
 #erp-email-campaign-edit .ecamp-page-title button,
-#erp-email-campaign-edit .erp-grid-container+p button {
+#erp-email-campaign-edit .erp-grid-container+p button,
+#erp-email-campaign-edit #customizer-controls button {
     color: #555;
     border-color: #ccc;
     background: #f7f7f7;
