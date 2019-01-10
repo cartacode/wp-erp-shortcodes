@@ -8,7 +8,7 @@
 add_action( 'wp_enqueue_scripts', function() {
     // css for all shortcodes
     $css_files = array(
-        'crm' => array( 'recently-added', 'todays-schedules', 'upcoming-schedules', 'w-all-contacts', 'table-view', 'activities', 'circles', 'schedules' )
+        'crm' => array( 'recently-added', 'todays-schedules', 'upcoming-schedules', 'w-all-contacts', 'table-view', 'activities', 'circles', 'schedules', 'emarketing' )
     );
 
     foreach ( $css_files as $type => $files ) {
@@ -80,4 +80,9 @@ if ( is_plugin_active('wp-erp/wp-erp.php') ) {
     require_once( dirname( __FILE__ ) . '/includes/crm/activities.php' );
     require_once( dirname( __FILE__ ) . '/includes/crm/circles.php' );
     require_once( dirname( __FILE__ ) . '/includes/crm/schedules.php' );
+
+
+    if ( is_plugin_active('erp-email-campaign/wp-erp-email-campaign.php') ) {
+        require_once( dirname( __FILE__ ) . '/includes/crm/emarketing.php' );
+    }
 }

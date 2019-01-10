@@ -1,0 +1,15 @@
+#erp-email-campaign-search {
+    width: auto;
+    padding: 3px 5px;
+    line-height: 20px;
+    min-height: auto;
+}
+
+.campaign-list-table .column-icon {
+    width: 70px;
+    padding: 8px 0 0 4px!important;
+}
+.campaign-list-table .column-icon .email-type-icon {
+    width: auto;
+    max-width: 70px;
+}
