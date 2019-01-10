@@ -6,8 +6,9 @@ add_shortcode( 'employees-list-table', function() {
        require_once( ABSPATH . 'wp-admin/includes/class-wp-screen.php' );
        require_once( ABSPATH . 'wp-admin/includes/template.php' );
    }
-	
-	$localize_script = apply_filters( 'erp_hr_localize_script', array(
+     wp_enqueue_media();
+       
+    $localize_script = apply_filters( 'erp_hr_localize_script', array(
             'nonce'                  => wp_create_nonce( 'wp-erp-hr-nonce' ),
             'popup'                  => array(
                 'dept_title'        => __( 'New Department', 'erp' ),
@@ -57,54 +58,48 @@ add_shortcode( 'employees-list-table', function() {
             ], admin_url( 'admin.php' ) ), __( 'Create Entitlement', 'erp' ), __( 'Create Entitlement', 'erp' ) ),
         ) );
 
-    $contact_actvity_localize = apply_filters( 'erp_crm_contact_localize_var', [
-        'ajaxurl'              => admin_url( 'admin-ajax.php' ),
-        'nonce'                => wp_create_nonce( 'wp-erp-crm-customer-feed' ),
-        'current_user_id'      => get_current_user_id(),
-        'isAdmin'              => current_user_can( 'manage_options' ),
-        'isCrmManager'         => current_user_can( 'erp_crm_manager' ),
-        'isAgent'              => current_user_can( 'erp_crm_agent' ),
-        'confirm'              => __( 'Are you sure?', 'erp' ),
-        'date_format'          => get_option( 'date_format' ),
-        'timeline_feed_header' => apply_filters( 'erp_crm_contact_timeline_feeds_header', '' ),
-        'timeline_feed_body'   => apply_filters( 'erp_crm_contact_timeline_feeds_body', '' ),
+    
+   wp_localize_script( 'erp-vue-table', 'wpVueTable', [
+        'ajaxurl' => admin_url( 'admin-ajax.php' ),
+        'nonce'   => wp_create_nonce( 'wp-erp-vue-table' )
     ] );
 
-	wp_localize_script( 'erp-vue-table', 'wpVueTable', [
-		'ajaxurl' => admin_url( 'admin-ajax.php' ),
-		'nonce'   => wp_create_nonce( 'wp-erp-vue-table' )
-	] );
+   if( function_exists( 'erp_get_js_template' ) ) {
+        erp_get_js_template( WPERP_MODULES . '/hrm/views/js-templates/new-employee.php', 'erp-new-employee' );
+        erp_get_js_template( WPERP_MODULES . '/hrm/views/js-templates/row-employee.php', 'erp-employee-row' );
+    }
+    $employee  = new \WeDevs\ERP\HRM\Employee();
+    $localize_script['employee_empty'] = $employee->to_array();
 
-	if( function_exists( 'erp_get_js_template' ) ) {
-		erp_get_js_template( WPERP_MODULES . '/hrm/views/js-templates/new-employee.php', 'erp-hrm-new-employee' );
-	}
-wp_enqueue_style( 'erp-sweetalert' );
+ 
+   wp_enqueue_script( 'erp-tiptip' );
+        wp_enqueue_style( 'erp-sweetalert' );
 wp_enqueue_script( 'erp-sweetalert' );
-	wp_enqueue_script( 'erp-crm' );
-	wp_localize_script( 'erp-crm', 'wpErpCrm', $localize_script );
-	
-	wp_enqueue_script( 'erp-crm-contact' );
-	wp_localize_script( 'erp-crm-contact', 'wpErpCrm', $localize_script );
+wp_enqueue_script( 'wp-erp-hr' );
+ wp_localize_script( 'wp-erp-hr', 'wpErpHr', $localize_script );     
+wp_enqueue_style( 'wp-color-picker' );
+        wp_enqueue_style( 'erp-select2' );
+        wp_enqueue_style( 'erp-tiptip' );
+        wp_enqueue_style( 'erp-style' );
+    wp_enqueue_style( 'table-view' );
 
-	wp_enqueue_style( 'erp-tiptip' );
-	wp_enqueue_style( 'erp-select2' );
-	wp_enqueue_style( 'table-view' );
 
-	//wp_enqueue_style( 'circles' );
+    
 
-	$template = '';
+    
+  
 
-	$template .= '<div class="wrap erp-crm-contact-group" id="wp-erp">';
+    $template = '';
 
-	$template .= '<h2>';
+    $template .= '<div class="wrap erp-hr-employees" id="wp-erp">';
+
+    $template .= '<h2>';
 
     if ( current_user_can( 'erp_create_employee' ) ) 
             
-             $template .= '<a href="#" @click.prevent="addEmployee( \'employee\', \'Add New Employee\' )" id="erp-employee-new" class="erp-employee-new add-new-h2">Add New Employee</a>';
-           
- 
-
-    // $template .= '<a href="' . add_query_arg( [ 'page'=>'erp-crm', 'section' => 'contact-groups', 'groupaction' => 'view-subscriber' ], home_url('dashboard/circles') ) . '" class="add-new-h2" title="View all subscriber contact">View all subscriber</a>';
+             
+         $template .= '<a href="#" id="erp-employee-new" class="add-new-h2">Add New Employee</a>';
+        
     
     $template .= '</h2>';
 
@@ -113,18 +108,18 @@ wp_enqueue_script( 'erp-sweetalert' );
 
             <form method="get">
                 <input type="hidden" name="page" value="erp-hr">
-                <input type="hidden" name="section" value="employee">'.
+                <input type="hidden" name="section" value="employee">';
                 ob_start();
-					
-	                $employee_table = new \WeDevs\ERP\HRM\Employee_List_Table();
-	                $employee_table->prepare_items();
-	                $employee_table->search_box( __( 'Search Employee', 'erp' ), 'erp-employee-search' );
-	                $employee_table->views();
-	                $employee_table->display();
-	                
-	                $template .= ob_get_contents(); 
+                    
+                    $employee_table = new \WeDevs\ERP\HRM\Employee_List_Table();
+                    $employee_table->prepare_items();
+                    $employee_table->search_box( __( 'Search Employee', 'erp' ), 'erp-employee-search' );
+                    $employee_table->views();
+                    $employee_table->display();
+                    
+                    $template .= ob_get_contents(); 
 
-					ob_end_clean();
+                    ob_end_clean();
 
             $template .= '</form>
 
@@ -133,8 +128,9 @@ wp_enqueue_script( 'erp-sweetalert' );
    </div>';
 
 
-	$template .= file_get_contents( dirname( __FILE__ ) . '/demo-modal.php' );
+    $template .= file_get_contents( dirname( __FILE__ ) . '/demo-modal.php' );
 
-	return $template;
+
+    return $template;
 
 } );
