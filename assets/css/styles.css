@@ -34,10 +34,11 @@
     box-sizing: content-box;
 }
 
-div[class^="erp"] input[type="submit"],
-div[class^="erp"] input[type="button"],
-div[class^="erp"] input[type="reset"],
-div[class^="erp"] a.button,
+div#wp-erp input[type="submit"],
+div[class*="erp"] input[type="submit"],
+div[class*="erp"] input[type="button"],
+div[class*="erp"] input[type="reset"],
+div[class*="erp"] a.button,
 .tablenav input[type="submit"] {
     display: inline-block;
     text-decoration: none;
