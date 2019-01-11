@@ -62,11 +62,7 @@ add_shortcode( 'circle_list', function() {
 	wp_enqueue_script( 'erp-crm-contact' );
 	wp_localize_script( 'erp-crm-contact', 'wpErpCrm', $localize_script );
 
-	wp_enqueue_style( 'erp-tiptip' );
-	wp_enqueue_style( 'erp-select2' );
-	wp_enqueue_style( 'table-view' );
-
-	wp_enqueue_style( 'circles' );
+    wp_enqueue_style( 'erp-shortcode-styles' );
 
 	$template = '';
 

@@ -2,7 +2,7 @@
 
 // recently added contacts or companies
 add_shortcode( 'crm_dashboard_recently_added', function() {
-    wp_enqueue_style( 'recently-added' );
+    wp_enqueue_style( 'erp-shortcode-styles' );
 
     $contacts  = erp_get_peoples( [ 'type' => 'contact', 'orderby' => 'created', 'order' => 'DESC', 'number' => 5 ] );
     $companies = erp_get_peoples( [ 'type' => 'company', 'orderby' => 'created', 'order' => 'DESC', 'number' => 5 ] );
@@ -68,7 +68,7 @@ add_shortcode( 'crm_dashboard_total_inbound_emails', function() {
 
 // todays' schedules
 add_shortcode( 'crm_todays_schedules', function() {
-    wp_enqueue_style( 'todays-schedules' );
+    wp_enqueue_style( 'erp-shortcode-styles' );
 
 	$todays_schedules = erp_crm_get_todays_schedules_activity( get_current_user_id() );
    
@@ -167,7 +167,7 @@ add_shortcode( 'crm_todays_schedules', function() {
 
 // upcoming schedules
 add_shortcode( 'crm_upcoming_schedules', function() {
-    wp_enqueue_style( 'upcoming-schedules' );
+    wp_enqueue_style( 'erp-shortcode-styles' );
 
 	$upcoming_schedules = erp_crm_get_next_seven_day_schedules_activities( get_current_user_id() );
 
@@ -218,7 +218,7 @@ add_shortcode( 'crm_upcoming_schedules', function() {
 
 // show all contacts
 add_shortcode( 'view_all_contacts', function() {
-    wp_enqueue_style( 'w-all-contacts' );
+    wp_enqueue_style( 'erp-shortcode-styles' );
 
     $contacts_count  = erp_crm_customer_get_status_count( 'contact' );
     $companies_count = erp_crm_customer_get_status_count( 'company' );
@@ -267,7 +267,7 @@ add_shortcode( 'view_all_contacts', function() {
 
 // show all companies created
 add_shortcode( 'view_all_companies', function() {
-    wp_enqueue_style( 'w-all-contacts' );
+    wp_enqueue_style( 'erp-shortcode-styles' );
 
     $companies_count = erp_crm_customer_get_status_count( 'company' );
     
@@ -318,6 +318,7 @@ add_shortcode( 'view_all_companies', function() {
 add_shortcode( 'show_my_schedules', function() {
     wp_enqueue_script( 'erp-js' );
     wp_enqueue_style( 'erp-fullcalendar' );
+    wp_enqueue_style( 'erp-shortcode-styles' );
     
     $user_id        = is_user_logged_in() ? get_current_user_id() : -1;
     $args           = [

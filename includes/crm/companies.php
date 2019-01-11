@@ -75,7 +75,7 @@ add_shortcode( 'company-list-table', function() {
 
     wp_enqueue_style( 'erp-tiptip' );
     wp_enqueue_style( 'erp-select2' );
-    wp_enqueue_style( 'table-view' );
+    wp_enqueue_style( 'erp-shortcode-styles' );
 
 	if ( isset( $_GET['filter_assign_contact' ] ) && !empty( $_GET['filter_assign_contact' ] ) ) {
 	    $id = intval( $_GET['filter_assign_contact'] );

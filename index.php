@@ -6,17 +6,6 @@
 **/
 
 add_action( 'wp_enqueue_scripts', function() {
-    // css for all shortcodes
-    $css_files = array(
-        'crm' => array( 'recently-added', 'todays-schedules', 'upcoming-schedules', 'w-all-contacts', 'table-view', 'activities', 'circles', 'schedules', 'emarketing' )
-    );
-
-    foreach ( $css_files as $type => $files ) {
-        foreach ( $files as $file ) {
-           wp_register_style( $file, plugins_url( '/assets/css/' . $type . '/' . $file . '.css', __FILE__ ), false );
-        }
-    }
-
     $WP_ERP_MODULES_URL = WPERP_URL . '/modules';
 
     wp_enqueue_script( 'my_custom_script', plugin_dir_url( __FILE__ ) . 'assets/js/custom.js' );
@@ -59,14 +48,13 @@ add_action( 'wp_enqueue_scripts', function() {
     // Scripts for HR Section
     wp_register_style( 'erp-sweetalert', WPERP_ASSETS . '/vendor/sweetalert/sweetalert.css', false, '1.4.1' );
     wp_register_script( 'erp-sweetalert', WPERP_ASSETS . '/vendor/sweetalert/sweetalert.min.js', array( 'jquery' ), '1.4.1', true );
-   wp_register_script( 'wp-erp-hr', $WP_ERP_MODULES_URL . "/hrm/assets/js/hrm.min.js", array( 'erp-script' ), date( 'Ymd' ), true );
+    wp_register_script( 'wp-erp-hr', $WP_ERP_MODULES_URL . "/hrm/assets/js/hrm.min.js", array( 'erp-script' ), date( 'Ymd' ), true );
 
     // calendar
     wp_register_script( 'erp-trix-editor', WPERP_ASSETS . '/vendor/trix/trix.js', array( 'jquery' ), date( 'Ymd' ), true );
     wp_register_style( 'erp-trix-editor', WPERP_ASSETS . '/vendor/trix/trix.css', false, date( 'Ymd' ) );
 
     // email campaign
-    wp_register_style( 'erp-styles', WPERP_ASSETS . '/css/admin.css', false, date( 'Ymd' ) );
     wp_register_style( 'erp-fontawesome', WPERP_ASSETS . '/vendor/fontawesome/font-awesome.min.css', false, date( 'Ymd' ) );
 
     wp_register_script( 'erp-sortable', WPERP_EMAIL_CAMPAIGN_ASSETS . '/js/Sortable.js', [], WPERP_EMAIL_CAMPAIGN_VERSION, true );
@@ -110,6 +98,9 @@ add_action( 'wp_enqueue_scripts', function() {
     wp_enqueue_script( 'erp-select2' );
     wp_enqueue_script( 'erp-popup' );
     wp_enqueue_script( 'erp-script' );
+
+    wp_register_style( 'erp-styles', WPERP_ASSETS . '/css/admin.css', false, date( 'Ymd' ) );
+    wp_register_style( 'erp-shortcode-styles', plugins_url( '/assets/css/styles.css', __FILE__ ), [ 'erp-styles', 'erp-nprogress' ] );
 } );
 
 

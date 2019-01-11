@@ -1,5 +1,5 @@
 <?php
-add_shortcode( 'contact-list-table', function() {
+function init_contact_assets() {
 	wp_enqueue_media();
 	
 	$localize_script = apply_filters( 'erp_crm_localize_script', array(
@@ -72,11 +72,15 @@ add_shortcode( 'contact-list-table', function() {
 	
 	wp_enqueue_script( 'erp-crm-contact' );
 	wp_localize_script( 'erp-crm-contact', 'wpErpCrm', $localize_script );
-
+	
 	wp_enqueue_style( 'erp-tiptip' );
 	wp_enqueue_style( 'erp-select2' );
-	wp_enqueue_style( 'table-view' );
-	
+	wp_enqueue_style( 'erp-shortcode-styles' );
+}
+
+add_shortcode( 'contact-list-table', function() {
+	init_contact_assets();
+
 	$custom_data = [
 		'searchFields' => array_keys( erp_crm_get_serach_key( 'contact' ) )
 	];
@@ -98,7 +102,7 @@ add_shortcode( 'contact-list-table', function() {
 			row-checkbox-name="customer_id"
 			action="erp-crm-get-contacts"
 			:wpnonce="wpnonce"
-			page = "' . home_url( '/dashboard/contacts' ) . '"
+			page = "' . home_url( '/crmdashboard/contacts' ) . '"
 			per-page="20"
 			:fields=fields
 			:item-row-actions=itemRowActions
@@ -115,5 +119,48 @@ add_shortcode( 'contact-list-table', function() {
 
 	$template .= file_get_contents( dirname( __FILE__ ) . '/demo-modal.php' );
 
+	return $template;
+} );
+
+function erp_shortcode_body_class( $classes ) {
+	global $post;
+
+	if( isset($post->post_content) && has_shortcode( $post->post_content, 'single-contact-view' ) ) {
+		$classes[] = 'js';
+	}
+
+	return $classes;
+}
+add_filter( 'body_class', 'erp_shortcode_body_class' );
+
+add_shortcode( 'single-contact-view', function() {
+	$id     = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
+
+	if ( !$id )
+		return $template;
+
+	if ( function_exists( 'erp_get_vue_component_template' ) ) {
+		erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/customer-newnote.php', 'erp-crm-new-note-template' );
+		erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/customer-log-activity.php', 'erp-crm-log-activity-template' );
+		erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/customer-email-note.php', 'erp-crm-email-note-template' );
+		erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/customer-schedule-note.php', 'erp-crm-schedule-note-template' );
+		erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/customer-tasks-note.php', 'erp-crm-tasks-note-template' );		
+	}
+
+	$customer = new WeDevs\ERP\CRM\Contact( $id );
+
+	$template = '';
+
+	ob_start();
+
+	include 'single-contact.php';
+
+	$template .= ob_get_contents();
+
+	ob_end_clean();
+
+	init_contact_assets();
+
+	$template .= file_get_contents( dirname( __FILE__ ) . '/demo-modal.php' );
 	return $template;
 } );
