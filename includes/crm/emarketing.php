@@ -3,8 +3,7 @@ add_shortcode( 'email-campaign-list', function() {
 	require_once WPERP_EMAIL_CAMPAIGN_INCLUDES . '/class-email-campaign-list-table.php';
 
 	$template = '';
-	wp_enqueue_style( 'table-view' );
-	wp_enqueue_style( 'emarketing' );
+    wp_enqueue_style( 'erp-shortcode-styles' );
 	
 	if( ! is_admin() ){
 	   require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
@@ -73,6 +72,8 @@ add_shortcode( 'new-email-campaign', function() {
             'placeholder'   => date( get_option( 'time_format', 'g:i a' ), current_time( 'timestamp' ) )
         ],
     ];
+    
+    wp_enqueue_style( 'erp-shortcode-styles' );
 
     wp_enqueue_style( 'tiny-mce', site_url( '/wp-includes/css/editor.css' ), [], WPERP_EMAIL_CAMPAIGN_VERSION );
     wp_enqueue_script( 'tiny-mce', site_url( '/wp-includes/js/tinymce/tinymce.min.js' ), [] );
@@ -107,8 +108,6 @@ add_shortcode( 'new-email-campaign', function() {
     $ecampGlobal['searchPlaceHolder'] = __( 'Search Contact', 'erp-email-campaign' );
 
     wp_localize_script( 'erp-email-campaign', 'ecampGlobal', $ecampGlobal );
-    
-    wp_enqueue_style( 'emarketing' );
 
     ob_start();
 ?>

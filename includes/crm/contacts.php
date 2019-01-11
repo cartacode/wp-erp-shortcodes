@@ -72,11 +72,11 @@ add_shortcode( 'contact-list-table', function() {
 	
 	wp_enqueue_script( 'erp-crm-contact' );
 	wp_localize_script( 'erp-crm-contact', 'wpErpCrm', $localize_script );
-
+	
 	wp_enqueue_style( 'erp-tiptip' );
 	wp_enqueue_style( 'erp-select2' );
-	wp_enqueue_style( 'table-view' );
-	
+    wp_enqueue_style( 'erp-shortcode-styles' );
+
 	$custom_data = [
 		'searchFields' => array_keys( erp_crm_get_serach_key( 'contact' ) )
 	];

@@ -6,18 +6,6 @@
 **/
 
 add_action( 'wp_enqueue_scripts', function() {
-    wp_register_style( 'erp-styles', WPERP_ASSETS . '/css/admin.css', false, date( 'Ymd' ) );
-    // css for all shortcodes
-    $css_files = array(
-        'crm' => array( 'recently-added', 'todays-schedules', 'upcoming-schedules', 'contacts', 'table-view', 'activities', 'circles', 'schedules', 'emarketing', 'single-contact' )
-    );
-
-    foreach ( $css_files as $type => $files ) {
-        foreach ( $files as $file ) {
-           wp_register_style( $file, plugins_url( '/assets/css/' . $type . '/' . $file . '.css', __FILE__ ), [ 'erp-styles' ] );
-        }
-    }
-
     $WP_ERP_MODULES_URL = WPERP_URL . '/modules';
 
     wp_enqueue_script( 'my_custom_script', plugin_dir_url( __FILE__ ) . 'assets/js/custom.js' );
@@ -110,6 +98,9 @@ add_action( 'wp_enqueue_scripts', function() {
     wp_enqueue_script( 'erp-select2' );
     wp_enqueue_script( 'erp-popup' );
     wp_enqueue_script( 'erp-script' );
+
+    wp_register_style( 'erp-styles', WPERP_ASSETS . '/css/admin.css', false, date( 'Ymd' ) );
+    wp_register_style( 'erp-shortcode-styles', plugins_url( '/assets/css/styles.css', __FILE__ ), [ 'erp-styles', 'erp-nprogress' ] );
 } );
 
 

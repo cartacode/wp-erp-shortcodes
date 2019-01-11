@@ -47,7 +47,7 @@ add_shortcode( 'schedule-calendar', function() {
     wp_enqueue_script( 'erp-trix-editor' );
     wp_enqueue_style( 'erp-trix-editor' );
 
-	wp_enqueue_style( 'schedules' );
+	wp_enqueue_style( 'erp-shortcode-styles' );
 
 	ob_start();
 

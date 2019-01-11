@@ -55,9 +55,8 @@ add_shortcode( 'activity_list', function() {
     wp_enqueue_script( 'erp-crm' );
     wp_localize_script( 'erp-crm', 'wpErpCrm', $localize_script );
     
-	wp_enqueue_style( 'erp-nprogress' );
     wp_enqueue_style( 'erp-select2' );
-    wp_enqueue_style( 'activities' );
+    wp_enqueue_style( 'erp-shortcode-styles' );
 
 	$feeds_tab = array();
 	$crm_users = array();
