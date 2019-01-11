@@ -93,15 +93,7 @@ wp_enqueue_style( 'wp-color-picker' );
 
     $template .= '<div class="wrap erp-hr-employees" id="wp-erp">';
 
-    $template .= '<h2>';
-
-    if ( current_user_can( 'erp_create_employee' ) ) 
-            
-             
-         $template .= '<a href="#" id="erp-employee-new" class="add-new-h2">Add New Employee</a>';
-        
-    
-    $template .= '</h2>';
+   
 
     $template .= '<div class="list-table-wrap erp-hr-employees-wrap">
         <div class="list-table-inner erp-hr-employees-wrap-inner">

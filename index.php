@@ -117,7 +117,7 @@ if ( is_plugin_active('wp-erp/wp-erp.php') ) {
     require_once( dirname( __FILE__ ) . '/includes/crm/schedules.php' );
   
     require_once( dirname( __FILE__ ) . '/includes/crm/import.php' );
-
+    require_once( dirname( __FILE__ ) . '/includes/crm/export.php' );
 
     if ( is_plugin_active('erp-email-campaign/wp-erp-email-campaign.php') ) {
         require_once( dirname( __FILE__ ) . '/includes/crm/emarketing.php' );
