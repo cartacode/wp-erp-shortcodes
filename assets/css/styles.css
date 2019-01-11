@@ -8,18 +8,18 @@
 }
 
 .elementor-shortcode ul.erp-list {
-	width: auto;
+    width: auto;
 }
 
 /* table nav */
 .tablenav .actions select {
-	font-size: 14px;
-	border-radius: 0px;
-	padding: 2px!important;
-	background-color: #fff;
-	min-height: auto;
-	width: auto;
-	height: 28px;
+    font-size: 14px;
+    border-radius: 0px;
+    padding: 2px !important;
+    background-color: #fff;
+    min-height: auto;
+    width: auto;
+    height: 28px;
 }
 
 .tablenav-pages .current-page {
@@ -29,117 +29,129 @@
     line-height: 20px;
 }
 
-.tablenav .tablenav-pages a, .tablenav-pages-navspan {
+.tablenav .tablenav-pages a,
+.tablenav-pages-navspan {
     box-sizing: content-box;
 }
 
-.elementor-shortcode input[type="submit"] {
-	display: inline-block;
-	text-decoration: none;
-	font-size: 13px;
-	line-height: 26px;
-	height: 28px;
-	margin: 0;
-	padding: 0 10px 1px;
-	cursor: pointer;
-	border-width: 1px;
-	border-style: solid;
-	-webkit-appearance: none;
-	border-radius: 3px;
-	white-space: nowrap;
-	box-sizing: border-box;
-	color: #555;
-	border-color: #cccccc;
-	background: #f7f7f7;
-	box-shadow: 0 1px 0 #cccccc;
-	vertical-align: top;
-	text-transform: capitalize;
+div[class^="erp"] input[type="submit"],
+div[class^="erp"] input[type="button"],
+div[class^="erp"] input[type="reset"],
+div[class^="erp"] a.button {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 26px;
+    height: 28px;
+    margin: 0;
+    padding: 0 10px 1px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    white-space: nowrap;
+    box-sizing: border-box;
+    color: #555;
+    border-color: #cccccc;
+    background: #f7f7f7;
+    box-shadow: 0 1px 0 #cccccc;
+    vertical-align: top;
+    text-transform: capitalize;
 }
 
 .elementor-shortcode table thead,
 .elementor-shortcode table tfoot {
-	background-color: #184f7e;
+    background-color: #184f7e;
 }
 
 #erp-crm-calendar table thead,
-#erp-crm-calendar table tfoot  {
-	background-color: inherit;
+#erp-crm-calendar table tfoot {
+    background-color: inherit;
 }
 
 .elementor-shortcode table th {
-	text-transform: capitalize;
+    text-transform: capitalize;
 }
 
-.widefat th.sortable, .widefat th.sorted {
-    padding: 0!important;
+.widefat th.sortable,
+.widefat th.sorted {
+    padding: 0 !important;
 }
 
 th.sortable a,
 th.sorted a,
 .sorting-indicator:before {
-	color: #67e2fd;
+    color: #67e2fd;
 }
 
 .widefat thead tr th,
 .widefat tfoot tr th {
-	color: #fff;
+    color: #fff;
 }
 
 .widefat thead td input,
 .widefat tfoot td input {
-	background-color: transparent;
-	border: 2px solid #fff;
-	border-radius: 4px;
+    background-color: transparent;
+    border: 2px solid #fff;
+    border-radius: 4px;
 }
 
 .widefat thead td.check-column,
 .widefat tfoot td.check-column {
-	padding: 5px 0 0 3px!important;	
-}
-.widefat tbody th.check-column {
-	padding: 11px 0 0 3px!important;
+    padding: 5px 0 0 3px !important;
 }
 
-.widefat td, .widefat th {
-    padding: 8px 10px!important;
+.widefat tbody th.check-column {
+    padding: 11px 0 0 3px !important;
+}
+
+.widefat td,
+.widefat th {
+    padding: 8px 10px !important;
 }
 
 /* table content */
 .vtable-wrap .vtbale-table-wrapper {
-	position: relative;
-}
-.vtable-wrap .vtbale-table-wrapper table.vtable {
-	position: relative;
-	width: 100%;
-	height: 100%;
-}
-.vtable-wrap .vtbale-table-wrapper table.vtable tbody.vtbale-tbody tr.vtable-ajax-loading {
-	height: 50px;
-}
-.vtable-wrap .vtbale-table-wrapper .vtable-loader-bg {
-	width: 100%;
-	height: 100%;
-	background: #fafafa;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	opacity: 0.4;
-}
-.vtable-wrap .vtbale-table-wrapper .vtable-loader {
-	position: absolute;
-	width: 30px;
-	height: 30px;
-	background: url('../images/spinner-2x.gif') center center no-repeat;
-	z-index: 99;
-	background-size: 30px;
-	top: 38%;
-	left: 50%;
+    position: relative;
 }
 
-.erp-crm-customer table.wp-list-table .column-name img, .erp-crm-subscriber-contact table.wp-list-table .column-name img {
-	float: left;
-	margin-right: 10px;
-	margin-top: 1px;
+.vtable-wrap .vtbale-table-wrapper table.vtable {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.vtable-wrap .vtbale-table-wrapper table.vtable tbody.vtbale-tbody tr.vtable-ajax-loading {
+    height: 50px;
+}
+
+.vtable-wrap .vtbale-table-wrapper .vtable-loader-bg {
+    width: 100%;
+    height: 100%;
+    background: #fafafa;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    opacity: 0.4;
+}
+
+.vtable-wrap .vtbale-table-wrapper .vtable-loader {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: url('../images/spinner-2x.gif') center center no-repeat;
+    z-index: 99;
+    background-size: 30px;
+    top: 38%;
+    left: 50%;
+}
+
+.erp-crm-customer table.wp-list-table .column-name img,
+.erp-crm-subscriber-contact table.wp-list-table .column-name img {
+    float: left;
+    margin-right: 10px;
+    margin-top: 1px;
 }
 
 .nprogress-custom-parent #nprogress .spinner {
@@ -156,66 +168,79 @@ th.sorted a,
 
 /* Recently Added in Dashboard */
 ul.erp-latest-contact-list {
-  padding-bottom: 7px;
-  list-style: none;
-  margin: 0px;
+    padding-bottom: 7px;
+    list-style: none;
+    margin: 0px;
 }
+
 ul.erp-latest-contact-list li {
-  position: relative;
-  padding: 4px 0px;
-  border-bottom: 1px solid #e3e3e3;
+    position: relative;
+    padding: 4px 0px;
+    border-bottom: 1px solid #e3e3e3;
 }
+
 ul.erp-latest-contact-list li:before,
 ul.erp-latest-contact-list li:after {
-  content: " ";
-  display: table;
+    content: " ";
+    display: table;
 }
+
 ul.erp-latest-contact-list li:after {
-  clear: both;
+    clear: both;
 }
+
 ul.erp-latest-contact-list li:before,
 ul.erp-latest-contact-list li:after {
-  content: " ";
-  display: table;
+    content: " ";
+    display: table;
 }
+
 ul.erp-latest-contact-list li:after {
-  clear: both;
+    clear: both;
 }
+
 ul.erp-latest-contact-list li span.contact-created-time {
-  position: absolute;
-  top: 0%;
-  right: 3px;
-  cursor: pointer;
+    position: absolute;
+    top: 0%;
+    right: 3px;
+    cursor: pointer;
 }
+
 ul.erp-latest-contact-list li:first-child {
-  padding-top: 0px;
+    padding-top: 0px;
 }
+
 ul.erp-latest-contact-list li:last-child {
-  border-bottom: none;
-  padding-bottom: 0px;
+    border-bottom: none;
+    padding-bottom: 0px;
 }
+
 ul.erp-latest-contact-list li .avatar {
-  width: 29px;
-  float: left;
-  margin-right: 10px;
+    width: 29px;
+    float: left;
+    margin-right: 10px;
 }
+
 ul.erp-latest-contact-list li .details {
-  float: left;
+    float: left;
 }
+
 ul.erp-latest-contact-list li .details p.contact-name {
-  margin-top: -3px;
-  margin-bottom: -2px;
-  padding: 0px;
+    margin-top: -3px;
+    margin-bottom: -2px;
+    padding: 0px;
 }
+
 ul.erp-latest-contact-list li .details p.contact-name a {
-  text-decoration: none;
+    text-decoration: none;
 }
+
 ul.erp-latest-contact-list li .details p.contact-stage {
-  padding: 0px;
-  margin-top: 0px;
-  margin-bottom: 3px;
-  color: #afafaf;
-  font-style: italic;
+    padding: 0px;
+    margin-top: 0px;
+    margin-bottom: 3px;
+    color: #afafaf;
+    font-style: italic;
 }
 
 /* All Cotnacts view in Dashboard */
@@ -308,11 +333,12 @@ ul.erp-latest-contact-list li .details p.contact-stage {
 }
 
 #erp-email-campaign-edit .erp-email-campaign-shortcode-btn .button.button-link {
-	padding: 0px;
+    padding: 0px;
     margin-top: 1px;
 }
 
-#erp-email-campaign-edit .validation-error, #erp-email-campaign-edit .floating-info .floating-info-text.always-on-top {
+#erp-email-campaign-edit .validation-error,
+#erp-email-campaign-edit .floating-info .floating-info-text.always-on-top {
     top: -19px;
     background-color: #f4f4f4;
 }
@@ -334,12 +360,13 @@ ul.erp-latest-contact-list li .details p.contact-stage {
     margin-bottom: 0
 }
 
-#erp-email-campaign-edit table th, #erp-email-campaign-edit table td {
+#erp-email-campaign-edit table th,
+#erp-email-campaign-edit table td {
     border-bottom: none;
 }
 
 #erp-email-campaign-edit #email-template td {
-	padding: 0px;
+    padding: 0px;
 }
 
 #erp-email-campaign-edit #email-template td[align="center"] {
@@ -347,13 +374,22 @@ ul.erp-latest-contact-list li .details p.contact-stage {
 }
 
 #erp-email-campaign-edit #email-template td[align="left"] {
-	text-align: left;
+    text-align: left;
 }
 
 #erp-email-campaign-edit #email-template td[align="right"] {
-	text-align: right;
+    text-align: right;
 }
 
 #erp-email-campaign-edit .erp-grid-container .row {
     display: flex;
+}
+
+/* Single Contact View */
+.postbox {
+    position: relative;
+    min-width: 255px;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+    background: #fff;
 }
