@@ -37,7 +37,8 @@
 div[class^="erp"] input[type="submit"],
 div[class^="erp"] input[type="button"],
 div[class^="erp"] input[type="reset"],
-div[class^="erp"] a.button {
+div[class^="erp"] a.button,
+.tablenav input[type="submit"] {
     display: inline-block;
     text-decoration: none;
     font-size: 13px;

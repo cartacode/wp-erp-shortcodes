@@ -4,18 +4,18 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
 ?>
 <div class="wrap erp erp-crm-customer erp-single-customer" id="wp-erp" v-cloak>
     <h2><?php _e( 'Contact #', 'erp' ); echo $customer->id; ?>
-        <a href="<?php echo add_query_arg( ['page' => 'erp-crm', 'section' => 'contacts'], admin_url('admin.php') ); ?>" id="erp-contact-list" class="add-new-h2"><?php _e( 'Back to Contact list', 'erp' ); ?></a>
+        <a href="<?php _e( home_url( '/crmdashboard/contacts ') ); ?>" id="erp-contact-list" class="add-new-h2"><?php _e( 'Back to Contact list', 'erp' ); ?></a>
 
         <?php if ( current_user_can( 'erp_crm_edit_contact', $customer->id ) || current_user_can( erp_crm_get_manager_role() ) ): ?>
             <span class="edit">
                 <a href="#" @click.prevent="editContact( 'contact', '<?php echo $customer->id; ?>', '<?php _e( 'Edit this contact', 'erp' ); ?>' )" data-id="<?php echo $customer->id; ?>" data-single_view="1" title="<?php _e( 'Edit this Contact', 'erp' ); ?>" class="add-new-h2"><?php _e( 'Edit this Contact', 'erp' ); ?></a>
             </span>
 
-            <?php if ( ! $customer->user_id && erp_crm_current_user_can_make_wp_user() ): ?>
+            <?php /* if ( ! $customer->user_id && erp_crm_current_user_can_make_wp_user() ): ?>
                 <span class="make-wp-user">
                     <a href="#" @click.prevent="makeWPUser( 'contact', '<?php echo $customer->id; ?>', '<?php _e( 'Make WP User', 'erp' ); ?>', '<?php echo $customer->email ?>' )" data-single_view="1" title="<?php _e( 'Make this contact as a WP User', 'erp' ); ?>" class="add-new-h2"><?php _e( 'Make WP User', 'erp' ); ?></a>
                 </span>
-            <?php endif ?>
+            <?php endif */ ?>
         <?php endif ?>
     </h2>
 

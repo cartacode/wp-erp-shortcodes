@@ -128,7 +128,7 @@ function erp_shortcode_body_class( $classes ) {
 	if( isset($post->post_content) && has_shortcode( $post->post_content, 'single-contact-view' ) ) {
 		$classes[] = 'js';
 	}
-	
+
 	return $classes;
 }
 add_filter( 'body_class', 'erp_shortcode_body_class' );
@@ -160,5 +160,7 @@ add_shortcode( 'single-contact-view', function() {
 	ob_end_clean();
 
 	init_contact_assets();
+
+	$template .= file_get_contents( dirname( __FILE__ ) . '/demo-modal.php' );
 	return $template;
 } );
