@@ -218,7 +218,7 @@ add_shortcode( 'crm_upcoming_schedules', function() {
 
 // show all contacts
 add_shortcode( 'view_all_contacts', function() {
-    wp_enqueue_style( 'w-all-contacts' );
+    wp_enqueue_style( 'contacts' );
 
     $contacts_count  = erp_crm_customer_get_status_count( 'contact' );
     $companies_count = erp_crm_customer_get_status_count( 'company' );
@@ -267,7 +267,7 @@ add_shortcode( 'view_all_contacts', function() {
 
 // show all companies created
 add_shortcode( 'view_all_companies', function() {
-    wp_enqueue_style( 'w-all-contacts' );
+    wp_enqueue_style( 'contacts' );
 
     $companies_count = erp_crm_customer_get_status_count( 'company' );
     

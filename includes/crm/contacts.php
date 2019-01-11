@@ -117,3 +117,26 @@ add_shortcode( 'contact-list-table', function() {
 
 	return $template;
 } );
+
+add_shortcode( 'single-contact-view', function() {
+	$id     = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
+
+	if ( !$id )
+		return $template;
+
+	wp_enqueue_style( 'single-contact' );
+
+	$customer = new WeDevs\ERP\CRM\Contact( $id );
+
+	$template = '';
+
+	ob_start();
+
+	include 'single-contact.php';
+
+	$template .= ob_get_contents();
+
+	ob_end_clean();
+
+	return $template;
+} );
