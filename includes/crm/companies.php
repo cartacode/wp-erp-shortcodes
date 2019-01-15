@@ -110,7 +110,7 @@ add_shortcode( 'company-list-table', function() {
             row-checkbox-name="company_id"
             action="erp-crm-get-contacts"
             :wpnonce="wpnonce"
-            page = "' . home_url( '/dashboard/companies' ) . '"
+            page = "' . home_url( '/crmdashboard/companies' ) . '"
             per-page="20"
             :fields=fields
             :item-row-actions=itemRowActions
@@ -159,7 +159,7 @@ add_shortcode( 'single-company-view', function() {
 
     ob_start();
 
-    include 'single-contact.php';
+    include 'single-company.php';
 
     $template .= ob_get_contents();
 
