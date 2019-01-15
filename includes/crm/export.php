@@ -2,6 +2,7 @@
 //export all records in csv file
 add_shortcode('show_all_export',function(){
     
+    
     $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
 
     $is_crm_activated = erp_is_module_active( 'crm' );
@@ -62,5 +63,6 @@ add_shortcode('show_all_export',function(){
             <input type="submit" name="export_all" value="Export" />
         </form>';
     return $html_7;
+
 });
 ?>
