@@ -56,6 +56,8 @@ add_shortcode( 'circle_list', function() {
         erp_get_js_template( WPERP_MODULES . '/crm/views/js-templates/new-subscriber-contact.php', 'erp-crm-assign-subscriber-contact' );
 	}
 
+	wp_enqueue_script( 'common' );
+
 	wp_enqueue_script( 'erp-crm' );
 	wp_localize_script( 'erp-crm', 'wpErpCrm', $localize_script );
 	
