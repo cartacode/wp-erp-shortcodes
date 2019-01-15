@@ -122,7 +122,7 @@ add_shortcode( 'contact-list-table', function() {
 	return $template;
 } );
 
-function erp_shortcode_body_class( $classes ) {
+add_filter( 'body_class', function ( $classes ) {
 	global $post;
 
 	if( isset($post->post_content) && has_shortcode( $post->post_content, 'single-contact-view' ) ) {
@@ -130,8 +130,7 @@ function erp_shortcode_body_class( $classes ) {
 	}
 
 	return $classes;
-}
-add_filter( 'body_class', 'erp_shortcode_body_class' );
+} );
 
 add_shortcode( 'single-contact-view', function() {
 	$id     = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;

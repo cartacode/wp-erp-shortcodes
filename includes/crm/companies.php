@@ -128,3 +128,45 @@ add_shortcode( 'company-list-table', function() {
 
 	return $template;
 } );
+
+add_filter( 'body_class', function( $classes ) {
+    global $post;
+
+    if( isset($post->post_content) && has_shortcode( $post->post_content, 'single-company-view' ) ) {
+        $classes[] = 'js';
+    }
+
+    return $classes;    
+} );
+
+add_shortcode( 'single-company-view', function() {
+    $id     = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
+
+    if ( !$id )
+        return $template;
+
+    if ( function_exists( 'erp_get_vue_component_template' ) ) {
+        erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/customer-newnote.php', 'erp-crm-new-note-template' );
+        erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/customer-log-activity.php', 'erp-crm-log-activity-template' );
+        erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/customer-email-note.php', 'erp-crm-email-note-template' );
+        erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/customer-schedule-note.php', 'erp-crm-schedule-note-template' );
+        erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/customer-tasks-note.php', 'erp-crm-tasks-note-template' );     
+    }
+
+    $customer = new WeDevs\ERP\CRM\Contact( $id );
+
+    $template = '';
+
+    ob_start();
+
+    include 'single-contact.php';
+
+    $template .= ob_get_contents();
+
+    ob_end_clean();
+
+    init_contact_assets();
+
+    $template .= file_get_contents( dirname( __FILE__ ) . '/demo-modal.php' );
+    return $template;
+} );
