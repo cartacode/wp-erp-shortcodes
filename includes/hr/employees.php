@@ -77,14 +77,10 @@ add_shortcode( 'employees-list-table', function() {
 wp_enqueue_script( 'erp-sweetalert' );
 wp_enqueue_script( 'wp-erp-hr' );
  wp_localize_script( 'wp-erp-hr', 'wpErpHr', $localize_script );     
-wp_enqueue_style( 'wp-color-picker' );
+wp_enqueue_style( 'erp-shortcode-styles' );
         wp_enqueue_style( 'erp-select2' );
-        wp_enqueue_style( 'erp-tiptip' );
-        wp_enqueue_style( 'erp-style' );
-    wp_enqueue_style( 'table-view' );
 
 
-    
 
     
   

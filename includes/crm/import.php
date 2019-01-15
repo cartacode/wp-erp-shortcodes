@@ -1,6 +1,7 @@
 <?php
 //show import export
 add_shortcode('show_all_import',function(){
+
     global $wpdb;
     $csv_file_path = site_url(). '/wp-content/plugins/wp-erp-shortcodes/sample_csv_contact-1.csv';
     
@@ -558,7 +559,7 @@ function erp_import_export_download_sample_action_1() {
                     if($counter != 0)
                     {
                         //check if email exists in database or not
-                        $query_2 = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."erp_peoples WHERE email = '".$emapData[0]."'" );
+                        $query_2 = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."erp_peoples WHERE email = '".$emapData[2]."'" );
 
                         if($query_2)
                         {
@@ -578,7 +579,7 @@ function erp_import_export_download_sample_action_1() {
                             //insert data into contact_subscriber table
                             if($group_id != 'select')
                             {
-                                $query_3 = "INSERT INTO ".$wpdb->prefix."erp_crm_contact_subscriber(`user_id`,`group_id`,`status`,`subscribe_at`,`unsubscribe_at`,`hash`) values('".$get_last_id."','".$group_id."','subscribe','".$date."','NULL','".md5($user_details->ID)."')";
+                                $query_3 = "INSERT INTO ".$wpdb->prefix."erp_crm_contact_subscriber(`user_id`,`group_id`,`status`,`subscribe_at`,`unsubscribe_at`,`hash`) values('".$get_last_id."','".$group_id."','subscribe','".$date."',NULL,'".md5($user_details->ID)."')";
                                 $wpdb->query($query_3);
                             }
                         }

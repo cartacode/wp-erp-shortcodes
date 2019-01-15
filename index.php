@@ -115,6 +115,7 @@ if ( is_plugin_active('wp-erp/wp-erp.php') ) {
     require_once( dirname( __FILE__ ) . '/includes/crm/activities.php' );
     require_once( dirname( __FILE__ ) . '/includes/crm/circles.php' );
     require_once( dirname( __FILE__ ) . '/includes/crm/schedules.php' );
+    require_once( dirname( __FILE__ ) . '/includes/crm/email_connect.php' );
   
     require_once( dirname( __FILE__ ) . '/includes/crm/import.php' );
     require_once( dirname( __FILE__ ) . '/includes/crm/export.php' );
