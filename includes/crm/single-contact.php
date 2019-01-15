@@ -1,3 +1,4 @@
+<!-- single contact/company view -->
 <?php
 $contact_tags = wp_get_object_terms( $customer->id, 'erp_crm_tag', array('orderby' => 'name', 'order' => 'ASC'));
 $contact_tags = wp_list_pluck($contact_tags, 'name');
