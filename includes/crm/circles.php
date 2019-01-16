@@ -53,7 +53,7 @@ add_shortcode( 'circle_list', function() {
 
 	if( function_exists( 'erp_get_js_template' ) ) {
 		erp_get_js_template( WPERP_MODULES . '/crm/views/js-templates/new-contact-group.php', 'erp-crm-new-contact-group' );
-        erp_get_js_template( WPERP_MODULES . '/crm/views/js-templates/new-subscriber-contact.php', 'erp-crm-assign-subscriber-contact' );
+        // erp_get_js_template( WPERP_MODULES . '/crm/views/js-templates/new-subscriber-contact.php', 'erp-crm-assign-subscriber-contact' );
 	}
 
 	wp_enqueue_script( 'common' );
