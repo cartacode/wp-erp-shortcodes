@@ -395,3 +395,12 @@ ul.erp-latest-contact-list li .details p.contact-stage {
     box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
     background: #fff;
 }
+
+.erp-email-campaign-single .legend table {
+    width: auto;
+}
+
+.erp-email-campaign-single .legend table td {
+    border-bottom: none;
+    padding: 1px 1px 6px;
+}
