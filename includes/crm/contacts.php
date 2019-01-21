@@ -94,6 +94,11 @@ add_shortcode( 'contact-list-table', function() {
 
 	$template .= '<advance-search :show-hide-segment="showHideSegment"></advance-search>';
 
+	$home_url = home_url( '/crmdashboard/contacts' );
+
+	if ( isset( $_GET['page'] ) && $_GET['page'] == 'crmdashboard' )
+		$home_url = add_query_arg( [ 'page' => 'crmdashboard' ], $home_url ); 
+
 	$template .= '
 		<vtable v-ref:vtable
 			wrapper-class="erp-crm-list-table-wrap"
@@ -102,7 +107,7 @@ add_shortcode( 'contact-list-table', function() {
 			row-checkbox-name="customer_id"
 			action="erp-crm-get-contacts"
 			:wpnonce="wpnonce"
-			page = "' . home_url( '/crmdashboard/contacts' ) . '"
+			page = "' . $home_url . '"
 			per-page="20"
 			:fields=fields
 			:item-row-actions=itemRowActions
