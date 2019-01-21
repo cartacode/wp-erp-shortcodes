@@ -20,7 +20,7 @@ add_shortcode( 'crm_dashboard_recently_added', function() {
             $life_stage = $contact_obj->get_life_stage();
 
             $template .= '<li><div class="avatar">' . $contact_obj->get_avatar(28) . '</div>';
-            $template .= '<div class="details"><p class="contact-name"><a href="' . $contact_obj->get_details_url() . '">' . $contact_obj->get_full_name() . '</a></p><p class="contact-stage">' . (isset( $crm_life_stages[ $life_stage ] ) ? $crm_life_stages[ $life_stage ] : '') . '</p>
+            $template .= '<div class="details"><p class="contact-name"><a href="' . home_url( '/crmdashboard/contacts/view-contact/?action=view&id=' . (int)$contact->id ) . '">' . $contact_obj->get_full_name() . '</a></p><p class="contact-stage">' . (isset( $crm_life_stages[ $life_stage ] ) ? $crm_life_stages[ $life_stage ] : '') . '</p>
                     </div>';
 
             $template .= '<span class="contact-created-time erp-tips" title="' . sprintf( '%s %s', __( 'Created on', 'erp' ), erp_format_date( $contact->created ) ) . '"><i class="fa fa-clock-o"></i></span></li>';
@@ -45,7 +45,7 @@ add_shortcode( 'crm_dashboard_recently_added', function() {
                 
             $template .= '<li><div class="avatar">' . $company_obj->get_avatar(28) . '</div>';
 
-            $template .= '<div class="details"><p class="contact-name"><a href="' . $company_obj->get_details_url() . '">' . $company_obj->get_full_name() . '</a></p><p class="contact-stage">' . (isset( $crm_life_stages[ $life_stage ] ) ? $crm_life_stages[ $life_stage ] : '') . '</p></div>';
+            $template .= '<div class="details"><p class="contact-name"><a href="' . home_url( '/crmdashboard/companies/view-company/?action=view&id=' . (int)$company->id ) . '">' . $company_obj->get_full_name() . '</a></p><p class="contact-stage">' . (isset( $crm_life_stages[ $life_stage ] ) ? $crm_life_stages[ $life_stage ] : '') . '</p></div>';
 
             $template .= '<span class="contact-created-time erp-tips" title="' . sprintf( '%s %s', __( 'Created on', 'erp' ), erp_format_date( $company->created ) ) . '"><i class="fa fa-clock-o"></i></span></li>';
 
@@ -243,7 +243,7 @@ add_shortcode( 'view_all_contacts', function() {
                                 }
 
                                 $template .= '<li>
-                                    <a href="' . add_query_arg( [ 'page' => 'erp-crm','section' => 'contacts', 'status' => $contact_key ], admin_url( 'admin.php' ) ) . '">
+                                    <a href="' . home_url( '/crmdashboard/contacts?page=crmdashboard&status=' . $contact_key ) . '">
                                         <i class="fa fa-square" aria-hidden="true"></i>&nbsp;';
 
                                             $singular = $contact_value['label'];
@@ -291,7 +291,7 @@ add_shortcode( 'view_all_companies', function() {
                                     continue;
                                 }
                                 $template .= '<li>
-                                    <a href="' . add_query_arg( [ 'page' => 'erp-crm', 'section' => 'companies', 'status' => $company_key ], admin_url( 'admin.php' ) ) . '">
+                                    <a href="' . home_url( '/crmdashboard/companies?page=crmdashboard&status=' . $company_key ) . '">
                                         <i class="fa fa-square" aria-hidden="true"></i>&nbsp;';
                                         
 
