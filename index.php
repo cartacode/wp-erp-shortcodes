@@ -124,3 +124,10 @@ if ( is_plugin_active('wp-erp/wp-erp.php') ) {
         require_once( dirname( __FILE__ ) . '/includes/crm/emarketing.php' );
     }
 }
+
+
+if ( !function_exists( 'is_admin_request' ) ) {
+    function is_admin_request() {
+        return ( strpos( $_SERVER['HTTP_REFERER'], 'admin.php' ) !== false ) || ( strpos( $_SERVER['HTTP_REFERER'], '/wp-admin' ) !== false );
+    }
+}

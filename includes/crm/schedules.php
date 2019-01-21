@@ -32,6 +32,12 @@ add_shortcode( 'schedule-calendar', function() {
 		erp_get_js_template( WPERP_MODULES . '/crm/views/js-templates/single-schedule-details.php', 'erp-crm-single-schedule-details' );
 		erp_get_js_template( WPERP_MODULES . '/crm/views/js-templates/customer-add-schedules.php', 'erp-crm-customer-schedules');
 	}
+	
+	wp_enqueue_style( 'erp-timepicker' );
+	wp_enqueue_script( 'erp-timepicker' );
+    wp_enqueue_script( 'underscore' );
+    wp_enqueue_script( 'erp-trix-editor' );
+    wp_enqueue_style( 'erp-trix-editor' );
 
 	wp_enqueue_script( 'erp-crm' );
 	wp_localize_script( 'erp-crm', 'wpErpCrm', $localize_script );
@@ -41,11 +47,6 @@ add_shortcode( 'schedule-calendar', function() {
 	wp_enqueue_style( 'erp-fullcalendar' );
 	wp_enqueue_script( 'erp-fullcalendar' );
 	wp_enqueue_style( 'erp-select2' );
-	wp_enqueue_style( 'erp-timepicker' );
-	wp_enqueue_script( 'erp-timepicker' );
-    wp_enqueue_script( 'underscore' );
-    wp_enqueue_script( 'erp-trix-editor' );
-    wp_enqueue_style( 'erp-trix-editor' );
 
 	wp_enqueue_style( 'erp-shortcode-styles' );
 
