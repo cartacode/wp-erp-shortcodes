@@ -11,6 +11,10 @@
     width: auto;
 }
 
+table {
+    margin-bottom: 0px;
+}
+
 /* table nav */
 .tablenav .actions select {
     font-size: 14px;
@@ -62,8 +66,8 @@ div[class*="erp"] a.button,
     text-transform: capitalize;
 }
 
-.elementor-shortcode table thead,
-.elementor-shortcode table tfoot {
+.elementor-shortcode table.wp-list-table thead,
+.elementor-shortcode table.wp-list-table tfoot {
     background-color: #184f7e;
 }
 
