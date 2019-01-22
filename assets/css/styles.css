@@ -43,6 +43,7 @@ div[class*="erp"] input[type="submit"],
 div[class*="erp"] input[type="button"],
 div[class*="erp"] input[type="reset"],
 div[class*="erp"] a.button,
+div[class*="erp"] button,
 .tablenav input[type="submit"] {
     display: inline-block;
     text-decoration: none;
