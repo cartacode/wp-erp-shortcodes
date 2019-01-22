@@ -144,6 +144,14 @@ add_shortcode( 'single-contact-view', function() {
 		return $template;
 
 	if ( function_exists( 'erp_get_vue_component_template' ) ) {
+        erp_get_js_template( WPERP_MODULES . '/crm/views/js-templates/new-assign-company.php', 'erp-crm-new-assign-company' );
+        erp_get_js_template( WPERP_MODULES . '/crm/views/js-templates/customer-social.php', 'erp-crm-customer-social' );
+        erp_get_js_template( WPERP_MODULES . '/crm/views/js-templates/customer-feed-edit.php', 'erp-crm-customer-edit-feed' );
+        erp_get_js_template( WPERP_MODULES . '/crm/views/js-templates/new-subscriber-contact.php', 'erp-crm-assign-subscriber-contact' );
+        erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/timeline-new-note.php', 'erp-crm-timeline-feed-new-note' );
+        erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/timeline-email.php', 'erp-crm-timeline-feed-email' );
+        erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/timeline-log-activity.php', 'erp-crm-timeline-feed-log-activity' );
+        erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/timeline-task.php', 'erp-crm-timeline-feed-task-note' );
 		erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/customer-newnote.php', 'erp-crm-new-note-template' );
 		erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/customer-log-activity.php', 'erp-crm-log-activity-template' );
 		erp_get_vue_component_template( WPERP_MODULES . '/crm/views/js-templates/customer-email-note.php', 'erp-crm-email-note-template' );
