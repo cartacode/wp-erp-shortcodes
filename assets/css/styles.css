@@ -409,3 +409,9 @@ ul.erp-latest-contact-list li .details p.contact-stage {
     border-bottom: none;
     padding: 1px 1px 6px;
 }
+
+div#wp-erp select,
+div#wp-erp form select,
+div#wp-erp form input[type="text"] {
+    width: auto;
+}
