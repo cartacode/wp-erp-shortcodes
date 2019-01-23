@@ -7,7 +7,10 @@
     color: #0073aa;
 }
 
-.elementor-shortcode ul.erp-list {
+
+.elementor-shortcode ul.erp-list,
+.elementor-shortcode select,
+.elementor-shortcode input[type="text"] {
     width: auto;
 }
 
@@ -408,10 +411,4 @@ ul.erp-latest-contact-list li .details p.contact-stage {
 .erp-email-campaign-single .legend table td {
     border-bottom: none;
     padding: 1px 1px 6px;
-}
-
-div#wp-erp select,
-div#wp-erp form select,
-div#wp-erp form input[type="text"] {
-    width: auto;
 }
