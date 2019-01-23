@@ -559,7 +559,7 @@ function erp_import_export_download_sample_action_1() {
                     if($counter != 0)
                     {
                         //check if email exists in database or not
-                        $query_2 = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."erp_peoples WHERE email = '".$emapData[2]."'" );
+                        $query_2 = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."erp_peoples WHERE email = '".$emapData[$email]." AND contact_owner= '".$user_details->ID."' " );
 
                         if($query_2)
                         {

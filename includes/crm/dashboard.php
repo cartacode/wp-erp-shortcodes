@@ -342,9 +342,60 @@ add_shortcode( 'show_my_schedules', function() {
         .fc-day-grid-event .fc-content {
             white-space: normal;
         }
+         .popup-overlay{
+          visibility:hidden;
+          position:absolute;
+          background:#ffffff;
+          border:3px solid #666666;
+          width:400px;
+          height:100%;
+          left:-37%; 
+          top:10px;
+          z-index:999999;
+        }
+        .popup-overlay.active{
+          /*displays pop-up when "active" class is present*/
+          visibility:visible;
+          text-align:center;
+        }
+        .below_section,
+        {
+            padding:10px;
+        }
+        .inner_section{
+            padding:5px;
+        }
+        .popup-content {
+          /*Hides pop-up content when there is no "active" class */
+         visibility:hidden;
+        }
+
+        .popup-content.active {
+          /*Shows pop-up content when "active" class is present */
+          visibility:visible;
+        }
+        @media only screen and (max-width: 600px) {
+         .popup-overlay{
+          visibility:hidden;
+          position:absolute;
+          background:#ffffff;
+          border:3px solid #666666;
+          width:250px;
+          height:100%;
+          left:10%; 
+          top:10px;
+          z-index:999999;
+        }
+
     </style>
 
     <div id="erp-crm-calendar"></div>';
+    $template .= '<div class="popup-overlay">
+   <div class="popup-content">
+      <h2></h2><hr/>
+      <div class="below_section"></div>
+      <button class="close">Close</button></div>
+    </div>';
 
     $template .= "
     <script>
@@ -358,9 +409,69 @@ add_shortcode( 'show_my_schedules', function() {
                 editable: false,
                 eventLimit: true,
                 events: " . json_encode( $schedules_data ) . ",
+               eventClick: function(calEvent, jsEvent, view) {
+                var ajaxurl= '".admin_url( 'admin-ajax.php' ) ."';
+                var scheduleId = calEvent.schedule.id;
+                var title      = ( calEvent.schedule.extra.schedule_title ) ? calEvent.schedule.extra.schedule_title : '". _e( '', 'erp' ) ."';
+                 if ( 'tasks' === calEvent.schedule.type ) {
+                    title = calEvent.schedule.extra.task_title
+                 }
+                 jQuery('.popup-content h2').html(title);
+                 jQuery.ajax({
+                    type: 'POST',
+                    url: ajaxurl,
+                    data: {
+                            'action':'load_more_companies_first_filter',
+                            'scheduleId': scheduleId,
+                            'title':title
+                        },
+                        success:function(response) {
+                            //console.log(data);
+                            //alert(response);
+                            jQuery('.below_section').html(response);
+                        },
+                        error: function(errorThrown){
+                            //console.log(errorThrown);
+                            //alert('fail');
+                        }
+                });
+                     
+                  jQuery('.popup-overlay, .popup-content').addClass('active');
+                 
+                jQuery('.close, .popup-overlay').on('click', function(){
+                  jQuery('.popup-overlay, .popup-content').removeClass('active');
+                });
+                        
+                }
             });
         });
     </script>";
 
     return $template;
 } );
+
+add_action( 'wp_ajax_load_more_companies_first_filter', 'load_more_companies_first_filter' );
+add_action( 'wp_ajax_nopriv_load_more_companies_first_filter', 'load_more_companies_first_filter' );
+function load_more_companies_first_filter() {
+    global $wpdb;
+    extract($_POST);
+    $scheduleId = $_REQUEST['scheduleId'];
+    $title = $_REQUEST['title'];
+
+    $get_data = $wpdb->get_results("SELECT type,message,log_type,start_date,end_date,first_name,last_name FROM ".$wpdb->prefix."erp_crm_customer_activities as t1 INNER JOIN ".$wpdb->prefix."erp_peoples as t2 ON t1.user_id = t2.id WHERE  t1.id = '".$scheduleId."'");
+    
+    foreach($get_data as $get_the_data)
+    {
+        $s = $get_the_data->start_date;
+        $s_1 = $get_the_data->end_date;
+        $dt = new DateTime($s);
+        $dt_1 = new DateTime($s_1);
+
+        $date   = $dt->format('M d');
+        $time   = $dt->format('h:i a');
+        $time_1 = $dt_1->format('h:i a');
+
+        echo '<div class="inner_section">You logged a '.$get_the_data->log_type." for ".'<strong>'.$get_the_data->first_name.''.$get_the_data->last_name.'</strong>'.'</div><hr /><div class="inner_section"><span class="email_subject"><i class="fa fa-bookmark"></i> '.$title.' | </span><span class="header"><i class="fa fa-calendar-check-o"></i> '.$date.' at ' .$time.' to '.$time_1.'</span></div><hr/><div class="inner_section">'.$get_the_data->message.'</div>';   
+    }
+    die();
+}
