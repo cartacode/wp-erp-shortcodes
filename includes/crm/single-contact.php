@@ -105,6 +105,7 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
                                             ?>
                                             <?php if ( $crm_user_id && ! empty( $user ) ): ?>
                                                 <?php echo erp_crm_get_avatar( $crm_user_id, $user_email, $crm_user_id, 32 ); ?>
+                                                
                                                 <div class="user-details">
                                                     <a href="#"><?php echo get_the_author_meta( 'display_name', $crm_user_id ); ?></a>
                                                     <span><?php echo  get_the_author_meta( 'user_email', $crm_user_id ); ?></span>
