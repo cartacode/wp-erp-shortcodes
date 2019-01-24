@@ -2,31 +2,7 @@
 add_shortcode( 'schedule-calendar', function() {
 	$tab = 'own';
 	
-	$localize_script = apply_filters( 'erp_crm_localize_script', array(
-		'ajaxurl'               => admin_url( 'admin-ajax.php' ),
-		'nonce'                 => wp_create_nonce( 'wp-erp-crm-nonce' ),
-		'popup'                 => array(
-			'customer_title'         => __( 'Add New Customer', 'erp' ),
-			'customer_update_title'  => __( 'Edit Customer', 'erp' ),
-			'customer_social_title'  => __( 'Customer Social Profile', 'erp' ),
-			'customer_assign_group'  => __( 'Add to Contact groups', 'erp' ),
-		),
-		'add_submit'                  => __( 'Add New', 'erp' ),
-		'update_submit'               => __( 'Update', 'erp' ),
-		'save_submit'                 => __( 'Save', 'erp' ),
-		'customer_upload_photo'       => __( 'Upload Photo', 'erp' ),
-		'customer_set_photo'          => __( 'Set Photo', 'erp' ),
-		'confirm'                     => __( 'Are you sure?', 'erp' ),
-		'delConfirmCustomer'          => __( 'Are you sure to delete?', 'erp' ),
-		'delConfirm'                  => __( 'Are you sure to delete this?', 'erp' ),
-		'checkedConfirm'              => __( 'Select atleast one group', 'erp' ),
-		'contact_exit'                => __( 'Already exists as a contact or company', 'erp' ),
-		'make_contact_text'           => __( 'This user already exists! Do you want to make this user as a', 'erp' ),
-		'wpuser_make_contact_text'    => __( 'This is wp user! Do you want to create this user as a', 'erp' ),
-		'create_contact_text'         => __( 'Create new', 'erp' ),
-		'current_user_id'             => get_current_user_id(),
-		'successfully_created_wpuser' => __( 'WP User created successfully', 'erp' ),
-	) );
+	$localize_script = get_default_localize_script();
 
 	if ( function_exists( 'erp_get_js_template' ) ) {
 		erp_get_js_template( WPERP_MODULES . '/crm/views/js-templates/single-schedule-details.php', 'erp-crm-single-schedule-details' );
