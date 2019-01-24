@@ -66,9 +66,7 @@ add_shortcode( 'new-email-campaign', function() {
 
     $action = isset( $_GET['action'] ) ? $_GET['action'] : 'list';
 
-    if ( $action == 'edit' ) {
-        $campaign_id = !empty( $_GET['id'] ) ? absint( $_GET['id'] ) : 0;
-    }
+    $campaign_id = !empty( $_GET['id'] ) ? absint( $_GET['id'] ) : 0;
 
     $ecampGlobal = [
         'ajaxurl'   => admin_url( 'admin-ajax.php' ),
