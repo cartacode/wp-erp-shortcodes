@@ -1,5 +1,39 @@
 <?php
 
+function import_dahsboard_crmjs() {
+    $localize_script = apply_filters( 'erp_crm_localize_script', array(
+        'ajaxurl'               => admin_url( 'admin-ajax.php' ),
+        'nonce'                 => wp_create_nonce( 'wp-erp-crm-nonce' ),
+        'popup'                 => array(
+            'customer_title'         => __( 'Add New Customer', 'erp' ),
+            'customer_update_title'  => __( 'Edit Customer', 'erp' ),
+            'customer_social_title'  => __( 'Customer Social Profile', 'erp' ),
+            'customer_assign_group'  => __( 'Add to Contact groups', 'erp' ),
+        ),
+        'add_submit'                  => __( 'Add New', 'erp' ),
+        'update_submit'               => __( 'Update', 'erp' ),
+        'save_submit'                 => __( 'Save', 'erp' ),
+        'customer_upload_photo'       => __( 'Upload Photo', 'erp' ),
+        'customer_set_photo'          => __( 'Set Photo', 'erp' ),
+        'confirm'                     => __( 'Are you sure?', 'erp' ),
+        'delConfirmCustomer'          => __( 'Are you sure to delete?', 'erp' ),
+        'delConfirm'                  => __( 'Are you sure to delete this?', 'erp' ),
+        'checkedConfirm'              => __( 'Select atleast one group', 'erp' ),
+        'contact_exit'                => __( 'Already exists as a contact or company', 'erp' ),
+        'make_contact_text'           => __( 'This user already exists! Do you want to make this user as a', 'erp' ),
+        'wpuser_make_contact_text'    => __( 'This is wp user! Do you want to create this user as a', 'erp' ),
+        'create_contact_text'         => __( 'Create new', 'erp' ),
+        'current_user_id'             => get_current_user_id(),
+        'successfully_created_wpuser' => __( 'WP User created successfully', 'erp' ),
+    ) );
+
+    wp_enqueue_script( 'erp-tiptip' );
+    wp_enqueue_style( 'erp-tiptip' );
+
+    wp_localize_script( 'erp-crm', 'wpErpCrm', $localize_script );
+    wp_enqueue_script( 'erp-crm' );
+}
+
 // recently added contacts or companies
 add_shortcode( 'crm_dashboard_recently_added', function() {
     wp_enqueue_style( 'erp-shortcode-styles' );
@@ -68,6 +102,7 @@ add_shortcode( 'crm_dashboard_total_inbound_emails', function() {
 
 // todays' schedules
 add_shortcode( 'crm_todays_schedules', function() {
+    import_dahsboard_crmjs();
     wp_enqueue_style( 'erp-shortcode-styles' );
 
 	$todays_schedules = erp_crm_get_todays_schedules_activity( get_current_user_id() );
@@ -75,6 +110,10 @@ add_shortcode( 'crm_todays_schedules', function() {
    	$template = '';
 
     if ( $todays_schedules ):
+
+        if( function_exists( 'erp_get_js_template' ) ) {
+            erp_get_js_template( WPERP_MODULES . '/crm/views/js-templates/single-schedule-details.php', 'erp-crm-single-schedule-details' );
+        }
 
 	    $template .= '<ul class="erp-list list-two-side list-sep erp-crm-dashbaord-todays-schedules">';
 
@@ -162,11 +201,14 @@ add_shortcode( 'crm_todays_schedules', function() {
 
     endif;
 
+    $template .= file_get_contents( dirname( __FILE__ ) . '/demo-modal.php' );
+
     return $template;
 } );
 
 // upcoming schedules
 add_shortcode( 'crm_upcoming_schedules', function() {
+    import_dahsboard_crmjs();
     wp_enqueue_style( 'erp-shortcode-styles' );
 
 	$upcoming_schedules = erp_crm_get_next_seven_day_schedules_activities( get_current_user_id() );
@@ -174,6 +216,11 @@ add_shortcode( 'crm_upcoming_schedules', function() {
 	$template = '';
 
     if ( $upcoming_schedules ): 
+
+        if( function_exists( 'erp_get_js_template' ) ) {
+            erp_get_js_template( WPERP_MODULES . '/crm/views/js-templates/single-schedule-details.php', 'erp-crm-single-schedule-details' );
+        }
+
         $template .= '<ul class="erp-list list-two-side list-sep erp-crm-dashbaord-upcoming-schedules">';
 
         foreach ( $upcoming_schedules as $key => $schedule ) : 
@@ -212,6 +259,8 @@ add_shortcode( 'crm_upcoming_schedules', function() {
         $template .= 'No schedules found';
 
     endif;
+
+    $template .= file_get_contents( dirname( __FILE__ ) . '/demo-modal.php' );
 
     return $template;
 } );
