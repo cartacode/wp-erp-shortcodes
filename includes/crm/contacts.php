@@ -54,8 +54,15 @@ add_shortcode( 'contact-list-table', function() {
 
 	$template .= '<div class="wrap erp-crm-customer erp-crm-customer-listing" id="wp-erp" v-cloak>';
 
-	if ( current_user_can( 'erp_crm_add_contact' ) )
-		$template .= '<a href="#" @click.prevent="addContact( \'contact\', \'Add New Contact\' )" id="erp-customer-new" class="erp-contact-new add-new-h2">Add New Contact</a>';
+	if ( current_user_can( 'erp_crm_add_contact' ) ) {
+		$template .= '<h2 class="wp-erp-shortcode-title">
+			Contacts
+				<a href="#" @click.prevent="addContact( \'contact\', \'Add New Contact\' )" id="erp-customer-new" class="erp-contact-new add-new-h2">
+					<i class="fa fa-plus" aria-hidden="true"></i> <span>Add New Contact</span>
+				</a>
+			</h2>
+		';
+	}
 
 	$template .= '<advance-search :show-hide-segment="showHideSegment"></advance-search>';
 

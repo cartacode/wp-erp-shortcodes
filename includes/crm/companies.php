@@ -62,8 +62,16 @@ add_shortcode( 'company-list-table', function() {
 
 	$template .= '<div class="wrap erp-crm-customer erp-crm-customer-listing" id="wp-erp">';
 
-    if ( current_user_can( 'erp_crm_add_contact' ) )
-        $template .= '<a href="#" @click.prevent="addContact( \'company\', \'Add New Company\' )" id="erp-company-new" class="erp-contact-new add-new-h2">Add New Company</a>';
+    if ( current_user_can( 'erp_crm_add_contact' ) ) {
+
+        $template .= '<h2 class="wp-erp-shortcode-title">
+            Companies
+                <a href="#" @click.prevent="addContact( \'company\', \'Add New company\' )" id="erp-company-new" class="erp-contact-new add-new-h2">
+                    <i class="fa fa-plus" aria-hidden="true"></i> <span>Add New Company</span>
+                </a>
+            </h2>
+        ';
+    }
 
     $template .= '<advance-search :show-hide-segment="showHideSegment"></advance-search>';
 

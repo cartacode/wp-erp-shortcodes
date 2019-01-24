@@ -7,11 +7,44 @@
     color: #0073aa;
 }
 
-
 .elementor-shortcode ul.erp-list,
 .elementor-shortcode select,
 .elementor-shortcode input[type="text"] {
     width: auto;
+}
+
+.elementor-shortcode .erp-email-campaign div[id^="editor-step-"] input[type="text"] {
+    width: 100%;
+}
+
+.elementor-shortcode h2.wp-erp-shortcode-title {
+    color: #444444;
+    font-family: "Roboto", Sans-serif;
+    font-size: 24px;
+    font-weight: normal;
+    display: flex;
+}
+
+.elementor-shortcode h2.wp-erp-shortcode-title a.add-new-h2 {
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+    padding: 15px 30px;
+    display: inline-block;
+    line-height: 1;
+    text-align: center;
+    transition: all 0.5s;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #444444;
+}
+
+.elementor-shortcode h2.wp-erp-shortcode-title a:hover {
+    background-color: #444444;
+    color: #fff;
+}
+
+.elementor-shortcode h2.wp-erp-shortcode-title a:first-child {
+    margin-left: auto;
 }
 
 table {
@@ -311,7 +344,37 @@ ul.erp-latest-contact-list li .details p.contact-stage {
     max-width: 70px;
 }
 
-#erp-email-campaign-edit .ecamp-page-title button,
+#erp-email-campaign-edit .ecamp-page-title {
+    line-height: 46px;
+}
+
+#erp-email-campaign-edit .ecamp-page-title button {
+    border-style: solid;
+    border-width: 1px 1px 1px 1px;
+    border-color: #7a7a7a;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    color: #444;
+    background-color: #eee;
+    border-radius: 0 0 0 0;
+    font-weight: 500;
+    padding: 15px 30px;
+    text-align: center;
+    transition: all .5s;
+    height: auto;
+    line-height: 1;
+    width: 230px;
+}
+
+#erp-email-campaign-edit .ecamp-page-title button i.fa {
+    float: left;
+}
+
+#erp-email-campaign-edit .ecamp-page-title button:hover {
+    background-color: #444;
+    color: #fff;
+}
+
 #erp-email-campaign-edit .erp-grid-container+p button,
 #erp-email-campaign-edit #customizer-controls button {
     color: #555;
