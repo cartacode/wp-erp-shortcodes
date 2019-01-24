@@ -282,5 +282,5 @@
 		echo 'No Calendar Found';
 	}
 		});
-		add_shortcode ('avatarnav', 'erp_crm_get_avatar')
+		
 	?>

@@ -475,3 +475,4 @@ function load_more_companies_first_filter() {
     }
     die();
 }
+ 
