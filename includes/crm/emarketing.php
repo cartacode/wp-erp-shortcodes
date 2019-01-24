@@ -131,7 +131,7 @@ add_shortcode( 'new-email-campaign', function() {
                     <i class="fa fa-eye"></i> {{ i18n.previewTemplate }}
                 </button>
                 <button class="button" :disabled="isPreviewBtnDisabled" v-on:click="sendPreviewEmail">
-                    <i class="fa fa-paper-plane-o"></i> {{ i18n.sendPreview }}
+                    <i class="fa fa-paper-plane"></i> {{ i18n.sendPreview }}
                 </button>
             </span>
         </h2>
