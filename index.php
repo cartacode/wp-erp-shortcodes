@@ -179,3 +179,9 @@ if ( !function_exists( 'get_default_contact_actvity_localize' ) ) {
         ] );
     }
 }
+
+add_shortcode( 'current-user-avatar', function() {
+    $employee = new \WeDevs\ERP\HRM\Employee( get_current_user_id() );
+    
+    return $employee->get_avatar();
+} );
