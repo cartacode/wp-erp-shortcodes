@@ -193,6 +193,17 @@ add_shortcode( 'current-user-avatar', function( $atts ) {
     <div class="current-user-avatar">
         <?php _e( $employee->get_avatar( $size ) ); ?>
     </div>
+
+    <style type="text/css">
+    /* avatar in nav */
+    .current-user-avatar {
+        text-align: center;
+    }
+
+    .current-user-avatar img {
+        border-radius: 50%;
+    }
+    </style>
 <?php
     $template = ob_get_contents();
     ob_end_clean();
