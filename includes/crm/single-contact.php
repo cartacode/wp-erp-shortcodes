@@ -188,8 +188,8 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
 
                     <contact-assign-group
                         :id="<?php echo $customer->id; ?>"
-                        add-button-txt="<?php _e( 'Assign Contact Groups', 'erp' ) ?>"
-                        title="<?php _e( 'Contact Group', 'erp' ); ?>"
+                        add-button-txt="<?php _e( 'Assign a Circle', 'erp' ) ?>"
+                        title="<?php _e( 'Circle', 'erp' ); ?>"
                         is-permitted="<?php echo current_user_can( 'erp_crm_edit_contact', $customer->id ); ?>"
                     ></contact-assign-group>
 

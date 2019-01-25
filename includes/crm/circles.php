@@ -48,7 +48,7 @@ add_shortcode( 'circle_list', function() {
 	$template .= '<h2>';
 
     if ( current_user_can( 'erp_crm_create_groups' ) )
-        $template .= '<a href="#" id="erp-new-contact-group" class="erp-new-contact-group add-new-h2" title="Add New Contact Group">Add New Contact Group</a>';
+        $template .= '<a href="#" id="erp-new-contact-group" class="erp-new-contact-group add-new-h2" title="Add New Circle">Add New Circle</a>';
 
     // $template .= '<a href="' . add_query_arg( [ 'page'=>'erp-crm', 'section' => 'contact-groups', 'groupaction' => 'view-subscriber' ], home_url('dashboard/circles') ) . '" class="add-new-h2" title="View all subscriber contact">View all subscriber</a>';
     
@@ -66,7 +66,7 @@ add_shortcode( 'circle_list', function() {
 					
 	                $customer_table = new \WeDevs\ERP\CRM\Contact_Group_List_Table();
 	                $customer_table->prepare_items();
-	                $customer_table->search_box( __( 'Search Contact Group', 'erp' ), 'erp-crm-contact-group-search' );
+	                $customer_table->search_box( __( 'Search Circles', 'erp' ), 'erp-crm-contact-group-search' );
 	                $customer_table->views();
 
 	                $customer_table->display();
