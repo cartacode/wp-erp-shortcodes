@@ -180,8 +180,22 @@ if ( !function_exists( 'get_default_contact_actvity_localize' ) ) {
     }
 }
 
-add_shortcode( 'current-user-avatar', function() {
+add_shortcode( 'current-user-avatar', function( $atts ) {
+    extract(shortcode_atts(array(
+        'size' => 32
+    ), $atts));
+
     $employee = new \WeDevs\ERP\HRM\Employee( get_current_user_id() );
-    
-    return $employee->get_avatar();
+
+    $template = '';
+    ob_start();
+?>
+    <div class="current-user-avatar">
+        <?php $employee->get_avatar( $size ); ?>
+    </div>
+<?php
+    $template = ob_get_contents();
+    ob_end_clean();
+
+    return $template;
 } );

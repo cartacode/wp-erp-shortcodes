@@ -475,3 +475,12 @@ ul.erp-latest-contact-list li .details p.contact-stage {
     border-bottom: none;
     padding: 1px 1px 6px;
 }
+
+/* avatar in nav */
+.current-user-avatar {
+    text-align: center;
+}
+
+.current-user-avatar img {
+    border-radius: 50%;
+}
