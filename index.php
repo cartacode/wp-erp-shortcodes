@@ -191,7 +191,7 @@ add_shortcode( 'current-user-avatar', function( $atts ) {
     ob_start();
 ?>
     <div class="current-user-avatar">
-        <?php $employee->get_avatar( $size ); ?>
+        <?php _e( $employee->get_avatar( $size ) ); ?>
     </div>
 <?php
     $template = ob_get_contents();
