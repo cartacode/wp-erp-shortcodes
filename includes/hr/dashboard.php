@@ -207,8 +207,9 @@
 	    wp_enqueue_style( 'erp-fullcalendar' );
 	    
 	    // $user_id        = get_current_user_id();
-		$user_id = get_user_meta( get_current_user_id(), 'created_by', true );
-		
+		$owner_id = get_user_meta( get_current_user_id(), 'created_by', true );
+		$user_id = user_can( $owner_id, 'administrator' ) ? get_current_user_id() : $owner_id;
+
 	    $leave_requests = erp_hr_get_calendar_leave_events( false, $user_id, false );
 	    $holidays       = erp_array_to_object( \WeDevs\ERP\HRM\Models\Leave_Holiday::all()->toArray() );
 	    $events         = [];
