@@ -6,7 +6,7 @@ add_shortcode( 'employees-list-table', function() {
        require_once( ABSPATH . 'wp-admin/includes/class-wp-screen.php' );
        require_once( ABSPATH . 'wp-admin/includes/template.php' );
    }
-     wp_enqueue_media();
+    wp_enqueue_media();
        
     $localize_script = apply_filters( 'erp_hr_localize_script', array(
             'nonce'                  => wp_create_nonce( 'wp-erp-hr-nonce' ),
@@ -59,7 +59,7 @@ add_shortcode( 'employees-list-table', function() {
         ) );
 
     
-   wp_localize_script( 'erp-vue-table', 'wpVueTable', [
+    wp_localize_script( 'erp-vue-table', 'wpVueTable', [
         'ajaxurl' => admin_url( 'admin-ajax.php' ),
         'nonce'   => wp_create_nonce( 'wp-erp-vue-table' )
     ] );
@@ -72,13 +72,13 @@ add_shortcode( 'employees-list-table', function() {
     $localize_script['employee_empty'] = $employee->to_array();
 
  
-   wp_enqueue_script( 'erp-tiptip' );
-        wp_enqueue_style( 'erp-sweetalert' );
-wp_enqueue_script( 'erp-sweetalert' );
-wp_enqueue_script( 'wp-erp-hr' );
- wp_localize_script( 'wp-erp-hr', 'wpErpHr', $localize_script );     
-wp_enqueue_style( 'erp-shortcode-styles' );
-        wp_enqueue_style( 'erp-select2' );
+    wp_enqueue_script( 'erp-tiptip' );
+    wp_enqueue_style( 'erp-sweetalert' );
+    wp_enqueue_script( 'erp-sweetalert' );
+    wp_enqueue_script( 'wp-erp-hr' );
+    wp_localize_script( 'wp-erp-hr', 'wpErpHr', $localize_script );     
+    wp_enqueue_style( 'erp-shortcode-styles' );
+    wp_enqueue_style( 'erp-select2' );
 
 
 
