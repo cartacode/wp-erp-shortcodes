@@ -10,7 +10,14 @@
 														->leftJoin( $wpdb->users, $employee_tbl . '.user_id', '=', $wpdb->users . '.ID' );
 
 			$tmp_employee_id_arr = array();
+			$owner_id = get_user_meta( get_current_user_id(), 'created_by', true );
+
 			foreach ( $employees->get()->toArray() as $t_employee) {
+                if ( !user_can( $owner_id, 'administrator' ) ) {
+                    if ( get_user_meta( $t_employee['user_id'], 'created_by', true ) == $owner_id )
+                        array_push( $tmp_employee_id_arr, $t_employee['user_id'] );
+                }
+
 				if ( get_user_meta( $t_employee['user_id'], 'created_by', true ) == get_current_user_id() )
 					array_push( $tmp_employee_id_arr, $t_employee['user_id'] );
 			}
@@ -196,12 +203,12 @@
 	});
 	//shortcode to show calendar
 	add_shortcode('crm_calendar_view',function(){
-	if ( current_user_can( 'administrator' ) )
-    {
 		wp_enqueue_script( 'erp-js' );
 	    wp_enqueue_style( 'erp-fullcalendar' );
 	    
-	    $user_id        = get_current_user_id();
+	    // $user_id        = get_current_user_id();
+		$user_id = get_user_meta( get_current_user_id(), 'created_by', true );
+		
 	    $leave_requests = erp_hr_get_calendar_leave_events( false, $user_id, false );
 	    $holidays       = erp_array_to_object( \WeDevs\ERP\HRM\Models\Leave_Holiday::all()->toArray() );
 	    $events         = [];
@@ -276,11 +283,6 @@
 		    </script>";
 
 	    return $template;
-	}
-	else
-	{
-		echo 'No Calendar Found';
-	}
-		});
+	});
 		
 	?>
