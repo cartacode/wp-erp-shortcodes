@@ -1,11 +1,14 @@
 <?php
 add_shortcode( 'employees-list-table', function() {
-   if( ! is_admin() ){
-       require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
-       require_once( ABSPATH . 'wp-admin/includes/screen.php' );
-       require_once( ABSPATH . 'wp-admin/includes/class-wp-screen.php' );
-       require_once( ABSPATH . 'wp-admin/includes/template.php' );
-   }
+    if( ! is_admin() ){
+        require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+        require_once( ABSPATH . 'wp-admin/includes/screen.php' );
+        require_once( ABSPATH . 'wp-admin/includes/class-wp-screen.php' );
+        require_once( ABSPATH . 'wp-admin/includes/template.php' );
+    }
+
+    wp_list_table_pagination();
+    
     wp_enqueue_media();
        
     $localize_script = apply_filters( 'erp_hr_localize_script', array(

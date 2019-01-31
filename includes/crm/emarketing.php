@@ -12,16 +12,7 @@ add_shortcode( 'email-campaign-list', function() {
 	   require_once( ABSPATH . 'wp-admin/includes/template.php' );
 	}
 
-    if(!isset($_REQUEST['paged'])) {
-        $_REQUEST['paged'] = explode('/page/', $_SERVER['REQUEST_URI'], 2);
-        if(isset($_REQUEST['paged'][1])) list($_REQUEST['paged'],) = explode('/', $_REQUEST['paged'][1], 2);
-        if(isset($_REQUEST['paged']) and $_REQUEST['paged'] != '') {
-            $_REQUEST['paged'] = intval($_REQUEST['paged']);
-            if($_REQUEST['paged'] < 2) $_REQUEST['paged'] = '';
-        } else {
-            $_REQUEST['paged'] = '';
-        }
-    }
+    wp_list_table_pagination();
 
 	$campaign_table = new WeDevs\ERP\CRM\EmailCampaign\Campaign_List_Table();
 
