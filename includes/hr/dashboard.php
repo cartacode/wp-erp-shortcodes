@@ -228,7 +228,7 @@
 	            'title'     => $event_label,
 	            'start'     => $leave_request->start_date,
 	            'end'       => $leave_request->end_date,
-	            'url'       => erp_hr_url_single_employee( $leave_request->user_id, 'leave' ),
+	            // 'url'       => erp_hr_url_single_employee( $leave_request->user_id, 'leave' ),
 	            'color'     => $leave_request->color,
 	        );
 	    }
@@ -275,9 +275,9 @@
 		                eventLimit: true,
 		                events: " . json_encode( $schedules_data ) . ",
 		                eventRender: function(event, element, calEvent) {
-		                if ( event.holiday ) {
-		                    element.find('.fc-content').find('.fc-title').css({ 'top':'0px', 'left' : '3px', 'fontSize' : '13px', 'padding':'2px' });
-		                };
+			                if ( event.holiday ) {
+			                    element.find('.fc-content').find('.fc-title').css({ 'top':'0px', 'left' : '3px', 'fontSize' : '13px', 'padding':'2px' });
+			                };
 		            	},
 		            });
 		        });
