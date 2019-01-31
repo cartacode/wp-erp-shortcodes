@@ -94,7 +94,6 @@ add_shortcode( 'company-list-table', function() {
             :item-row-actions=itemRowActions
             :search="search"
             :top-nav-filter="topNavFilter"
-            :bulkactions="bulkactions"
             :extra-bulk-action = "extraBulkAction"
             :additional-params = "additionalParams"
             :custom-data = \'' . json_encode( $custom_data, JSON_UNESCAPED_UNICODE ). '\'
