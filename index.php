@@ -210,3 +210,20 @@ add_shortcode( 'current-user-avatar', function( $atts ) {
 
     return $template;
 } );
+
+if ( !function_exists( 'wp_list_table_pagination' ) ) {
+    function wp_list_table_pagination() {
+        if ( !isset( $_REQUEST['paged'] ) ) {
+            $_REQUEST['paged'] = explode( '/page/', $_SERVER['REQUEST_URI'], 2 );
+        
+            if ( isset( $_REQUEST['paged'][1] ) )
+                list( $_REQUEST['paged'], ) = explode( '/', $_REQUEST['paged'][1], 2 );
+
+            if ( isset( $_REQUEST['paged'] ) && $_REQUEST['paged'] != '' ) {
+                $_REQUEST['paged'] = $_REQUEST['paged'] < 2 ? '' : intval( $_REQUEST['paged'] );
+            } else {
+                $_REQUEST['paged'] = '';
+            }
+        }
+    }
+}
