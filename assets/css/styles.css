@@ -47,6 +47,10 @@
     margin-left: auto;
 }
 
+form p.search-box {
+    display: none;
+}
+
 table {
     margin-bottom: 0px;
 }
