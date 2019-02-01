@@ -211,6 +211,7 @@ add_shortcode( 'current-user-avatar', function( $atts ) {
     return $template;
 } );
 
+// wp list table pagination
 if ( !function_exists( 'wp_list_table_pagination' ) ) {
     function wp_list_table_pagination() {
         if ( !isset( $_REQUEST['paged'] ) ) {
