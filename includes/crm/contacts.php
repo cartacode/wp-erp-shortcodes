@@ -1,7 +1,9 @@
 <?php
 function init_contact_assets() {
 	wp_enqueue_media();
-	
+
+	wp_enqueue_script( 'tags-box' );
+
 	$localize_script = get_default_localize_script();
 
 	$contact_actvity_localize = get_default_contact_actvity_localize();

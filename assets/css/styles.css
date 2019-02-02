@@ -479,3 +479,27 @@ ul.erp-latest-contact-list li .details p.contact-stage {
     border-bottom: none;
     padding: 1px 1px 6px;
 }
+
+.tagchecklist > li {
+    display: inline-block;
+    margin-right: 25px;
+    font-size: 13px;
+    line-height: 1.8em;
+    cursor: default;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+div[class*="erp"] button.ntdelbutton {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: none;
+    margin: 0 0 0 -19px;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+    text-indent: 0;
+    box-shadow: none;
+}

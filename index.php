@@ -7,6 +7,7 @@
 
 add_action( 'wp_enqueue_scripts', function() {
     $WP_ERP_MODULES_URL = WPERP_URL . '/modules';
+    $suffix = SCRIPT_DEBUG ? '' : '.min';
 
     wp_enqueue_script( 'my_custom_script', plugin_dir_url( __FILE__ ) . 'assets/js/custom.js' );
     // global scripts
@@ -101,6 +102,18 @@ add_action( 'wp_enqueue_scripts', function() {
 
     wp_register_style( 'erp-styles', WPERP_ASSETS . '/css/admin.css', false, date( 'Ymd' ) );
     wp_register_style( 'erp-shortcode-styles', plugins_url( '/assets/css/styles.css', __FILE__ ), [ 'erp-styles', 'erp-nprogress' ] );
+
+    // tags in single contact or company
+    wp_register_script( 'tags-suggest', "/wp-admin/js/tags-suggest$suffix.js", array( 'jquery-ui-autocomplete', 'wp-a11y' ), false, 1 );
+    wp_localize_script( 'tags-suggest', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+    wp_localize_script( 'tags-suggest', 'tagsSuggestL10n', array(
+        'tagDelimiter' => _x( ',', 'tag delimiter' ),
+        'removeTerm'   => __( 'Remove term:' ),
+        'termSelected' => __( 'Term selected.' ),
+        'termAdded'    => __( 'Term added.' ),
+        'termRemoved'  => __( 'Term removed.' )
+    ) );
+    wp_register_script( 'tags-box', "/wp-admin/js/tags-box$suffix.js", array( 'jquery', 'tags-suggest' ), false, 1 );
 } );
 
 

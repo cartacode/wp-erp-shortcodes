@@ -1,6 +1,8 @@
 <?php
 add_shortcode( 'company-list-table', function() {
     wp_enqueue_media();
+
+    wp_enqueue_script( 'tags-box' );
     
     $localize_script = get_default_localize_script();
 
