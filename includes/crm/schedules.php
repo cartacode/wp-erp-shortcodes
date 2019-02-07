@@ -1,7 +1,5 @@
 <?php
 add_shortcode( 'schedule-calendar', function() {
-	$tab = 'own';
-	
 	$localize_script = get_default_localize_script();
 
 	if ( function_exists( 'erp_get_js_template' ) ) {
@@ -28,7 +26,7 @@ add_shortcode( 'schedule-calendar', function() {
 
 	ob_start();
 
-	render_schedule_fullcalendar( $tab );
+	render_schedule_fullcalendar();
 
 	$template .= ob_get_contents();
 
@@ -39,8 +37,16 @@ add_shortcode( 'schedule-calendar', function() {
 	return $template;
 } );
 
-function render_schedule_fullcalendar( $tab ) {
-	$schedules_data = erp_crm_get_schedule_data( $tab );
+function render_schedule_fullcalendar( $tab = 'own' ) {
+    
+    $args = [
+        'created_by' => get_current_user_id(),
+        'number'     => -1,
+        'type'       => [ 'log_activity', 'tasks' ]
+    ];
+
+    $schedules      = erp_crm_get_feed_activity( $args );
+    $schedules_data = erp_crm_prepare_calendar_schedule_data( $schedules );
 ?>
 <div class="wrap erp erp-crm-schedules" id="wp-erp">
 	<div class="erp-crm-schedule-wrapper">
