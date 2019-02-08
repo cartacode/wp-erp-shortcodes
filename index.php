@@ -209,10 +209,12 @@ add_shortcode( 'current-user-avatar', function( $atts ) {
 
     <style type="text/css">
     /* avatar in nav */
+    .sidr-class-current-user-avatar,
     .current-user-avatar {
         text-align: center;
     }
 
+    .sidr-class-current-user-avatar img,
     .current-user-avatar img {
         border-radius: 50%;
     }
