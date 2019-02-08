@@ -85,10 +85,11 @@ add_shortcode('show_all_import',function(){
                             <select name="contact_group">
                             <option value="select">- Select Group -</option>
                             ';
-                                $get_groups = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."erp_crm_contact_group");
-                                foreach($get_groups as $get_group_items)
+
+                                $contact_groups = erp_crm_get_contact_groups( array('number' => -1) );
+                                foreach($contact_groups as $group)
                                 {
-                            $html_6 .= '<option value="'.$get_group_items->id.'">'.$get_group_items->name.'</option>';
+                            $html_6 .= '<option value="'.$group->id.'">'.$group->name.'</option>';
                                 }
                         $html_6 .=   '</select>
                             <p class="description">Imported contacts will be subscribed in selected group.</p>
