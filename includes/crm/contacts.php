@@ -81,7 +81,7 @@ add_shortcode( 'contact-list-table', function() {
 			row-checkbox-name="customer_id"
 			action="erp-crm-get-contacts"
 			:wpnonce="wpnonce"
-			page = "' . $home_url . '"
+			page = "' . $home_url . '?"
 			per-page="20"
 			:fields=fields
 			:item-row-actions=itemRowActions
