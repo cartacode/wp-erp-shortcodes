@@ -512,3 +512,9 @@ div[class*="erp"] button.ntdelbutton {
     text-indent: 0;
     box-shadow: none;
 }
+
+.erp-employee-single select {
+    min-height: auto;
+    line-height: inherit;
+    height: 28px;
+}
