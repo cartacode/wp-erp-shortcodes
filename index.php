@@ -243,3 +243,40 @@ if ( !function_exists( 'wp_list_table_pagination' ) ) {
         }
     }
 }
+
+function current_wp_erp_user_is( $user_role ) {
+    $owner_id = get_user_meta( get_current_user_id(), 'created_by', true );
+    
+    switch ( $user_role ) {
+        case 'broker':
+            return $owner_id ? user_can( $owner_id, 'administrator' ) : false;
+
+        case 'staff':
+            $is_staff_or_team_user = get_user_meta( get_current_user_id(), 'is_staff_or_team_user', true );
+            $o_owner_id = get_user_meta( $owner_id, 'created_by', true );
+
+            return ( $o_owner_id ? user_can( $o_owner_id, 'administrator' ) : false ) && $is_staff_or_team_user == 'on';
+        
+        default:
+            return false;
+    }
+}
+
+add_shortcode( 'switch_back_link', function() {
+    if ( !class_exists( 'user_switching') )
+        return;
+
+    $old_user = user_switching::get_old_user();
+    if ( !$old_user )
+        return;
+
+    $link = sprintf(
+        /* Translators: 1: user display name; 2: username; */
+        __( 'Switch back to %1$s (%2$s)', 'user-switching' ),
+        $old_user->display_name,
+        $old_user->user_login
+    );
+    $url = add_query_arg( array( 'redirect_to' => urlencode( user_switching::current_url() ) ), user_switching::switch_back_url( $old_user ) );
+
+    return '<a href="' . esc_url( $url ) . '" style="display: block; color: #fff; text-align: center;">' . esc_html( $link ) . '</a>';
+} );
