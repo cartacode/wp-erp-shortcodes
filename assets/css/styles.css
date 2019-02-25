@@ -438,8 +438,18 @@ ul.erp-latest-contact-list li .details p.contact-stage {
     display: none;
 }
 
-#erp-email-campaign-edit #template-chooser {
-    display: none
+#erp-email-campaign-edit #editor-step-2 .editor-list-tab-container {
+    display: none;
+}
+
+#erp-email-campaign-edit #editor-step-2 .theme-filter-inside select {
+    padding: 2px;
+    line-height: 28px;
+    height: 28px;
+    vertical-align: middle;
+    min-height: auto;
+    width: 100%;
+    background-color: #fff;
 }
 
 #erp-email-campaign-edit table {
