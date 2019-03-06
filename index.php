@@ -5,6 +5,9 @@
  * Author: Square 1 Group
 **/
 
+if ( is_admin() )
+    return;
+
 add_action( 'wp_enqueue_scripts', function() {
     $WP_ERP_MODULES_URL = WPERP_URL . '/modules';
     $suffix = SCRIPT_DEBUG ? '' : '.min';
@@ -116,27 +119,27 @@ add_action( 'wp_enqueue_scripts', function() {
     wp_register_script( 'tags-box', "/wp-admin/js/tags-box$suffix.js", array( 'jquery', 'tags-suggest' ), false, 1 );
 } );
 
+add_action( 'init', function() {
+    if ( function_exists( 'is_plugin_active' ) && is_plugin_active('wp-erp/wp-erp.php') ) {
+        require_once( dirname( __FILE__ ) . '/includes/hr/dashboard.php' );
+        require_once( dirname( __FILE__ ) . '/includes/hr/employees.php' );
 
+        require_once( dirname( __FILE__ ) . '/includes/crm/dashboard.php' );
+        require_once( dirname( __FILE__ ) . '/includes/crm/contacts.php' );
+        require_once( dirname( __FILE__ ) . '/includes/crm/companies.php' );
+        require_once( dirname( __FILE__ ) . '/includes/crm/activities.php' );
+        require_once( dirname( __FILE__ ) . '/includes/crm/circles.php' );
+        require_once( dirname( __FILE__ ) . '/includes/crm/schedules.php' );
+        require_once( dirname( __FILE__ ) . '/includes/crm/email_connect.php' );
+      
+        require_once( dirname( __FILE__ ) . '/includes/crm/import.php' );
+        require_once( dirname( __FILE__ ) . '/includes/crm/export.php' );
 
-if ( is_plugin_active('wp-erp/wp-erp.php') ) {
-    require_once( dirname( __FILE__ ) . '/includes/hr/dashboard.php' );
-    require_once( dirname( __FILE__ ) . '/includes/hr/employees.php' );
-
-    require_once( dirname( __FILE__ ) . '/includes/crm/dashboard.php' );
-    require_once( dirname( __FILE__ ) . '/includes/crm/contacts.php' );
-    require_once( dirname( __FILE__ ) . '/includes/crm/companies.php' );
-    require_once( dirname( __FILE__ ) . '/includes/crm/activities.php' );
-    require_once( dirname( __FILE__ ) . '/includes/crm/circles.php' );
-    require_once( dirname( __FILE__ ) . '/includes/crm/schedules.php' );
-    require_once( dirname( __FILE__ ) . '/includes/crm/email_connect.php' );
-  
-    require_once( dirname( __FILE__ ) . '/includes/crm/import.php' );
-    require_once( dirname( __FILE__ ) . '/includes/crm/export.php' );
-
-    if ( is_plugin_active('erp-email-campaign/wp-erp-email-campaign.php') ) {
-        require_once( dirname( __FILE__ ) . '/includes/crm/emarketing.php' );
+        if ( is_plugin_active('erp-email-campaign/wp-erp-email-campaign.php') ) {
+            require_once( dirname( __FILE__ ) . '/includes/crm/emarketing.php' );
+        }
     }
-}
+} );
 
 
 if ( !function_exists( 'is_admin_request' ) ) {
