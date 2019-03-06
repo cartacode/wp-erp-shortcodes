@@ -5,6 +5,36 @@
  * Author: Square 1 Group
 **/
 
+
+
+if ( !function_exists( 'is_admin_request' ) ) {
+    function is_admin_request() {
+        return ( strpos( $_SERVER['HTTP_REFERER'], 'admin.php' ) !== false ) || ( strpos( $_SERVER['HTTP_REFERER'], '/wp-admin' ) !== false );
+    }
+}
+
+
+if ( !function_exists( 'current_wp_erp_user_is' ) ) {
+    function current_wp_erp_user_is( $user_role ) {
+        $owner_id = get_user_meta( get_current_user_id(), 'created_by', true );
+        
+        switch ( $user_role ) {
+            case 'broker':
+                return $owner_id ? user_can( $owner_id, 'administrator' ) : false;
+
+            case 'staff':
+                $is_staff_or_team_user = get_user_meta( get_current_user_id(), 'is_staff_or_team_user', true );
+                $o_owner_id = get_user_meta( $owner_id, 'created_by', true );
+
+                return ( $o_owner_id ? user_can( $o_owner_id, 'administrator' ) : false ) && $is_staff_or_team_user == 'on';
+            
+            default:
+                return false;
+        }
+    }
+}
+
+
 if ( is_admin() )
     return;
 
@@ -141,14 +171,6 @@ add_action( 'init', function() {
     }
 } );
 
-
-if ( !function_exists( 'is_admin_request' ) ) {
-    function is_admin_request() {
-        return ( strpos( $_SERVER['HTTP_REFERER'], 'admin.php' ) !== false ) || ( strpos( $_SERVER['HTTP_REFERER'], '/wp-admin' ) !== false );
-    }
-}
-
-
 if ( !function_exists( 'get_default_localize_script' ) ) {
     function get_default_localize_script() {
         return apply_filters( 'erp_crm_localize_script', array(
@@ -244,24 +266,6 @@ if ( !function_exists( 'wp_list_table_pagination' ) ) {
                 $_REQUEST['paged'] = '';
             }
         }
-    }
-}
-
-function current_wp_erp_user_is( $user_role ) {
-    $owner_id = get_user_meta( get_current_user_id(), 'created_by', true );
-    
-    switch ( $user_role ) {
-        case 'broker':
-            return $owner_id ? user_can( $owner_id, 'administrator' ) : false;
-
-        case 'staff':
-            $is_staff_or_team_user = get_user_meta( get_current_user_id(), 'is_staff_or_team_user', true );
-            $o_owner_id = get_user_meta( $owner_id, 'created_by', true );
-
-            return ( $o_owner_id ? user_can( $o_owner_id, 'administrator' ) : false ) && $is_staff_or_team_user == 'on';
-        
-        default:
-            return false;
     }
 }
 
