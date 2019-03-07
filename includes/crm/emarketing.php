@@ -1,5 +1,21 @@
 <?php
 add_shortcode( 'email-campaign-list', function() {
+    if ( $_REQUEST['action'] == 'duplicate' && isset( $_GET['id'] ) && !empty( $_GET['id'] ) ) {
+        erp_email_campaign()->die_if_invalid_campaign( $_GET['id'], true );
+
+        $new_campaign = erp_email_campaign()->duplicate_campaign( $_GET['id'] );
+
+        $redirect = remove_query_arg( [ '_wp_http_referer', '_wpnonce', 'campaign_search', 'id', 'action', 'action2' ], wp_unslash( $_SERVER['REQUEST_URI'] ) );
+
+        $redirect = add_query_arg( 'duplicated', $new_campaign->id, $redirect );
+
+        echo '<script>';
+        echo 'window.location.href = "' . home_url( $redirect ) . '";';
+        echo '</script>';
+    }
+
+
+
 	require_once WPERP_EMAIL_CAMPAIGN_INCLUDES . '/class-email-campaign-list-table.php';
 
 	$template = '';
