@@ -51,8 +51,7 @@ form p.search-box {
     display: none;
 }
 
-div.erp-crm-customer-listing form p.search-box,
-div.erp-hr-employees form p.search-box {
+div.erp-crm-customer-listing form p.search-box {
     display: block;
 }
 
