@@ -1,17 +1,40 @@
 <?php
 add_shortcode( 'email-campaign-list', function() {
-    if ( $_REQUEST['action'] == 'duplicate' && isset( $_GET['id'] ) && !empty( $_GET['id'] ) ) {
-        erp_email_campaign()->die_if_invalid_campaign( $_GET['id'], true );
+    if ( isset( $_REQUEST['action'] ) && isset( $_GET['id'] ) && !empty( $_GET['id'] ) ) {
+        switch ( $_REQUEST['action'] ) {
+            case 'duplicate':
+                erp_email_campaign()->die_if_invalid_campaign( $_GET['id'], true );
 
-        $new_campaign = erp_email_campaign()->duplicate_campaign( $_GET['id'] );
+                $new_campaign = erp_email_campaign()->duplicate_campaign( $_GET['id'] );
 
-        $redirect = remove_query_arg( [ '_wp_http_referer', '_wpnonce', 'campaign_search', 'id', 'action', 'action2' ], wp_unslash( $_SERVER['REQUEST_URI'] ) );
+                $redirect = remove_query_arg( [ '_wp_http_referer', '_wpnonce', 'campaign_search', 'id', 'action', 'action2' ], wp_unslash( $_SERVER['REQUEST_URI'] ) );
 
-        $redirect = add_query_arg( 'duplicated', $new_campaign->id, $redirect );
+                $redirect = add_query_arg( 'duplicated', $new_campaign->id, $redirect );
+                break;
 
-        echo '<script>';
-        echo 'window.location.href = "' . home_url( $redirect ) . '";';
-        echo '</script>';
+            case 'trash':
+                if ( is_array( $_GET['id'] ) ) {
+                    foreach ( $_GET['id'] as $id ) {
+                        erp_email_campaign()->die_if_invalid_campaign( $id, false );
+                    }
+                } else {
+                        erp_email_campaign()->die_if_invalid_campaign( $_GET['id'], false );                    
+                }
+
+                $delete_count = erp_email_campaign()->trash_campaigns( $_GET['id'] );
+
+                $redirect = add_query_arg( 'trashed', $delete_count, $redirect );
+                break;
+            
+            default:
+                break;
+        }
+
+        if ( isset( $redirect ) && !empty( $redirect ) ) {
+            echo '<script>';
+            echo 'window.location.href = "' . $redirect . '";';
+            echo '</script>';
+        }
     }
 
 
