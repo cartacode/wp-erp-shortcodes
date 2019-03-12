@@ -66,6 +66,11 @@ table {
 }
 
 /* table nav */
+.erp-crm-customer table.wp-list-table.customers .column-name, .erp-crm-subscriber-contact table.wp-list-table.customers .column-name,
+.erp-crm-customer table.wp-list-table.customers .column-email, .erp-crm-subscriber-contact table.wp-list-table.customers .column-email {
+    width: auto;
+}
+
 .tablenav .actions select {
     font-size: 14px;
     border-radius: 0px;

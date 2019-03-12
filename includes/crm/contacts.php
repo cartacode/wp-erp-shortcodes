@@ -71,7 +71,7 @@ add_shortcode( 'contact-list-table', function() {
 	$home_url = home_url( '/crmdashboard/contacts' );
 
 	if ( isset( $_GET['page'] ) && $_GET['page'] == 'crmdashboard' )
-		$home_url = add_query_arg( [ 'page' => 'crmdashboard' ], $home_url ); 
+		$home_url = add_query_arg( [ 'page' => 'crmdashboard' ], $home_url );
 
 	$template .= '
 		<vtable v-ref:vtable
