@@ -20,7 +20,7 @@ add_shortcode( 'show_all_export', function() {
     <div class="inside">
         <h3><?php _e( 'Export Contacts / Companies', 'erp' ); ?></h3>
 
-        <form method="post" action="<?php echo admin_url( 'admin.php?page=erp-tools' ); ?>" id="export_form">
+        <form method="post" action="<?php echo home_url( '/crmdashboard/export' ); ?>" id="export_form">
 
             <table class="form-table">
                 <tbody>
