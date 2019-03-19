@@ -172,8 +172,7 @@ add_action( 'init', function() {
     require_once( 'includes/crm/schedules.php' );
     require_once( 'includes/crm/email_connect.php' );
   
-    require_once( 'includes/crm/import.php' );
-    require_once( 'includes/crm/export.php' );
+    require_once( 'includes/tools/init.php' );
 
     require_once( 'includes/crm/emarketing.php' );
 

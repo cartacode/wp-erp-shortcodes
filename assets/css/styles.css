@@ -534,3 +534,10 @@ div[class*="erp"] button.ntdelbutton {
     line-height: inherit;
     height: 28px;
 }
+
+
+/* export form */
+form#export_form #fields ul.erp-list {
+    margin-left: 0px;
+    margin-right: 0px;
+}

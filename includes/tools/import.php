@@ -1,7 +1,4 @@
 <?php
-erp_process_import_export();
-erp_import_export_download_sample_action();
-
 add_shortcode( 'import_contacts_from_csv', function() {
     $page           = '?action=download_sample';
     $nonce          = 'erp-emport-export-sample-nonce';
