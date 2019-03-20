@@ -88,6 +88,7 @@ add_shortcode( 'contact-list-table', function() {
 			:search="search"
 			:top-nav-filter="topNavFilter"
         	:bulkactions="bulkactions"
+        	remove-assign-group-action="yes"
 			:extra-bulk-action="extraBulkAction"
 			:additional-params="additionalParams"
 			:remove-url-params="removeUrlParams"
