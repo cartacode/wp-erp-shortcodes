@@ -5,37 +5,8 @@
  * Author: Square 1 Group
 **/
 
-
-
-if ( !function_exists( 'is_admin_request' ) ) {
-    function is_admin_request() {
-        if ( isset( $_SERVER['HTTP_REFERER'] ) )
-            return ( strpos( $_SERVER['HTTP_REFERER'], 'admin.php' ) !== false ) || ( strpos( $_SERVER['HTTP_REFERER'], '/wp-admin' ) !== false );
-        return false;
-    }
-}
-
-
-if ( !function_exists( 'current_wp_erp_user_is' ) ) {
-    function current_wp_erp_user_is( $user_role ) {
-        $owner_id = get_user_meta( get_current_user_id(), 'created_by', true );
-        
-        switch ( $user_role ) {
-            case 'broker':
-                return $owner_id ? user_can( $owner_id, 'administrator' ) : false;
-
-            case 'staff':
-                $is_staff_or_team_user = get_user_meta( get_current_user_id(), 'is_staff_or_team_user', true );
-                $o_owner_id = get_user_meta( $owner_id, 'created_by', true );
-
-                return ( $o_owner_id ? user_can( $o_owner_id, 'administrator' ) : false ) && $is_staff_or_team_user == 'on';
-            
-            default:
-                return false;
-        }
-    }
-}
-
+require_once( 'functions.php' );
+require_once( 'global-shortcodes.php' );
 
 if ( is_admin() )
     return;
@@ -149,8 +120,18 @@ add_action( 'wp_enqueue_scripts', function() {
         'termRemoved'  => __( 'Term removed.' )
     ) );
     wp_register_script( 'tags-box', "/wp-admin/js/tags-box$suffix.js", array( 'jquery', 'tags-suggest' ), false, 1 );
-} );
 
+    wp_register_script( 'password-strength-js', plugin_dir_url( __FILE__ ) . 'assets/js/password-strength/password.min.js', array( 'jquery', 'jquery-migrate' ), '1.0.0', true );
+    wp_register_style( 'password-strength-css', plugin_dir_url( __FILE__ ) . 'assets/js/password-strength/password.min.css' );
+    
+    wp_register_script( 'settings-js', plugin_dir_url( __FILE__ ) . 'assets/js/settings.js', array( 'password-strength-js' ), '1.0.0', true );
+    wp_register_style( 'settings-css', plugin_dir_url( __FILE__ ) . 'assets/css/settings.css', array( 'password-strength-css' ) );
+
+    global $wp;
+    if ( $wp->request == 'dashboard/settings' ) {
+        wp_enqueue_style( 'settings-css' );
+    }
+} );
 
 add_action( 'init', function() {
     if ( 
@@ -176,122 +157,13 @@ add_action( 'init', function() {
 
     require_once( 'includes/crm/emarketing.php' );
 
+    require_once( 'includes/settings/update-profile.php' );
+
     // require_once( 'includes/deals/init.php' );
 } );
 
-if ( !function_exists( 'get_default_localize_script' ) ) {
-    function get_default_localize_script() {
-        return apply_filters( 'erp_crm_localize_script', array(
-            'ajaxurl'               => admin_url( 'admin-ajax.php' ),
-            'nonce'                 => wp_create_nonce( 'wp-erp-crm-nonce' ),
-            'popup'                 => array(
-                'customer_title'         => __( 'Add New Customer', 'erp' ),
-                'customer_update_title'  => __( 'Edit Customer', 'erp' ),
-                'customer_social_title'  => __( 'Customer Social Profile', 'erp' ),
-                'customer_assign_group'  => __( 'Add to Contact groups', 'erp' ),
-            ),
-            'add_submit'                  => __( 'Add New', 'erp' ),
-            'update_submit'               => __( 'Update', 'erp' ),
-            'save_submit'                 => __( 'Save', 'erp' ),
-            'customer_upload_photo'       => __( 'Upload Photo', 'erp' ),
-            'customer_set_photo'          => __( 'Set Photo', 'erp' ),
-            'confirm'                     => __( 'Are you sure?', 'erp' ),
-            'delConfirmCustomer'          => __( 'Are you sure to delete?', 'erp' ),
-            'delConfirm'                  => __( 'Are you sure to delete this?', 'erp' ),
-            'checkedConfirm'              => __( 'Select atleast one group', 'erp' ),
-            'contact_exit'                => __( 'Already exists as a contact or company', 'erp' ),
-            'make_contact_text'           => __( 'This user already exists! Do you want to make this user as a', 'erp' ),
-            'wpuser_make_contact_text'    => __( 'This is wp user! Do you want to create this user as a', 'erp' ),
-            'create_contact_text'         => __( 'Create new', 'erp' ),
-            'current_user_id'             => get_current_user_id(),
-            'successfully_created_wpuser' => __( 'WP User created successfully', 'erp' ),
-        ) );
-    }
-}
-
-if ( !function_exists( 'get_default_contact_actvity_localize' ) ) {
-    function get_default_contact_actvity_localize() {
-        return apply_filters( 'erp_crm_contact_localize_var', [
-            'ajaxurl'              => admin_url( 'admin-ajax.php' ),
-            'nonce'                => wp_create_nonce( 'wp-erp-crm-customer-feed' ),
-            'current_user_id'      => get_current_user_id(),
-            'isAdmin'              => current_user_can( 'manage_options' ),
-            'isCrmManager'         => current_user_can( 'erp_crm_manager' ),
-            'isAgent'              => current_user_can( 'erp_crm_agent' ),
-            'confirm'              => __( 'Are you sure?', 'erp' ),
-            'date_format'          => get_option( 'date_format' ),
-            'timeline_feed_header' => apply_filters( 'erp_crm_contact_timeline_feeds_header', '' ),
-            'timeline_feed_body'   => apply_filters( 'erp_crm_contact_timeline_feeds_body', '' ),
-        ] );
-    }
-}
-
-add_shortcode( 'current-user-avatar', function( $atts ) {
-    extract(shortcode_atts(array(
-        'size' => 32
-    ), $atts));
-
-    $employee = new \WeDevs\ERP\HRM\Employee( get_current_user_id() );
-
-    $template = '';
-    ob_start();
-?>
-    <div class="current-user-avatar">
-        <?php _e( $employee->get_avatar( $size ) ); ?>
-    </div>
-
-    <style type="text/css">
-    /* avatar in nav */
-    .sidr-class-current-user-avatar,
-    .current-user-avatar {
-        text-align: center;
-    }
-
-    .sidr-class-current-user-avatar img,
-    .current-user-avatar img {
-        border-radius: 50%;
-    }
-    </style>
-<?php
-    $template = ob_get_contents();
-    ob_end_clean();
-
-    return $template;
-} );
-
-// wp list table pagination
-if ( !function_exists( 'wp_list_table_pagination' ) ) {
-    function wp_list_table_pagination() {
-        if ( !isset( $_REQUEST['paged'] ) ) {
-            $_REQUEST['paged'] = explode( '/page/', $_SERVER['REQUEST_URI'], 2 );
-        
-            if ( isset( $_REQUEST['paged'][1] ) )
-                list( $_REQUEST['paged'], ) = explode( '/', $_REQUEST['paged'][1], 2 );
-
-            if ( isset( $_REQUEST['paged'] ) && $_REQUEST['paged'] != '' ) {
-                $_REQUEST['paged'] = $_REQUEST['paged'] < 2 ? '' : intval( $_REQUEST['paged'] );
-            } else {
-                $_REQUEST['paged'] = '';
-            }
-        }
-    }
-}
-
-add_shortcode( 'switch_back_link', function() {
-    if ( !class_exists( 'user_switching') )
+add_action( 'init', function() {
+    if ( !isset( $_POST['_wpnonce'] ) || !wp_verify_nonce( $_POST['_wpnonce'], 'update-profile' ) || !is_user_logged_in() )
         return;
-
-    $old_user = user_switching::get_old_user();
-    if ( !$old_user )
-        return;
-
-    $link = sprintf(
-        /* Translators: 1: user display name; 2: username; */
-        __( 'Switch back to %1$s (%2$s)', 'user-switching' ),
-        $old_user->display_name,
-        $old_user->user_login
-    );
-    $url = add_query_arg( array( 'redirect_to' => urlencode( user_switching::current_url() ) ), user_switching::switch_back_url( $old_user ) );
-
-    return '<a href="' . esc_url( $url ) . '" style="display: block; color: #fff; text-align: center;">' . esc_html( $link ) . '</a>';
+    $is_updated = update_user_profile( $_POST, $_FILES['avatar'] );
 } );

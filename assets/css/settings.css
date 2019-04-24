@@ -1,0 +1,132 @@
+.avatar-wrapper {
+    position: relative;
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 1px 1px 15px -5px black;
+    transition: all 0.3s ease;
+    margin-right: 50px;
+}
+
+.avatar-wrapper:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.avatar-wrapper:hover .profile-pic {
+    opacity: 0.25;
+}
+
+.avatar-wrapper .profile-pic {
+    width: auto;
+    height: 100%;
+    max-width: none;
+    transition: all 0.3s ease;
+}
+
+.avatar-wrapper .profile-pic:after {
+    font-family: FontAwesome;
+    content: "\f007";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    font-size: 150px;
+    background: #ecf0f1;
+    color: #34495e;
+    text-align: center;
+    line-height: 200px;
+}
+
+.avatar-wrapper .upload-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.avatar-wrapper .upload-button .fa-upload {
+    position: absolute;
+    font-size: 150px;
+    text-align: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+    color: #34495e;
+    line-height: 200px;
+    width: 200px;
+}
+
+.avatar-wrapper .upload-button:hover .fa-upload {
+    opacity: 0.9;
+}
+
+.file-upload {
+    display: none;
+}
+
+.d-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.w-100 {
+    width: 100%;
+    clear: both;
+}
+
+.user-info-wrapper {
+    min-width: 600px;
+}
+
+.user-info-wrapper label {
+    font-weight: bold;
+}
+
+.user-info-wrapper .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+}
+
+.user-info-wrapper .form-group>div {
+    width: 50%;
+    display: flex;
+    padding-right: 20px;
+}
+
+.user-info-wrapper .form-group input {
+    border: none;
+    background-color: transparent;
+    padding: 12px 10px;
+    border-bottom: 2px solid #c4c4c4;
+    width: 100%;
+}
+
+.user-info-wrapper .form-group input:focus,
+.user-info-wrapper .form-group input:active {
+    outline: none;
+}
+
+.user-info-wrapper .name input {
+    text-transform: capitalize;
+}
+
+.user-info-wrapper .form-group span {
+    font-size: 0.75em;
+}
+
+form.update-profile-form button {
+    margin: 0px auto;
+    margin-left: 250px;
+}
+
+form.update-profile-form button:disabled {
+    background-color: buttonface;
+}
