@@ -97,8 +97,13 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
                                                 $crm_user_id = $customer->get_contact_owner();
                                                 if ( !empty( $crm_user_id ) ) {
                                                     $user        = get_user_by( 'id', $crm_user_id );
-                                                    $user_string = esc_html( $user->display_name );
-                                                    $user_email  = $user->get('user_email');
+
+						    if ( is_wp_error( $user ) || empty( $user ) ) { 
+						        $user_string = ''; $crm_user_id = false;
+						    } else {
+                                                        $user_string = esc_html( $user->display_name );
+                                                        $user_email  = $user->get('user_email');
+						    }
                                                 } else {
                                                     $user_string = '';
                                                 }
