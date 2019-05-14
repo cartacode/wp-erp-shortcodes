@@ -5,7 +5,7 @@ add_shortcode( 'ac-update-profile', function() {
 	$current_user = wp_get_current_user();
 	$employee = new WeDevs\ERP\HRM\Employee( get_current_user_id() );
 	$photo_id = $employee->get_photo_id();
-	$avatar_url = $employee->get_avatar_url( $avatar_id );
+	$avatar_url = $employee->get_avatar_url( $photo_id );
 
 	ob_start();
 ?>
