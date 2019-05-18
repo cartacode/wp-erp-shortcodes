@@ -164,14 +164,14 @@ if ( !function_exists( 'update_user_profile' ) ) {
     }
 }
 
-// get agent user's office
-if ( !function_exists( 'get_office_by_agent_user_id' ) ) {
-    function get_office_by_agent_user_id( $user_id = null ) {
+// get agent user's brokerage_office
+if ( !function_exists( 'get_brokerage_office_by_agent_user_id' ) ) {
+    function get_brokerage_office_by_agent_user_id( $user_id = null ) {
         if ( empty( $user_id ) || !intval( $user_id ) ) return '';
 
-        $office = get_user_meta( $user_id, 'office', true );
+        $brokerage_office = get_user_meta( $user_id, 'brokerage_office', true );
 
-        if ( $office ) return $office;
+        if ( $brokerage_office ) return $brokerage_office;
 
         $owner_id = get_user_meta( $user_id, 'created_by', true );
 
@@ -196,20 +196,20 @@ if ( !function_exists( 'get_office_by_agent_user_id' ) ) {
         $owner = get_user_by( 'id', $owner_id );
         $owner_name = $owner ? $owner->user_firstname . ' ' . $owner->user_lastname : 'unknown';
 
-        $offices = [
+        $brokerage_offices = [
             'Toni Patillo'          => 'Santa Monica',
-            'Jeanne Gallagher'  => 'Peninsula Estates',
-            'Ron Kahn'                  => 'San Carlos',
+            'Jeanne Gallagher'      => 'Peninsula Estates',
+            'Ron Kahn'              => 'San Carlos',
             'Anne Kennedy'          => 'Napa Valley',
             'Blanca Aguirre'        => 'San Francisco',
-            'Tina Jones'                => 'Oakland'
+            'Tina Jones'            => 'Oakland'
         ];
 
-        if ( array_key_exists( $owner_name, $offices ) ) {
-            $office = sanitize_title( $offices[$owner_name] );
-            update_user_meta( $user_id, 'office', $office );
+        if ( array_key_exists( $owner_name, $brokerage_offices ) ) {
+            $brokerage_office = $brokerage_offices[$owner_name];
+            update_user_meta( $user_id, 'brokerage_office', $brokerage_office );
 
-            return $office;
+            return $brokerage_office;
         }
 
         return '';
