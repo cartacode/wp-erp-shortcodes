@@ -1,4 +1,5 @@
 <?php
+// check request is from admin panel
 if ( !function_exists( 'is_admin_request' ) ) {
     function is_admin_request() {
         if ( isset( $_SERVER['HTTP_REFERER'] ) )
@@ -7,7 +8,7 @@ if ( !function_exists( 'is_admin_request' ) ) {
     }
 }
 
-
+// check current wp erp user is broker or staff
 if ( !function_exists( 'current_wp_erp_user_is' ) ) {
     function current_wp_erp_user_is( $user_role ) {
         $owner_id = get_user_meta( get_current_user_id(), 'created_by', true );
@@ -28,6 +29,7 @@ if ( !function_exists( 'current_wp_erp_user_is' ) ) {
     }
 }
 
+// localize scripts for loading wp erp assets
 if ( !function_exists( 'get_default_localize_script' ) ) {
     function get_default_localize_script() {
         return apply_filters( 'erp_crm_localize_script', array(
@@ -58,6 +60,7 @@ if ( !function_exists( 'get_default_localize_script' ) ) {
     }
 }
 
+// default cotnact acitivity localize for wp erp assets settings
 if ( !function_exists( 'get_default_contact_actvity_localize' ) ) {
     function get_default_contact_actvity_localize() {
         return apply_filters( 'erp_crm_contact_localize_var', [
@@ -158,5 +161,57 @@ if ( !function_exists( 'update_user_profile' ) ) {
         wp_logout();
         wp_redirect( home_url( '/home/login' ) );
         exit;
+    }
+}
+
+// get agent user's office
+if ( !function_exists( 'get_office_by_agent_user_id' ) ) {
+    function get_office_by_agent_user_id( $user_id = null ) {
+        if ( empty( $user_id ) || !intval( $user_id ) ) return '';
+
+        $office = get_user_meta( $user_id, 'office', true );
+
+        if ( $office ) return $office;
+
+        $owner_id = get_user_meta( $user_id, 'created_by', true );
+
+        if ( !user_can( $owner_id, 'administrator' ) ) {
+            $depth = 15;
+
+            while($depth > 0) {
+                $o_owner_id = get_user_meta( $owner_id, 'created_by', true );
+
+                if ( !empty( $o_owner_id) ) {
+                    if ( user_can( $o_owner_id, 'administrator' ) ) {
+                        break;
+                    } else {
+                        $owner_id = $o_owner_id;
+                    }
+                } 
+                
+                $depth --;
+            }
+        }
+
+        $owner = get_user_by( 'id', $owner_id );
+        $owner_name = $owner ? $owner->user_firstname . ' ' . $owner->user_lastname : 'unknown';
+
+        $offices = [
+            'Toni Patillo'          => 'Santa Monica',
+            'Jeanne Gallagher'  => 'Peninsula Estates',
+            'Ron Kahn'                  => 'San Carlos',
+            'Anne Kennedy'          => 'Napa Valley',
+            'Blanca Aguirre'        => 'San Francisco',
+            'Tina Jones'                => 'Oakland'
+        ];
+
+        if ( array_key_exists( $owner_name, $offices ) ) {
+            $office = sanitize_title( $offices[$owner_name] );
+            update_user_meta( $user_id, 'office', $office );
+
+            return $office;
+        }
+
+        return '';
     }
 }
