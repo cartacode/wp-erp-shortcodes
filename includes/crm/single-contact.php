@@ -273,8 +273,31 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
                             </button>
                         </div>
 
-                        <div class="no-activity-found" v-if="!feeds.length">
+                        <div id="email_listing">
+                            <table id="list_email">
+                                <thead>
+
+                                <th><strong>From</strong></th>
+                                <th><strong>Subject</strong></th>
+                                <th><strong>Date</strong></th>
+
+                                </thead>
+                                <tbody>
+                                <tbody>
+                                <tr v-for="(item, index) in items" :key="index">
+                                    <td v-for="(column, indexColumn) in columns" :key="indexColumn">{{item[column]}}</td>
+                                </tr>
+                                </tbody>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                       <?php /* <div style="display:none" class="no-activity-found" v-if="!feeds.length">
                             <?php _e( 'No Activity found for this Contact', 'erp' ); ?>
+                        </div> */ ?>
+                        <div style="" class="no-activity-found no_email_found" >
+                            <?php _e( 'No Emails found', 'erp' ); ?>
                         </div>
                     </div>
                 </div>
@@ -285,3 +308,69 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
     </div>
 
 </div>
+
+<script>
+
+    function open_gmail(that){
+
+        //window.location.href="https://mail.google.com/mail/u/0/#inbox/"+$(that).attr("id");
+        window.open('https://mail.google.com/mail/u/0/#inbox/'+$(that).attr("id"), '_blank');
+
+    }
+
+    function get_inbox(){
+
+        $.ajax({
+            url:"<?php echo admin_url( 'admin-ajax.php' ) ?>", // Url to which the request is send
+            type: "POST",             // Type of request to be send, called as method
+            data: {action:"get_email_messages",user_email:' <?php echo $customer->get_email(); ?>'}, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+            success: function(data)   // A function to be called if request succeeds
+            {
+
+                data = JSON.parse(data);
+
+                var trHTML = '';
+
+                if(data != ""){
+                    jQuery(".no_email_found").hide();
+                    $('#list_email tbody tr').remove();
+
+                    $.each(data, function (i, item) {
+                        //item.id
+                        //item.subject
+                        //item.from
+                        //item.date
+                        var unread  =  "";
+                        if(item.unread == true){
+                            unread = "unread";
+                        }
+                        trHTML += '<tr  style="cursor: pointer;" id="'+item.id+'" onclick="open_gmail(this)" class="'+unread+'"><td>' +  item.from + '</td><td>' + item.subject+ '</td><td>' + item.date+ '</td></tr>';
+                    });
+                    $('#list_email').append(trHTML);
+
+                }else{
+                    jQuery(".no_email_found").show();
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                jQuery(".no_email_found").show();
+                // Handle errors here
+                console.log('ERRORS: ' + textStatus);
+                console.log(errorThrown);
+
+
+                // STOP LOADING SPINNER
+            }
+        });
+
+        console.log("Table Updated")
+        setTimeout(get_inbox, 180000);
+
+    }
+
+    jQuery(document).ready(function(){
+        get_inbox();
+
+    });
+</script>

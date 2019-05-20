@@ -128,5 +128,5 @@ form.update-profile-form button {
 }
 
 form.update-profile-form button:disabled {
-    background-color: buttonface;
+    background-color: #ddd;
 }

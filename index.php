@@ -8,8 +8,12 @@
 require_once( 'functions.php' );
 require_once( 'global-shortcodes.php' );
 
-if ( is_admin() )
+if ( is_admin() ) {
+    if ( function_exists( 'is_plugin_active' ) || is_plugin_active( 'wp-erp/wp-erp.php' ) )
+        require_once( 'includes/admin/agent_office_manage.php' );
+
     return;
+}
 
 add_action( 'wp_enqueue_scripts', function() {
     define( 'WP_ERP_MODULES_URL', WPERP_URL . '/modules' );
