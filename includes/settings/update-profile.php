@@ -59,10 +59,12 @@ add_shortcode( 'ac-update-profile', function() {
 
 		<?php wp_nonce_field( 'update-profile' ) ?>
 		<button id="submit" type="submit" disabled="">Update</button>
-                <?php 
-                $ACGoogleSSOGmail = new ACGoogleSSOGmail();
-                echo $ACGoogleSSOGmail->generate_sso_button();
-                ?>
+		<?php 
+			if ( class_exists( 'ACGoogleSSOGmail' ) ) {
+				$ACGoogleSSOGmail = new ACGoogleSSOGmail();
+				echo $ACGoogleSSOGmail->generate_sso_button();
+			}
+		?>
 	</form>
 <?php
 	$html = ob_get_contents();
