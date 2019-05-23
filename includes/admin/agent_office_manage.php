@@ -17,7 +17,7 @@ class Agent_Office_Manage {
 
 	function overview_page() {
     $agent_email = '';
-    $agent_office = '';
+    $agent_office = null;
     $error_msg = '';
 
     if ( !empty( $_REQUEST['action'] ) ) {
@@ -63,7 +63,7 @@ class Agent_Office_Manage {
         <?php if ( !empty( $error_msg ) ): ?> <p><small><?php _e( $error_msg ); ?></small></p><?php endif;?>
 			</form>
       
-      <?php if ( !empty( $agent_office ) ): ?>
+      <?php if ( !is_null( $agent_office ) ): ?>
         <hr style="margin: 2em 0px;">
         <h2>Agent Office</h2>
         <form action="<?php esc_attr_e( admin_url( 'admin.php' ) ); ?>">
@@ -73,7 +73,13 @@ class Agent_Office_Manage {
             <input type="hidden" name="agent_email" value="<?php esc_attr_e( $agent_email ); ?>" />
             
             <label style="min-width: 75px;">Update to: </label>
-            <input type="text" name="new_office" required value="<?php esc_attr_e( $agent_office ); ?>">
+            <select name="new_office" required>
+              <option value="">Not selected</option>
+              
+              <?php foreach( array_values( BROKERAGE_OFFICES ) as $office_name ): ?>
+                <option <?php esc_attr_e( $office_name == $agent_office ? 'selected' : '' ); ?> value="<?php esc_attr_e( $office_name ); ?>"><?php _e( $office_name ); ?></option>
+              <?php endforeach; ?>
+            </select>
             
             <input type="submit" class="button button-primary" value="Update">
           </div>

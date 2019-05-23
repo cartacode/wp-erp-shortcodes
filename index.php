@@ -5,6 +5,15 @@
  * Author: Square 1 Group
 **/
 
+define( 'BROKERAGE_OFFICES', [
+    'Toni Patillo'          => 'Santa Monica',
+    'Jeanne Gallagher'      => 'Peninsula Estates',
+    'Ron Kahn'              => 'San Carlos',
+    'Anne Kennedy'          => 'Napa Valley',
+    'Blanca Aguirre'        => 'San Francisco',
+    'Tina Jones'            => 'Oakland'
+]);
+
 require_once( 'functions.php' );
 require_once( 'global-shortcodes.php' );
 

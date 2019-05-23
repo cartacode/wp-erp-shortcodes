@@ -196,17 +196,8 @@ if ( !function_exists( 'get_brokerage_office_by_agent_user_id' ) ) {
         $owner = get_user_by( 'id', $owner_id );
         $owner_name = $owner ? $owner->user_firstname . ' ' . $owner->user_lastname : 'unknown';
 
-        $brokerage_offices = [
-            'Toni Patillo'          => 'Santa Monica',
-            'Jeanne Gallagher'      => 'Peninsula Estates',
-            'Ron Kahn'              => 'San Carlos',
-            'Anne Kennedy'          => 'Napa Valley',
-            'Blanca Aguirre'        => 'San Francisco',
-            'Tina Jones'            => 'Oakland'
-        ];
-
-        if ( array_key_exists( $owner_name, $brokerage_offices ) ) {
-            $brokerage_office = $brokerage_offices[$owner_name];
+        if ( array_key_exists( $owner_name, BROKERAGE_OFFICES ) ) {
+            $brokerage_office = BROKERAGE_OFFICES[$owner_name];
             update_user_meta( $user_id, 'brokerage_office', $brokerage_office );
 
             return $brokerage_office;

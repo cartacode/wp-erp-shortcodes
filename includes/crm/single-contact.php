@@ -94,23 +94,23 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
                                     <div class="user-wrap">
                                         <div class="user-wrap-content">
                                             <?php
-                                                $crm_user_id = $customer->get_contact_owner();
-                                                if ( !empty( $crm_user_id ) ) {
-                                                    $user        = get_user_by( 'id', $crm_user_id );
+                                            $crm_user_id = $customer->get_contact_owner();
+                                            if ( !empty( $crm_user_id ) ) {
+                                                $user        = get_user_by( 'id', $crm_user_id );
 
-						    if ( is_wp_error( $user ) || empty( $user ) ) { 
-						        $user_string = ''; $crm_user_id = false;
-						    } else {
-                                                        $user_string = esc_html( $user->display_name );
-                                                        $user_email  = $user->get('user_email');
-						    }
+                                                if ( is_wp_error( $user ) || empty( $user ) ) {
+                                                    $user_string = ''; $crm_user_id = false;
                                                 } else {
-                                                    $user_string = '';
+                                                    $user_string = esc_html( $user->display_name );
+                                                    $user_email  = $user->get('user_email');
                                                 }
+                                            } else {
+                                                $user_string = '';
+                                            }
                                             ?>
                                             <?php if ( $crm_user_id && ! empty( $user ) ): ?>
                                                 <?php echo erp_crm_get_avatar( $crm_user_id, $user_email, $crm_user_id, 32 ); ?>
-                                                
+
                                                 <div class="user-details">
                                                     <a href="#"><?php echo get_the_author_meta( 'display_name', $crm_user_id ); ?></a>
                                                     <span><?php echo  get_the_author_meta( 'user_email', $crm_user_id ); ?></span>
@@ -233,15 +233,80 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
 
                                 <tasks-note v-if="tabShow == 'tasks'"></tasks-note>
 
+                                <div v-if="tabShow == 'email_list'">
+
+
+                                    <div class="activity-feed" style="margin-bottom: 10px">
+                                        <input type="text" placeholder="From" class="erp-date-field email_from">
+                                        <input type="text" placeholder="To" class="erp-date-field email_to">
+                                        <input type="submit" value="Filter" class="button action" onclick="search_email()">
+                                    </div>
+
+                                    <div id="email_listing">
+                                        <table id="list_email">
+                                            <thead>
+
+                                            <th><strong>From</strong></th>
+                                            <th><strong>Subject</strong></th>
+                                            <th><strong>Date</strong></th>
+                                            <th><strong>Action</strong></th>
+
+                                            </thead>
+                                            <tbody>
+                                            <tbody>
+                                            <tr v-for="(item, index) in items" :key="index">
+                                                <td v-for="(column, indexColumn) in columns" :key="indexColumn">{{item[column]}}</td>
+                                                <td></td>
+                                            </tr>
+                                            <div id="accordion">
+                                                <h3>Section 1</h3>
+                                                <div>
+                                                    <p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
+                                                </div>
+                                                <h3>Section 2</h3>
+                                                <div>
+                                                    <p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna. </p>
+                                                </div>
+                                                <h3>Section 3</h3>
+                                                <div>
+                                                    <p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui. </p>
+                                                    <ul>
+                                                        <li>List item one</li>
+                                                        <li>List item two</li>
+                                                        <li>List item three</li>
+                                                    </ul>
+                                                </div>
+                                                <h3>Section 4</h3>
+                                                <div>
+                                                    <p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
+                                                </div>
+                                            </div>
+
+                                            </tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div style="" class="no-activity-found no_email_found" >
+                                        <?php _e( 'No Emails found', 'erp' ); ?>
+                                    </div>
+
+                                </div> <!-- Email Tab -->
+
+                                <div v-if="tabShow == 'sms'">
+                                    <?php
+                                    echo do_shortcode( "[ac-sms-send phone='".$customer->phone."']" ); ?>
+                                </div>
+
                                 <?php do_action( 'erp_crm_feeds_nav_content' ); ?>
 
                             </form>
                         </div>
                     </div>
 
-                    <div class="activity-content">
+                    <div class="activity-content" v-show="tabShow != 'email_list'">
                         <div class="activity-feed" style="margin-bottom: 10px">
-                            <select name="" id="" v-model="findFeeds.type"> 
+                            <select name="" id="" v-model="findFeeds.type">
                                 <option value="email">Email</option>
                                 <option value="tasks">Task</option>
                                 <option value="log_activity">Schedule</option>
@@ -273,32 +338,13 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
                             </button>
                         </div>
 
-                        <div id="email_listing">
-                            <table id="list_email">
-                                <thead>
-
-                                <th><strong>From</strong></th>
-                                <th><strong>Subject</strong></th>
-                                <th><strong>Date</strong></th>
-
-                                </thead>
-                                <tbody>
-                                <tbody>
-                                <tr v-for="(item, index) in items" :key="index">
-                                    <td v-for="(column, indexColumn) in columns" :key="indexColumn">{{item[column]}}</td>
-                                </tr>
-                                </tbody>
-                                </tbody>
-                            </table>
-                        </div>
 
 
-                       <?php /* <div style="display:none" class="no-activity-found" v-if="!feeds.length">
+
+                        <?php /* <div style="display:none" class="no-activity-found" v-if="!feeds.length">
                             <?php _e( 'No Activity found for this Contact', 'erp' ); ?>
                         </div> */ ?>
-                        <div style="" class="no-activity-found no_email_found" >
-                            <?php _e( 'No Emails found', 'erp' ); ?>
-                        </div>
+
                     </div>
                 </div>
 
@@ -311,6 +357,22 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
 
 <script>
 
+    function search_email(){
+
+        console.log("Search Email");
+
+        var from_date = jQuery(".email_from").val();
+        var to_date = jQuery(".email_to").val();
+
+        if(to_date == "" || from_date == ""){
+            alert("Please provide a date.");
+        }
+
+        get_inbox(from_date,to_date,true);
+
+    }
+
+
     function open_gmail(that){
 
         //window.location.href="https://mail.google.com/mail/u/0/#inbox/"+$(that).attr("id");
@@ -318,20 +380,21 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
 
     }
 
-    function get_inbox(){
+    function get_inbox(from,to,search = false){
 
         $.ajax({
             url:"<?php echo admin_url( 'admin-ajax.php' ) ?>", // Url to which the request is send
             type: "POST",             // Type of request to be send, called as method
-            data: {action:"get_email_messages",user_email:' <?php echo $customer->get_email(); ?>'}, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+            data: {action:"get_email_messages",user_email:' <?php echo $customer->get_email(); ?>',from_date:from,to_date:to,search:search}, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
             success: function(data)   // A function to be called if request succeeds
             {
 
                 data = JSON.parse(data);
 
                 var trHTML = '';
-
-                if(data != ""){
+                console.log("Date get message");
+                console.log(data);
+                if(data != "" && data != "null" && data != null){
                     jQuery(".no_email_found").hide();
                     $('#list_email tbody tr').remove();
 
@@ -349,6 +412,7 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
                     $('#list_email').append(trHTML);
 
                 }else{
+                    $('#list_email tbody tr').remove();
                     jQuery(".no_email_found").show();
                 }
             },
@@ -358,19 +422,36 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
                 // Handle errors here
                 console.log('ERRORS: ' + textStatus);
                 console.log(errorThrown);
-
-
                 // STOP LOADING SPINNER
             }
         });
 
-        console.log("Table Updated")
-        setTimeout(get_inbox, 180000);
+        console.log("Table Updated");
+        setTimeout(get_inbox, 60000);
 
     }
 
     jQuery(document).ready(function(){
-        get_inbox();
+        <?php if(get_user_meta(get_current_user_id(), "google_sso_token", true) != ""){?>
+        jQuery( "#accordion" ).accordion({
+            collapsible: true
+        });
+
+        jQuery("[href='#email_list']").click(function(){
+            jQuery(".activity-content").hide()
+            jQuery(".email_from").datepicker({dateFormat: 'yy-dd-mm'});
+            jQuery(".email_to").datepicker({dateFormat: 'yy-dd-mm'});
+            get_inbox();
+        });
+
+
+        <?php } ?>
+
+        jQuery("[href='!#email_list']").click(function(){
+            jQuery(".activity-content").show();
+        });
+
 
     });
+
 </script>
