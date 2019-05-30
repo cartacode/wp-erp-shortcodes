@@ -164,6 +164,19 @@ if ( !function_exists( 'update_user_profile' ) ) {
     }
 }
 
+if ( !function_exists( 'get_default_brokerage_offices' ) ) {
+    function get_default_brokerage_offices() {
+        return [
+            'Toni Patillo'          => 'Santa Monica',
+            'Jeanne Gallagher'      => 'Peninsula Estates',
+            'Ron Kahn'              => 'San Carlos',
+            'Anne Kennedy'          => 'Napa Valley',
+            'Blanca Aguirre'        => 'San Francisco',
+            'Tina Jones'            => 'Oakland'
+        ];
+    }
+}
+
 // get agent user's brokerage_office
 if ( !function_exists( 'get_brokerage_office_by_agent_user_id' ) ) {
     function get_brokerage_office_by_agent_user_id( $user_id = null ) {
@@ -196,8 +209,8 @@ if ( !function_exists( 'get_brokerage_office_by_agent_user_id' ) ) {
         $owner = get_user_by( 'id', $owner_id );
         $owner_name = $owner ? $owner->user_firstname . ' ' . $owner->user_lastname : 'unknown';
 
-        if ( array_key_exists( $owner_name, BROKERAGE_OFFICES ) ) {
-            $brokerage_office = BROKERAGE_OFFICES[$owner_name];
+        if ( array_key_exists( $owner_name, get_default_brokerage_offices() ) ) {
+            $brokerage_office = get_default_brokerage_offices()[$owner_name];
             update_user_meta( $user_id, 'brokerage_office', $brokerage_office );
 
             return $brokerage_office;

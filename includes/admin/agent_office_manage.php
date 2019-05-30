@@ -76,7 +76,7 @@ class Agent_Office_Manage {
             <select name="new_office" required>
               <option value="">Not selected</option>
               
-              <?php foreach( array_values( BROKERAGE_OFFICES ) as $office_name ): ?>
+              <?php foreach( array_values( get_default_brokerage_offices() ) as $office_name ): ?>
                 <option <?php esc_attr_e( $office_name == $agent_office ? 'selected' : '' ); ?> value="<?php esc_attr_e( $office_name ); ?>"><?php _e( $office_name ); ?></option>
               <?php endforeach; ?>
             </select>
