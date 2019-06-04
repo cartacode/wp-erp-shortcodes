@@ -163,7 +163,7 @@ add_action( 'init', function() {
 
     require_once( 'includes/settings/update-profile.php' );
 
-    // require_once( 'includes/deals/init.php' );
+    // require_once( 'includes/deals/init.php' );    
 } );
 
 add_action( 'init', function() {
