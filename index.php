@@ -163,15 +163,7 @@ add_action( 'init', function() {
 
     require_once( 'includes/settings/update-profile.php' );
 
-    // require_once( 'includes/deals/init.php' );
-
-    foreach ( get_users() as $wp_user ) {
-        if ( user_can( $wp_user, 'erp_crm_agent' ) && !current_user_can( 'erp_crm_create_groups' ) ) {
-            $crm_manager_role = erp_crm_get_manager_role();
-            $wp_user->add_role( $crm_manager_role );
-        }
-    }
-    
+    // require_once( 'includes/deals/init.php' );    
 } );
 
 add_action( 'init', function() {
