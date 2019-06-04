@@ -234,68 +234,15 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
                                 <tasks-note v-if="tabShow == 'tasks'"></tasks-note>
 
                                 <div v-if="tabShow == 'email_list'">
-
-
-                                    <div class="activity-feed" style="margin-bottom: 10px">
-                                        <input type="text" placeholder="From" class="erp-date-field email_from">
-                                        <input type="text" placeholder="To" class="erp-date-field email_to">
-                                        <input type="submit" value="Filter" class="button action" onclick="search_email()">
-                                    </div>
-
-                                    <div id="email_listing">
-                                        <table id="list_email">
-                                            <thead>
-
-                                            <th><strong>From</strong></th>
-                                            <th><strong>Subject</strong></th>
-                                            <th><strong>Date</strong></th>
-                                            <th><strong>Action</strong></th>
-
-                                            </thead>
-                                            <tbody>
-                                            <tbody>
-                                            <tr v-for="(item, index) in items" :key="index">
-                                                <td v-for="(column, indexColumn) in columns" :key="indexColumn">{{item[column]}}</td>
-                                                <td></td>
-                                            </tr>
-                                            <div id="accordion">
-                                                <h3>Section 1</h3>
-                                                <div>
-                                                    <p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
-                                                </div>
-                                                <h3>Section 2</h3>
-                                                <div>
-                                                    <p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna. </p>
-                                                </div>
-                                                <h3>Section 3</h3>
-                                                <div>
-                                                    <p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui. </p>
-                                                    <ul>
-                                                        <li>List item one</li>
-                                                        <li>List item two</li>
-                                                        <li>List item three</li>
-                                                    </ul>
-                                                </div>
-                                                <h3>Section 4</h3>
-                                                <div>
-                                                    <p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
-                                                </div>
-                                            </div>
-
-                                            </tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <div style="" class="no-activity-found no_email_found" >
-                                        <?php _e( 'No Emails found', 'erp' ); ?>
-                                    </div>
-
+                                    <?php echo do_shortcode("[front_form_gmail_sso]"); ?>
                                 </div> <!-- Email Tab -->
 
                                 <div v-if="tabShow == 'sms'">
-                                    <?php
-                                    echo do_shortcode( "[ac-sms-send phone='".$customer->phone."']" ); ?>
+
+
+                                    <?php  //print_r($customer);
+                                    echo do_shortcode( '[ac-sms-send phone="'.$customer->phone.'" avatar="'.$customer->get_avatar(32).'"]');
+                                    ?>
                                 </div>
 
                                 <?php do_action( 'erp_crm_feeds_nav_content' ); ?>
@@ -353,105 +300,22 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
         </div>
     </div>
 
+    <div class="popupWrap">
+        <div style="display: block" class="overlay js-overlay"></div>
+        <div style="display: block" class="popup defaultPop">
+            <div class="loader"></div>
+        </div>
+    </div>
+
+
 </div>
 
-<script>
+<?php
 
-    function search_email(){
-
-        console.log("Search Email");
-
-        var from_date = jQuery(".email_from").val();
-        var to_date = jQuery(".email_to").val();
-
-        if(to_date == "" || from_date == ""){
-            alert("Please provide a date.");
-        }
-
-        get_inbox(from_date,to_date,true);
-
-    }
-
-
-    function open_gmail(that){
-
-        //window.location.href="https://mail.google.com/mail/u/0/#inbox/"+$(that).attr("id");
-        window.open('https://mail.google.com/mail/u/0/#inbox/'+$(that).attr("id"), '_blank');
-
-    }
-
-    function get_inbox(from,to,search = false){
-
-        $.ajax({
-            url:"<?php echo admin_url( 'admin-ajax.php' ) ?>", // Url to which the request is send
-            type: "POST",             // Type of request to be send, called as method
-            data: {action:"get_email_messages",user_email:' <?php echo $customer->get_email(); ?>',from_date:from,to_date:to,search:search}, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-            success: function(data)   // A function to be called if request succeeds
-            {
-
-                data = JSON.parse(data);
-
-                var trHTML = '';
-                console.log("Date get message");
-                console.log(data);
-                if(data != "" && data != "null" && data != null){
-                    jQuery(".no_email_found").hide();
-                    $('#list_email tbody tr').remove();
-
-                    $.each(data, function (i, item) {
-                        //item.id
-                        //item.subject
-                        //item.from
-                        //item.date
-                        var unread  =  "";
-                        if(item.unread == true){
-                            unread = "unread";
-                        }
-                        trHTML += '<tr  style="cursor: pointer;" id="'+item.id+'" onclick="open_gmail(this)" class="'+unread+'"><td>' +  item.from + '</td><td>' + item.subject+ '</td><td>' + item.date+ '</td></tr>';
-                    });
-                    $('#list_email').append(trHTML);
-
-                }else{
-                    $('#list_email tbody tr').remove();
-                    jQuery(".no_email_found").show();
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown)
-            {
-                jQuery(".no_email_found").show();
-                // Handle errors here
-                console.log('ERRORS: ' + textStatus);
-                console.log(errorThrown);
-                // STOP LOADING SPINNER
-            }
-        });
-
-        console.log("Table Updated");
-        setTimeout(get_inbox, 60000);
-
-    }
-
-    jQuery(document).ready(function(){
-        <?php if(get_user_meta(get_current_user_id(), "google_sso_token", true) != ""){?>
-        jQuery( "#accordion" ).accordion({
-            collapsible: true
-        });
-
-        jQuery("[href='#email_list']").click(function(){
-            jQuery(".activity-content").hide()
-            jQuery(".email_from").datepicker({dateFormat: 'yy-dd-mm'});
-            jQuery(".email_to").datepicker({dateFormat: 'yy-dd-mm'});
-            get_inbox();
-        });
-
-
-        <?php } ?>
-
-        jQuery("[href='!#email_list']").click(function(){
-            jQuery(".activity-content").show();
-        });
-
-
-    });
-
-</script>
+/*
+ * add_shortcode( 'font_form_gmail_sso', 'front_form_gmail_sso' );
+   add_shortcode( 'font_script_gmail_sso', 'front_script_email_sso' );
+ *
+ */
+?>
+<?php echo do_shortcode("[front_script_gmail_sso customer= '".$customer->get_email()."'  ]"); ?>
