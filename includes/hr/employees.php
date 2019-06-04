@@ -83,6 +83,8 @@ add_shortcode( 'employees-list-table', function() {
     wp_enqueue_style( 'erp-shortcode-styles' );
     wp_enqueue_style( 'erp-select2' );
 
+    require_once dirname( __FILE__ ) . '/employee-list-table.php';
+
     $template = '';
 
     $template .= '<div class="wrap erp-hr-employees" id="wp-erp">';
@@ -90,12 +92,10 @@ add_shortcode( 'employees-list-table', function() {
     $template .= '<div class="list-table-wrap erp-hr-employees-wrap">
         <div class="list-table-inner erp-hr-employees-wrap-inner">
 
-            <form method="get">
-                <input type="hidden" name="page" value="erp-hr">
-                <input type="hidden" name="section" value="employee">';
+            <form class="show-search-box" method="get">';
                 ob_start();
-                    
-                $employee_table = new \WeDevs\ERP\HRM\Employee_List_Table();
+
+                $employee_table = new Custom_Employee_List_Table();
                 $employee_table->prepare_items();
                 $employee_table->search_box( __( 'Search Employee', 'erp' ), 'erp-employee-search' );
                 $employee_table->views();
