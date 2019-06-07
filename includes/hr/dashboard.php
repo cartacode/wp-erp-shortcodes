@@ -8,7 +8,30 @@
 			$employee_tbl = $wpdb->prefix . 'erp_hr_employees';
 			$employees = \WeDevs\ERP\HRM\Models\Employee::select( array( $employee_tbl . '.user_id', 'display_name' ) )
 														->leftJoin( $wpdb->users, $employee_tbl . '.user_id', '=', $wpdb->users . '.ID' );
+		    if ( !current_user_can( 'administrator' ) ) {
+		        $tmp_employee_id_arr = array();
+		        $owner_id = get_user_meta( get_current_user_id(), 'created_by', true );
 
+		        $is_staff_or_team = get_user_meta( get_current_user_id(), 'is_staff_or_team_user', true );
+		        $is_staff_or_team = empty( $is_staff_or_team ) ? 'off' : $is_staff_or_team;
+
+		        foreach ( $employees->get()->toArray() as $employee) {
+		            /*if ( !current_user_can('erp_crm_agent') || $is_staff_or_team == 'on' ) {
+		                if ( get_user_meta( $employee['user_id'], 'created_by', true ) == $owner_id ) {
+		                    array_push( $tmp_employee_id_arr, $employee['user_id'] );
+		                }
+		            }*/
+
+		            if ( get_user_meta( $employee['user_id'], 'created_by', true ) == get_current_user_id() ) {
+		                array_push( $tmp_employee_id_arr, $employee['user_id'] );
+		            }
+		        }
+
+		        $employees    = \WeDevs\ERP\HRM\Models\Employee::select( array( $employee_tbl . '.user_id', 'display_name' ) )
+		                                                       ->leftJoin( $wpdb->users, $employee_tbl . '.user_id', '=', $wpdb->users . '.ID' )
+		                                                       ->whereIn( $employee_tbl . '.user_id', $tmp_employee_id_arr );        
+		    }
+		    
 			$tmp_employee_id_arr = array();
 			$owner_id = get_user_meta( get_current_user_id(), 'created_by', true );
 
