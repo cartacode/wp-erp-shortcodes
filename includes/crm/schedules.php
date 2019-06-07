@@ -154,7 +154,7 @@ function render_schedule_fullcalendar( $tab = 'own' ) {
 							dateFormat: 'yy-mm-dd',
 							changeMonth: true,
 							changeYear: true,
-							yearRange: '-50:+5',
+							yearRange: '1915:+5',
 						});
 
 						jQuery( '.erp-time-field' ).timepicker({
