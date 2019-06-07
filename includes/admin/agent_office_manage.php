@@ -79,6 +79,8 @@ class Agent_Office_Manage {
               <?php foreach( array_values( get_default_brokerage_offices() ) as $office_name ): ?>
                 <option <?php esc_attr_e( $office_name == $agent_office ? 'selected' : '' ); ?> value="<?php esc_attr_e( $office_name ); ?>"><?php _e( $office_name ); ?></option>
               <?php endforeach; ?>
+
+              <option <?php esc_attr_e( 'Los Gatos' == $agent_office ? 'selected' : '' ); ?> value="Los Gatos">Los Gatos</option>
             </select>
             
             <input type="submit" class="button button-primary" value="Update">
