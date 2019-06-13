@@ -172,7 +172,8 @@ if ( !function_exists( 'get_default_brokerage_offices' ) ) {
             'Ron Kahn'              => 'San Carlos',
             'Anne Kennedy'          => 'Napa Valley',
             'Blanca Aguirre'        => 'San Francisco',
-            'Tina Jones'            => 'Oakland'
+            'Tina Jones'            => 'Oakland',
+            'Bryan Zapf'            => 'Los Gatos'
         ];
     }
 }
@@ -219,3 +220,20 @@ if ( !function_exists( 'get_brokerage_office_by_agent_user_id' ) ) {
         return '';
     }
 }
+
+
+add_action( 'wp_ajax_custom-unsubscribe-contact', function() {
+    if ( empty( $_REQUEST['user_id'] ) || empty( $_REQUEST['group_id'] ) )
+        wp_send_json_error( 'Please check user_id or group_id again.');
+
+    extract( $_REQUEST );
+
+    $updated = \WeDevs\ERP\CRM\Models\ContactSubscriber::where( 'user_id', $user_id )
+               ->where( 'group_id', $group_id )
+               ->update( [
+                   'status'         => 'unsubscribe',
+                   'unsubscribe_at' => current_time( 'mysql' )
+               ] );
+
+    wp_send_json_success( $updated );
+} );
