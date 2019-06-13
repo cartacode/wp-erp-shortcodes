@@ -172,7 +172,8 @@ if ( !function_exists( 'get_default_brokerage_offices' ) ) {
             'Ron Kahn'              => 'San Carlos',
             'Anne Kennedy'          => 'Napa Valley',
             'Blanca Aguirre'        => 'San Francisco',
-            'Tina Jones'            => 'Oakland'
+            'Tina Jones'            => 'Oakland',
+            'Bryan Zapf'            => 'Los Gatos'
         ];
     }
 }
