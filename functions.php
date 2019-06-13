@@ -18,10 +18,10 @@ if ( !function_exists( 'current_wp_erp_user_is' ) ) {
                 return $owner_id ? user_can( $owner_id, 'administrator' ) : false;
 
             case 'staff':
-                $is_staff_or_team_user = get_user_meta( get_current_user_id(), 'is_staff_or_team_user', true );
+                $is_staff_or_team_user = get_user_meta( get_current_user_id(), 'is_staff_or_team_user', true ) == 'on';
                 $o_owner_id = get_user_meta( $owner_id, 'created_by', true );
 
-                return ( $o_owner_id ? user_can( $o_owner_id, 'administrator' ) : false ) && $is_staff_or_team_user == 'on';
+                return ( $o_owner_id ? user_can( $o_owner_id, 'administrator' ) : false ) && $is_staff_or_team_user;
             
             default:
                 return false;
@@ -113,46 +113,50 @@ if ( !function_exists( 'update_user_profile' ) ) {
 
         $wordpress_upload_dir = wp_upload_dir();
 
-        $new_file_path = $wordpress_upload_dir['path'] . '/' . $avatar['name'];
-        $new_file_mime = mime_content_type( $avatar['tmp_name'] );
-         
-        if( empty( $avatar ) ) {
-            error_log( 'File is not selected.' );
-        } elseif( $avatar['error'] ) {
-            error_log( $avatar['error'] );
-        } elseif( $avatar['size'] > wp_max_upload_size() ) {
-            error_log( 'It is too large than expected.' );
-        } elseif( !in_array( $new_file_mime, get_allowed_mime_types() ) ) {
-            error_log( 'WordPress doesn\'t allow this type of uploads.' );
-        } else {
-            while( file_exists( $new_file_path ) ) {
-                $i++;
-                $new_file_path = $wordpress_upload_dir['path'] . '/' . $i . '_' . $avatar['name'];
-            }
-         
-            // looks like everything is OK
-            if( move_uploaded_file( $avatar['tmp_name'], $new_file_path ) ) {            
+        if( !empty( $avatar ) ) {
+            $new_file_path = $wordpress_upload_dir['path'] . '/' . $avatar['name'];
+            $new_file_mime = mime_content_type( $avatar['tmp_name'] );
+
+            if( $avatar['error'] ) {
+                error_log( $avatar['error'] );
+            } elseif( $avatar['size'] > wp_max_upload_size() ) {
+                error_log( 'It is too large than expected.' );
+            } elseif( !in_array( $new_file_mime, get_allowed_mime_types() ) ) {
+                error_log( 'WordPress doesn\'t allow this type of uploads.' );
+            } else {
+                while( file_exists( $new_file_path ) ) {
+                    $i++;
+                    $new_file_path = $wordpress_upload_dir['path'] . '/' . $i . '_' . $avatar['name'];
+                }
              
-                $upload_id = wp_insert_attachment( array(
-                    'guid'           => $new_file_path, 
-                    'post_mime_type' => $new_file_mime,
-                    'post_title'     => preg_replace( '/\.[^.]+$/', '', $avatar['name'] ),
-                    'post_content'   => '',
-                    'post_status'    => 'inherit'
-                ), $new_file_path );
-             
-                // wp_generate_attachment_metadata() won't work if you do not include this file
-                require_once( ABSPATH . 'wp-admin/includes/image.php' );
-             
-                // Generate and save the attachment metas into the database
-                wp_update_attachment_metadata( $upload_id, wp_generate_attachment_metadata( $upload_id, $new_file_path ) );
+                // looks like everything is OK
+                if( move_uploaded_file( $avatar['tmp_name'], $new_file_path ) ) {            
+                 
+                    $upload_id = wp_insert_attachment( array(
+                        'guid'           => $new_file_path, 
+                        'post_mime_type' => $new_file_mime,
+                        'post_title'     => preg_replace( '/\.[^.]+$/', '', $avatar['name'] ),
+                        'post_content'   => '',
+                        'post_status'    => 'inherit'
+                    ), $new_file_path );
+                 
+                    // wp_generate_attachment_metadata() won't work if you do not include this file
+                    require_once( ABSPATH . 'wp-admin/includes/image.php' );
+                 
+                    // Generate and save the attachment metas into the database
+                    wp_update_attachment_metadata( $upload_id, wp_generate_attachment_metadata( $upload_id, $new_file_path ) );
 
 
-                $employee = new WeDevs\ERP\HRM\Employee( $user_id );
-                $data = $employee->to_array();
-                $data['personal']['photo_id'] = $upload_id;
-                $employee->create_employee( $data );
+                    $employee = new WeDevs\ERP\HRM\Employee( $user_id );
+                    $data = $employee->to_array();
+                    $data['personal']['photo_id'] = $upload_id;
+                    $employee->create_employee( $data );
+                }
             }
+        }
+
+        if ( isset( $user_data['dre_number'] ) && !empty( $user_data['dre_number'] ) ) {
+            update_user_meta( get_current_user_id(), 'dre_number', $user_data['dre_number'] );
         }
 
         wp_set_current_user( $user_id );
@@ -161,6 +165,59 @@ if ( !function_exists( 'update_user_profile' ) ) {
         wp_logout();
         wp_redirect( home_url( '/home/login' ) );
         exit;
+    }
+}
+
+// update office profile
+if ( !function_exists( 'update_office_profile' ) ) {
+    function update_office_profile( $user_data, $office_logo = null ) {
+        $wordpress_upload_dir = wp_upload_dir();
+
+        if( !empty( $office_logo ) ) {
+            $new_file_path = $wordpress_upload_dir['path'] . '/' . $office_logo['name'];
+            $new_file_mime = mime_content_type( $office_logo['tmp_name'] );
+
+            if( $office_logo['error'] ) {
+                error_log( $office_logo['error'] );
+            } elseif( $office_logo['size'] > wp_max_upload_size() ) {
+                error_log( 'It is too large than expected.' );
+            } elseif( !in_array( $new_file_mime, get_allowed_mime_types() ) ) {
+                error_log( 'WordPress doesn\'t allow this type of uploads.' );
+            } else {
+                while( file_exists( $new_file_path ) ) {
+                    $i++;
+                    $new_file_path = $wordpress_upload_dir['path'] . '/' . $i . '_' . $office_logo['name'];
+                }
+             
+                // looks like everything is OK
+                if( move_uploaded_file( $office_logo['tmp_name'], $new_file_path ) ) {            
+                 
+                    $upload_id = wp_insert_attachment( array(
+                        'guid'           => $new_file_path, 
+                        'post_mime_type' => $new_file_mime,
+                        'post_title'     => preg_replace( '/\.[^.]+$/', '', $office_logo['name'] ),
+                        'post_content'   => '',
+                        'post_status'    => 'inherit'
+                    ), $new_file_path );
+                 
+                    // wp_generate_attachment_metadata() won't work if you do not include this file
+                    require_once( ABSPATH . 'wp-admin/includes/image.php' );
+                 
+                    // Generate and save the attachment metas into the database
+                    wp_update_attachment_metadata( $upload_id, wp_generate_attachment_metadata( $upload_id, $new_file_path ) );
+
+                    update_user_meta( get_current_user_id(), 'office_logo', $upload_id );
+                }
+            }
+        }
+
+        if ( current_wp_erp_user_is( 'broker' ) || current_wp_erp_user_is( 'staff' ) ) {
+            $keys = ['office_address_1', 'office_address_2', 'office_city', 'office_state', 'office_zip', 'office_dre_number' ];
+
+            foreach ( $keys as $key ) {
+                update_user_meta( get_current_user_id(), $key, $user_data[$key] );
+            }
+        }
     }
 }
 

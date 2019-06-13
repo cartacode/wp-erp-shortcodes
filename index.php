@@ -167,7 +167,14 @@ add_action( 'init', function() {
 } );
 
 add_action( 'init', function() {
-    if ( !isset( $_POST['_wpnonce'] ) || !wp_verify_nonce( $_POST['_wpnonce'], 'update-profile' ) || !is_user_logged_in() )
+    if ( !isset( $_POST['_wpnonce'] ) || !is_user_logged_in() )
         return;
-    $is_updated = update_user_profile( $_POST, $_FILES['avatar'] );
+
+    if ( wp_verify_nonce( $_POST['_wpnonce'], 'update-profile' ) ) {
+        $is_updated = update_user_profile( $_POST, $_FILES['avatar'] );
+    }
+
+    if ( wp_verify_nonce( $_POST['_wpnonce'], 'update-office-profile' ) ) {
+        $is_updated = update_office_profile( $_POST, $_FILES['office_logo'] );
+    }
 } );
