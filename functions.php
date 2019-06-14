@@ -146,14 +146,19 @@ if ( !function_exists( 'update_user_profile' ) ) {
                     // Generate and save the attachment metas into the database
                     wp_update_attachment_metadata( $upload_id, wp_generate_attachment_metadata( $upload_id, $new_file_path ) );
 
-
                     $employee = new WeDevs\ERP\HRM\Employee( $user_id );
                     $data = $employee->to_array();
                     $data['personal']['photo_id'] = $upload_id;
-                    $employee->create_employee( $data );
+                    $employee->update_employee( $data );
                 }
             }
         }
+
+        $employee = new WeDevs\ERP\HRM\Employee( $user_id );
+        $data = $employee->to_array();
+        $data['personal']['work_phone'] = empty( $user_data['work_phone'] ) ? '' : $user_data['work_phone'];
+        $data['personal']['description'] = empty( $user_data['description'] ) ? '' : $user_data['description'];
+        $employee->update_employee( $data );
 
         if ( isset( $user_data['dre_number'] ) && !empty( $user_data['dre_number'] ) ) {
             update_user_meta( get_current_user_id(), 'dre_number', $user_data['dre_number'] );

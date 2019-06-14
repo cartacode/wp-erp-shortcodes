@@ -6,6 +6,8 @@ add_shortcode( 'ac-update-profile', function() {
 	$employee = new WeDevs\ERP\HRM\Employee( get_current_user_id() );
 	$photo_id = $employee->get_photo_id();
 	$avatar_url = $employee->get_avatar_url( $photo_id );
+	$work_phone = $employee->get_work_phone();
+	$description = $employee->get_data()['personal']['description'];
 
 	ob_start();
 ?>
@@ -36,10 +38,14 @@ add_shortcode( 'ac-update-profile', function() {
 				</div>
 			
 				<div class="form-group email">
-					<label class="w-100">Email:</label>
-			
-					<div class="">
+					<div class="flex-column">
+						<label>Email:</label>
 						<input type="email" name="user_email" required="" value="<?php _e( esc_attr( $current_user->user_email ) ) ?>">
+					</div>
+
+					<div class="flex-column">
+						<label>Work Phone:</label>			
+						<input type="text" name="work_phone" required="" value="<?php _e( esc_attr( $work_phone ) ) ?>" />
 					</div>
 				</div>
 			
@@ -53,6 +59,11 @@ add_shortcode( 'ac-update-profile', function() {
 					<div class="confirm-password flex-column">
 						<input type="password" name="confirm_password" required="" placeholder="Confirm Password">
 					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="w-100">Biography:</label>
+					<textarea class="w-100" rows="5" name="description"><?php _e( $description ); ?></textarea>
 				</div>
 
 			<?php if ( !current_wp_erp_user_is( 'broker' ) && !current_wp_erp_user_is( 'staff' ) && !current_user_can( 'administrator' ) ): ?>
