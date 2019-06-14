@@ -139,3 +139,9 @@ form.update-office-profile-form button {
 form.update-profile-form button:disabled {
     background-color: #ddd;
 }
+
+
+form.update-profile-form textarea {
+    min-height: 100px;
+    height: 100px;
+}
