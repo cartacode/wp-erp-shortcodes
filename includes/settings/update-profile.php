@@ -70,7 +70,7 @@ add_shortcode( 'ac-update-profile', function() {
 				<div class="form-group">
 					<label class="w-100">DRE:</label>
 					<div class="">
-						<input type="text" name="dre_number" />
+						<input type="text" name="dre_number" value="<?php esc_attr_e( get_user_meta( get_current_user_id(), 'dre_number', true ) ); ?>" />
 					</div>
 				</div>
 			<?php endif; ?>
