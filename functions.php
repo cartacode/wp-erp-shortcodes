@@ -177,6 +177,7 @@ if ( !function_exists( 'update_user_profile' ) ) {
 if ( !function_exists( 'update_office_profile' ) ) {
     function update_office_profile( $user_data, $office_logo = null ) {
         $wordpress_upload_dir = wp_upload_dir();
+        $broker_user_id = current_wp_erp_user_is( 'broker' ) ? get_current_user_id() : get_user_meta( get_current_user_id(), 'created_by', true );
 
         if( !empty( $office_logo ) ) {
             $new_file_path = $wordpress_upload_dir['path'] . '/' . $office_logo['name'];
@@ -211,7 +212,7 @@ if ( !function_exists( 'update_office_profile' ) ) {
                     // Generate and save the attachment metas into the database
                     wp_update_attachment_metadata( $upload_id, wp_generate_attachment_metadata( $upload_id, $new_file_path ) );
 
-                    update_user_meta( get_current_user_id(), 'office_logo', $upload_id );
+                    update_user_meta( $broker_user_id, 'office_logo', $upload_id );
                 }
             }
         }
@@ -220,7 +221,7 @@ if ( !function_exists( 'update_office_profile' ) ) {
             $keys = ['office_address_1', 'office_address_2', 'office_city', 'office_state', 'office_zip', 'office_dre_number' ];
 
             foreach ( $keys as $key ) {
-                update_user_meta( get_current_user_id(), $key, $user_data[$key] );
+                update_user_meta( $broker_user_id, $key, $user_data[$key] );
             }
         }
     }
@@ -283,7 +284,7 @@ if ( !function_exists( 'get_brokerage_office_by_agent_user_id' ) ) {
     }
 }
 
-
+// ajax end point to unsubscribe
 add_action( 'wp_ajax_custom-unsubscribe-contact', function() {
     if ( empty( $_REQUEST['user_id'] ) || empty( $_REQUEST['group_id'] ) )
         wp_send_json_error( 'Please check user_id or group_id again.');
@@ -299,3 +300,29 @@ add_action( 'wp_ajax_custom-unsubscribe-contact', function() {
 
     wp_send_json_success( $updated );
 } );
+
+// add default circle id to the disabled circle list
+if ( !function_exists( 'add_disabled_group_id' ) ) {
+    function add_disabled_group_id( $group_id ) {
+        $group_ids = get_user_meta( get_current_user_id(), 'disabled_group_ids', true );
+
+        $group_ids = empty( $group_ids ) ? [] : $group_ids;
+
+        if ( !in_array( $group_id, $group_ids ) )
+            array_push( $group_ids, $group_id );
+
+        update_user_meta( get_current_user_id(), 'disabled_group_ids', $group_ids );
+
+        return $group_ids;
+    }
+}
+
+if ( !function_exists( 'get_disabled_group_ids' ) ) {
+    function get_disabled_group_ids() {
+        $group_ids = get_user_meta( get_current_user_id(), 'disabled_group_ids', true );
+
+        $group_ids = empty( $group_ids ) ? [] : $group_ids;
+
+        return $group_ids;
+    }
+}

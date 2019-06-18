@@ -4,8 +4,7 @@ add_shortcode( 'ac-update-profile', function() {
 
 	$current_user = wp_get_current_user();
 	$employee = new WeDevs\ERP\HRM\Employee( get_current_user_id() );
-	$photo_id = $employee->get_photo_id();
-	$avatar_url = $employee->get_avatar_url( $photo_id );
+	$avatar_url = $employee->get_avatar_url( 450 );
 	$work_phone = $employee->get_work_phone();
 	$description = $employee->get_data()['personal']['description'];
 
@@ -89,10 +88,11 @@ add_shortcode( 'ac-update-profile', function() {
 
 
 <?php if ( current_wp_erp_user_is( 'broker' ) || current_wp_erp_user_is( 'staff' ) ): ?>
+	<?php $broker_user_id = current_wp_erp_user_is( 'broker' ) ? get_current_user_id() : get_user_meta( get_current_user_id(), 'created_by', true ); ?>
 	<form class="update-office-profile-form" method="post" enctype="multipart/form-data">
 		<div class="office-profile-wrapper d-flex">
 			<?php 
-				$photo_id = get_user_meta( get_current_user_id(), 'office_logo', true );
+				$photo_id = get_user_meta( $broker_user_id, 'office_logo', true );
 				$office_logo_url = $photo_id ? wp_get_attachment_url( $photo_id ) : '';
 			?>
 			<div class="office-logo-wrapper img-upload-wrapper">
@@ -107,36 +107,36 @@ add_shortcode( 'ac-update-profile', function() {
 				<div class="form-group">
 					<div class="flex-column">
 						<label>Office Address 1:</label>
-						<input type="text" name="office_address_1" value="<?php esc_attr_e( get_user_meta( get_current_user_id(), 'office_address_1', true ) ); ?>" />
+						<input type="text" name="office_address_1" value="<?php esc_attr_e( get_user_meta( $broker_user_id, 'office_address_1', true ) ); ?>" />
 					</div>
 
 					<div class="flex-column">
 						<label>Office Address 2:</label>
-						<input type="text" name="office_address_2" value="<?php esc_attr_e( get_user_meta( get_current_user_id(), 'office_address_2', true ) ); ?>" />
+						<input type="text" name="office_address_2" value="<?php esc_attr_e( get_user_meta( $broker_user_id, 'office_address_2', true ) ); ?>" />
 					</div>
 				</div>
 
 				<div class="form-group">
 					<div class="flex-column">
 						<label>Office City:</label>
-						<input type="text" name="office_city" value="<?php esc_attr_e( get_user_meta( get_current_user_id(), 'office_city', true ) ); ?>" />
+						<input type="text" name="office_city" value="<?php esc_attr_e( get_user_meta( $broker_user_id, 'office_city', true ) ); ?>" />
 					</div>
 
 					<div class="flex-column">
 						<label>Office State:</label>
-						<input type="text" name="office_state" value="<?php esc_attr_e( get_user_meta( get_current_user_id(), 'office_state', true ) ); ?>" />
+						<input type="text" name="office_state" value="<?php esc_attr_e( get_user_meta( $broker_user_id, 'office_state', true ) ); ?>" />
 					</div>
 				</div>
 
 				<div class="form-group">
 					<div class="flex-column">
 						<label>Office Zipcode:</label>
-						<input type="text" name="office_zip" value="<?php esc_attr_e( get_user_meta( get_current_user_id(), 'office_zip', true ) ); ?>" />
+						<input type="text" name="office_zip" value="<?php esc_attr_e( get_user_meta( $broker_user_id, 'office_zip', true ) ); ?>" />
 					</div>
 
 					<div class="flex-column">
 						<label>Office DRE:</label>
-						<input type="text" name="office_dre_number" value="<?php esc_attr_e( get_user_meta( get_current_user_id(), 'office_dre_number', true ) ); ?>" />
+						<input type="text" name="office_dre_number" value="<?php esc_attr_e( get_user_meta( $broker_user_id, 'office_dre_number', true ) ); ?>" />
 					</div>
 				</div>
 			</div>
