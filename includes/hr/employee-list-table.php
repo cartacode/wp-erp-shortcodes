@@ -33,7 +33,6 @@ class Custom_Employee_List_Table extends \WP_List_Table {
         }
 
         $selected_desingnation = ( isset( $_GET['filter_designation'] ) ) ? $_GET['filter_designation'] : 0;
-        $selected_department   = ( isset( $_GET['filter_department'] ) ) ? $_GET['filter_department'] : 0;
         $selected_type   = ( isset( $_GET['filter_employment_type'] ) ) ? $_GET['filter_employment_type'] : '';
         ?>
         <div class="alignleft actions">
@@ -76,10 +75,10 @@ class Custom_Employee_List_Table extends \WP_List_Table {
 
         switch ( $column_name ) {
             case 'brokerage_office':
-                return $employee->get_brokerage_office('view');
+                return $employee->get_brokerage_office();
 
-            case 'department':
-                return $employee->get_department('view');
+            case 'email':
+                return $employee->get_user_email();
 
             case 'type':
                 return $employee->get_type('view');
@@ -132,7 +131,7 @@ class Custom_Employee_List_Table extends \WP_List_Table {
             'cb'           => '<input type="checkbox" />',
             'name'         => __( 'Employee Name', 'erp' ),
             'brokerage_office'  => __( 'Brokerage Office', 'erp' ),
-            'department'   => __( 'Department', 'erp' ),
+            'email'   => __( 'Email', 'erp' ),
             'type'         => __( 'Employment Type', 'erp' ),
             'date_of_hire' => __( 'Joined', 'erp' ),
             'status'       => __( 'Status', 'erp' ),
@@ -305,10 +304,6 @@ class Custom_Employee_List_Table extends \WP_List_Table {
 
         if ( isset( $_REQUEST['filter_designation'] ) && $_REQUEST['filter_designation'] ) {
             $args['designation'] = $_REQUEST['filter_designation'];
-        }
-
-        if ( isset( $_REQUEST['filter_department'] ) && $_REQUEST['filter_department'] ) {
-            $args['department'] = $_REQUEST['filter_department'];
         }
 
         if ( isset( $_REQUEST['filter_employment_type'] ) && $_REQUEST['filter_employment_type'] ) {
