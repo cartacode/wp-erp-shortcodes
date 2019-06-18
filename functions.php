@@ -284,7 +284,7 @@ if ( !function_exists( 'get_brokerage_office_by_agent_user_id' ) ) {
     }
 }
 
-
+// ajax end point to unsubscribe
 add_action( 'wp_ajax_custom-unsubscribe-contact', function() {
     if ( empty( $_REQUEST['user_id'] ) || empty( $_REQUEST['group_id'] ) )
         wp_send_json_error( 'Please check user_id or group_id again.');
@@ -300,3 +300,29 @@ add_action( 'wp_ajax_custom-unsubscribe-contact', function() {
 
     wp_send_json_success( $updated );
 } );
+
+// add default circle id to the disabled circle list
+if ( !function_exists( 'add_disabled_group_id' ) ) {
+    function add_disabled_group_id( $group_id ) {
+        $group_ids = get_user_meta( get_current_user_id(), 'disabled_group_ids', true );
+
+        $group_ids = empty( $group_ids ) ? [] : $group_ids;
+
+        if ( !in_array( $group_id, $group_ids ) )
+            array_push( $group_ids, $group_id );
+
+        update_user_meta( get_current_user_id(), 'disabled_group_ids', $group_ids );
+
+        return $group_ids;
+    }
+}
+
+if ( !function_exists( 'get_disabled_group_ids' ) ) {
+    function get_disabled_group_ids() {
+        $group_ids = get_user_meta( get_current_user_id(), 'disabled_group_ids', true );
+
+        $group_ids = empty( $group_ids ) ? [] : $group_ids;
+
+        return $group_ids;
+    }
+}
