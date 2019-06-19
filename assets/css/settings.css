@@ -134,6 +134,10 @@ form.update-profile-form button,
 form.update-office-profile-form button {
     margin: 0px auto;
     margin-left: 250px;
+    margin-top: 10px;
+    min-height: 48px;
+    font-family: "Roboto",sans-serif;
+    width: 150px;
 }
 
 form.update-profile-form button:disabled {
@@ -141,7 +145,8 @@ form.update-profile-form button:disabled {
 }
 
 
-form.update-profile-form textarea {
+form.update-profile-form textarea,
+form.update-office-profile-form textarea {
     min-height: 100px;
     height: 100px;
 }
