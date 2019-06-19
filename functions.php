@@ -234,7 +234,7 @@ if ( !function_exists( 'update_office_profile' ) ) {
         }
 
         if ( current_wp_erp_user_is( 'broker' ) || current_wp_erp_user_is( 'staff' ) ) {
-            $keys = ['office_address_1', 'office_address_2', 'office_city', 'office_state', 'office_zip', 'office_dre_number' ];
+            $keys = ['office_address_1', 'office_address_2', 'office_city', 'office_state', 'office_zip', 'office_dre_number', 'legal_compliance' ];
 
             foreach ( $keys as $key ) {
                 update_user_meta( $broker_user_id, $key, $user_data[$key] );
