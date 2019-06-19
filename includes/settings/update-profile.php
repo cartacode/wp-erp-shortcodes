@@ -44,7 +44,7 @@ add_shortcode( 'ac-update-profile', function() {
 
 					<div class="flex-column">
 						<label>Work Phone:</label>			
-						<input type="text" name="work_phone" required="" value="<?php _e( esc_attr( $work_phone ) ) ?>" />
+						<input type="text" name="work_phone" value="<?php _e( esc_attr( $work_phone ) ) ?>" />
 					</div>
 				</div>
 			
@@ -52,11 +52,11 @@ add_shortcode( 'ac-update-profile', function() {
 					<label class="w-100">Password:</label>
 					
 					<div class="real-password flex-column">
-						<input type="password" name="password" required="" placeholder="Enter Password">
+						<input type="password" name="password" placeholder="Enter Password">
 					</div>
 			
 					<div class="confirm-password flex-column">
-						<input type="password" name="confirm_password" required="" placeholder="Confirm Password">
+						<input type="password" name="confirm_password" placeholder="Confirm Password">
 					</div>
 				</div>
 
@@ -77,7 +77,7 @@ add_shortcode( 'ac-update-profile', function() {
 		</div>
 
 		<?php wp_nonce_field( 'update-profile' ) ?>
-		<button id="submit" type="submit" disabled="">Update</button>
+		<button id="submit" type="submit">Update</button>
 		<?php
 			if ( class_exists( 'ACGoogleSSOGmail' ) ) {
 				$ACGoogleSSOGmail = new ACGoogleSSOGmail();
