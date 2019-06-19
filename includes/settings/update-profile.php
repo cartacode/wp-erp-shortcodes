@@ -139,6 +139,11 @@ add_shortcode( 'ac-update-profile', function() {
 						<input type="text" name="office_dre_number" value="<?php esc_attr_e( get_user_meta( $broker_user_id, 'office_dre_number', true ) ); ?>" />
 					</div>
 				</div>
+
+				<div class="form-group">
+					<label class="w-100">Legal Compliance:</label>
+					<textarea class="w-100" rows="5" name="legal_compliance"><?php _e( get_user_meta( $broker_user_id, 'legal_compliance', true ) ); ?></textarea>
+				</div>
 			</div>
 		</div>
 
