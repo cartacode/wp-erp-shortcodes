@@ -145,7 +145,8 @@ form.update-profile-form button:disabled {
 }
 
 
-form.update-profile-form textarea {
+form.update-profile-form textarea,
+form.update-office-profile-form textarea {
     min-height: 100px;
     height: 100px;
 }
