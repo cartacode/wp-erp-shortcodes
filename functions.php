@@ -99,14 +99,23 @@ if ( !function_exists( 'wp_list_table_pagination' ) ) {
 // update user profile
 if ( !function_exists( 'update_user_profile' ) ) {
     function update_user_profile( $user_data, $avatar = null ) {
-        $user_id = wp_update_user( array( 
+        $args = [
             'ID'            => get_current_user_id(), 
             'first_name'    => $user_data['first_name'],
             'last_name'     => $user_data['last_name'],
             'display_name'  => $user_data['first_name'] . ' ' . $user_data['last_name'],
-            'user_email'    => $user_data['user_email'],
-            'user_pass'     => $user_data['password']
-        ) );
+            'user_email'    => $user_data['user_email']
+        ];
+
+        if ( 
+            isset( $user_data['password'] ) && !empty( $user_data['password'] ) &&
+            isset( $user_data['confirm_password'] ) && !empty( $user_data['confirm_password'] ) &&
+            $user_data['password'] == $user_data['confirm_password']
+        ) {
+            $args['user_pass'] = $user_data['password'];
+        }
+
+        $user_id = wp_update_user( $args );
 
         if ( is_wp_error( $user_id ) )
             return false;
@@ -167,9 +176,16 @@ if ( !function_exists( 'update_user_profile' ) ) {
         wp_set_current_user( $user_id );
         wp_set_auth_cookie( $user_id );
 
-        wp_logout();
-        wp_redirect( home_url( '/home/login' ) );
-        exit;
+
+        if ( 
+            isset( $user_data['password'] ) && !empty( $user_data['password'] ) &&
+            isset( $user_data['confirm_password'] ) && !empty( $user_data['confirm_password'] ) &&
+            $user_data['password'] == $user_data['confirm_password']
+        ) {
+            wp_logout();
+            wp_redirect( home_url( '/home/login' ) );
+            exit;
+        }
     }
 }
 
