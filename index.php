@@ -52,8 +52,9 @@ add_action( 'wp_enqueue_scripts', function() {
     wp_register_style( 'erp-nprogress', WPERP_ASSETS . '/vendor/nprogress/nprogress.css', false, date( 'Ymd' ) );
 
     wp_register_script( 'wp-erp-crm-vue-component', WP_ERP_MODULES_URL . "/crm/assets/js/crm-components.js", array( 'erp-nprogress', 'erp-script', 'erp-vuejs', 'underscore', 'erp-select2', 'erp-tiptip' ), date( 'Ymd' ), true );
+    wp_register_script( 'erp-email-campaign-contact-activity', WPERP_EMAIL_CAMPAIGN_ASSETS . '/js/contact-activity-email-campaign-component.js', [ 'wp-erp-crm-vue-component' ], WPERP_EMAIL_CAMPAIGN_VERSION, true );
 
-    wp_register_script( 'wp-erp-crm-vue-customer', WP_ERP_MODULES_URL . "/crm/assets/js/crm-app.js", array( 'wp-erp-crm-vue-component' ), date( 'Ymd' ), true );
+    wp_register_script( 'wp-erp-crm-vue-customer', WP_ERP_MODULES_URL . "/crm/assets/js/crm-app.js", array( 'erp-email-campaign-contact-activity' ), date( 'Ymd' ), true );
 
     wp_enqueue_style( 'jquery-ui', WPERP_ASSETS . '/vendor/jquery-ui/jquery-ui-1.9.1.custom.css' );
     // Scripts for HR Section
