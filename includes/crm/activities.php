@@ -55,6 +55,7 @@ add_shortcode( 'activity_list', function() {
 					</select>
 				</div>
 
+				<?php /*
 				<div class="filters">
 					<select style="width:260px;" v-selecttwo="filterFeeds.created_by" class="select2" v-model="filterFeeds.created_by" id="activity-created-by" data-placeholder="Created by..">
 						<option value="-1">All</option>
@@ -66,6 +67,7 @@ add_shortcode( 'activity_list', function() {
 
 					</select>
 				</div>
+				*/?>
 
 				<div class="filters">
 					<select style="width:260px;" v-selecttwo="filterFeeds.customer_id" data-types="contact,company"  class="erp-crm-contact-list-dropdown" v-model="filterFeeds.customer_id" id="activity-created-for"  data-placeholder="Created for contact or company ..">
