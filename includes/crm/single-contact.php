@@ -1,6 +1,7 @@
 <?php
 $contact_tags = wp_get_object_terms( $customer->id, 'erp_crm_tag', array('orderby' => 'name', 'order' => 'ASC'));
 $contact_tags = wp_list_pluck($contact_tags, 'name');
+
 ?>
 <div class="wrap erp erp-crm-customer erp-single-customer" id="wp-erp" v-cloak>
     <h2><?php _e( 'Contact #', 'erp' ); echo $customer->id; ?>
@@ -205,14 +206,19 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
             <div class="col-4 column-right">
                 <?php
                 global $current_user;
+
                 $feeds_tab = erp_crm_get_customer_feeds_nav();
+
+                unset( $feeds_tab['sms'] );
+
                 ?>
                 <div class="erp-customer-feeds" id="erp-customer-feeds" v-cloak>
                     <input type="hidden" v-model="customer_id" value="<?php echo $customer->id; ?>" name="customer_id">
                     <div class="activity-form">
                         <ul class="erp-list list-inline nav-item">
+                            
                             <?php foreach ( $feeds_tab as $name => $value ) : ?>
-                                <li :class="'<?php echo $name; ?>' == tabShow ? 'active': ''">
+                                 <li :class="'<?php echo $name; ?>' == tabShow ? 'active': ''">
                                     <a href="#<?php echo $name; ?>" @click.prevent="showTab('<?php echo $name; ?>')">
                                         <?php echo sprintf('%s %s', $value['icon'], $value['title'] ); ?>
                                     </a>
@@ -222,22 +228,23 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
 
                         <div class="nav-content" id="erp-crm-feed-nav-content">
                             <form action="" method="post" @submit.prevent="addCustomerFeed()" id="erp-crm-activity-feed-form" enctype="multipart/form-data">
-
                                 <new-note v-if="tabShow == 'new_note'" :feed="" keep-alive></new-note>
 
-                                <email-note v-if="tabShow == 'email'"></email-note>
+                                <!--<email-note v-if="tabShow == 'email'"></email-note>-->
 
                                 <log-activity v-if="tabShow == 'log_activity'"></log-activity>
 
                                 <schedule-note v-if="tabShow == 'schedule'"></schedule-note>
 
                                 <tasks-note v-if="tabShow == 'tasks'"></tasks-note>
+<!--                                <div v-if="tabShow == 'sms'"></div>-->
+
 
                                 <div v-if="tabShow == 'email_list'">
                                     <?php echo do_shortcode("[front_form_gmail_sso]"); ?>
                                 </div> <!-- Email Tab -->
 
-                                <div v-if="tabShow == 'sms'">
+                                <div v-if="tabShow == 'sms_send'">
 
 
                                     <?php  //print_r($customer);
@@ -300,12 +307,12 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
         </div>
     </div>
 
-    <div class="popupWrap">
-        <div style="display: block" class="overlay js-overlay"></div>
-        <div style="display: block" class="popup defaultPop">
-            <div class="loader"></div>
-        </div>
-    </div>
+ <div class="popupWrap">
+<div style="display: block" class="overlay js-overlay"></div>-->
+<div style="display: block" class="popup defaultPop">-->
+<div class="loader"></div>-->
+</div>
+  </div>
 
 
 </div>
