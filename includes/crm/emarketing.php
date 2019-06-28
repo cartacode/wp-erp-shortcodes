@@ -417,7 +417,7 @@ add_shortcode( 'view-single-campaign', function() {
                                         <?php if ( ( 'paused' !== $campaign->status && 'draft' !== $campaign->status) && 'scheduled' === $campaign->send && ! empty( $campaign->deliver_at ) && ( strtotime( $campaign->deliver_at ) > current_time( 'timestamp' ) ) ): ?>
                                                 <span class="list-table-status scheduled">
                                                     <?php _e( 'Scheduled', 'erp-email-campaign' ); ?>
-                                                    <span class="schedule-label"><i class="dashicons dashicons-clock"></i> <?php _e( 'send at', 'erp-email-campaign' ) ?>: <?php echo date( 'Y-m-d g:i a', strtotime( $campaign->deliver_at ) ) ?></span>
+                                                    <span class="schedule-label"><i class="dashicons dashicons-clock"></i> <?php _e( 'send at', 'erp-email-campaign' ) ?>: <?php echo date( 'm-d-Y g:i a', strtotime( $campaign->deliver_at ) ) ?></span>
                                                 </span>
                                         <?php else: ?>
                                             <span class="list-table-status <?php echo $campaign->status; ?>">
