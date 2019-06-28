@@ -26,12 +26,12 @@ add_shortcode( 'ac-update-profile', function() {
 					<label class="w-100">Name: </label>
 			
 					<div class="first-name flex-column">
-						<input type="" name="first_name" required="" value="<?php _e( esc_attr( $current_user->user_firstname ) ) ?>">
+						<input type="" name="first_name" required="" value="<?php _e( esc_attr( $current_user->user_firstname ) ) ?>" />
 						<span>First</span>
 					</div>
 			
 					<div class="last-name flex-column">
-						<input type="" name="last_name" required="" value="<?php _e( esc_attr( $current_user->user_lastname ) ) ?>">
+						<input type="" name="last_name" required="" value="<?php _e( esc_attr( $current_user->user_lastname ) ) ?>" />
 						<span>Last</span>
 					</div>
 				</div>
@@ -39,7 +39,7 @@ add_shortcode( 'ac-update-profile', function() {
 				<div class="form-group email">
 					<div class="flex-column">
 						<label>Email:</label>
-						<input type="email" name="user_email" required="" value="<?php _e( esc_attr( $current_user->user_email ) ) ?>">
+						<input type="email" name="user_email" required="" value="<?php _e( esc_attr( $current_user->user_email ) ) ?>" />
 					</div>
 
 					<div class="flex-column">
@@ -48,15 +48,22 @@ add_shortcode( 'ac-update-profile', function() {
 					</div>
 				</div>
 			
+				<div class="form-group license-id">
+					<div class="flex-column">
+						<label>License ID:</label>
+						<input type="text" name="licenseId" required="" value="<?php esc_attr_e( get_user_meta( get_current_user_id(), 'licenseId', true ) ); ?>" />
+					</div>
+				</div>
+			
 				<div class="form-group password">
 					<label class="w-100">Password:</label>
 					
 					<div class="real-password flex-column">
-						<input type="password" name="password" placeholder="Enter Password">
+						<input type="password" name="password" placeholder="Enter Password" />
 					</div>
 			
 					<div class="confirm-password flex-column">
-						<input type="password" name="confirm_password" placeholder="Confirm Password">
+						<input type="password" name="confirm_password" placeholder="Confirm Password" />
 					</div>
 				</div>
 
@@ -100,7 +107,7 @@ add_shortcode( 'ac-update-profile', function() {
 				<div class="upload-button">
 					<i class="fa fa-upload" aria-hidden="true"></i>
 				</div>
-				<input class="file-upload" name="office_logo" type="file" accept="image/*"/>
+				<input class="file-upload" name="office_logo" type="file" accept="image/*" />
 			</div>
 
 			<div class="office-info-wrapper info-wrapper">
