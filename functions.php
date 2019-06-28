@@ -173,6 +173,10 @@ if ( !function_exists( 'update_user_profile' ) ) {
             update_user_meta( get_current_user_id(), 'dre_number', $user_data['dre_number'] );
         }
 
+        if ( isset( $user_data['licenseId'] ) && !empty( $user_data['licenseId'] ) ) {
+            update_user_meta( get_current_user_id(), 'licenseId', $user_data['licenseId'] );
+        }
+
         wp_set_current_user( $user_id );
         wp_set_auth_cookie( $user_id );
 
