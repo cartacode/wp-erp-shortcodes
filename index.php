@@ -6,7 +6,7 @@
 **/
 
 
-if ( file_exists( 'config.php' ) )
+if ( file_exists( plugin_dir_path( __FILE__ ) . 'config.php' ) )
     require_once( 'config.php' );
 
 require_once( 'functions.php' );
