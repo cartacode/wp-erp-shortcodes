@@ -52,3 +52,46 @@ add_shortcode( 'switch_back_link', function() {
 
     return '<a href="' . esc_url( $url ) . '" style="display: block; color: #fff; text-align: center;">' . esc_html( $link ) . '</a>';
 } );
+
+
+
+add_shortcode( 'sellers-shield-page-content', function() {
+    $licenseId = get_user_meta( get_current_user_id(), 'licenseId', true );
+    if ( empty( $licenseId ) ) {
+        ob_start();
+?>
+        <script type="text/javascript">
+            window.location.href = '<?php _e( home_url( '/dashboard/settings' ) ) ?>';
+        </script>
+<?php
+        $template = ob_get_contents();
+        ob_end_clean();
+
+        return $template;
+    }
+
+    $template = '';
+    if ( defined( 'SELLERS_SHIELD_SECRET' ) && empty( SELLERS_SHIELD_SECRET ) )
+        return $template;
+
+    $URL = sprintf( 'https://protect.sellersshield.com/api/v1/agent/token?secret=%s&licenseId=%s', SELLERS_SHIELD_SECRET, $licenseId );
+    $response = wp_remote_get( $URL );
+
+    if ( is_wp_error( $response ) )
+        return $template;
+
+    if ( $response['body'] == 'Unauthorized' )
+        return;
+
+    ob_start();
+?>
+
+    <iframe style="min-height: 100vh;" src="<?php esc_attr_e( 'https://protect.sellersshield.com/api/v1/agent/auth?token=' . $response['body'] ); ?>"></iframe>
+
+<?php
+    $template = ob_get_contents();
+
+    ob_end_clean();
+
+    return $template;
+} );

@@ -101,7 +101,7 @@ add_shortcode( 'new-email-campaign', function() {
     $ecampGlobal = [
         'ajaxurl'   => admin_url( 'admin-ajax.php' ),
         'nonce'     => wp_create_nonce( 'erp-email-campaign' ),
-        'debug'     => defined( 'SCRIPT_DEBUG' ) ? SCRIPT_DEBUG : false,
+        'debug'     => true,
         'date'      => [
             'format'        => ecamp_js_date_format(),
             'placeholder'   => erp_format_date( 'now' )
@@ -177,7 +177,7 @@ add_shortcode( 'new-email-campaign', function() {
                 <div id="editor-step-3" v-if="3 === step">
                     <h3>{{ i18n.reviewDetails }}</h3>
                     <hr>
-                    <table class="form-table review-details-table">
+                    <table class="form-table review-details-table test">
                         <tbody>
                             <tr>
                                 <th><label for="email-subject">{{ i18n.emailSubject }}</label></th>
@@ -317,7 +317,7 @@ add_shortcode( 'view-single-campaign', function() {
     $ecampGlobal = [
         'ajaxurl'   => admin_url( 'admin-ajax.php' ),
         'nonce'     => wp_create_nonce( 'erp-email-campaign' ),
-        'debug'     => defined( 'SCRIPT_DEBUG' ) ? SCRIPT_DEBUG : false,
+        'debug'     => true,
         'date'      => [
             'format'        => ecamp_js_date_format(),
             'placeholder'   => erp_format_date( 'now' )
@@ -417,7 +417,7 @@ add_shortcode( 'view-single-campaign', function() {
                                         <?php if ( ( 'paused' !== $campaign->status && 'draft' !== $campaign->status) && 'scheduled' === $campaign->send && ! empty( $campaign->deliver_at ) && ( strtotime( $campaign->deliver_at ) > current_time( 'timestamp' ) ) ): ?>
                                                 <span class="list-table-status scheduled">
                                                     <?php _e( 'Scheduled', 'erp-email-campaign' ); ?>
-                                                    <span class="schedule-label"><i class="dashicons dashicons-clock"></i> <?php _e( 'send at', 'erp-email-campaign' ) ?>: <?php echo date( 'Y-m-d g:i a', strtotime( $campaign->deliver_at ) ) ?></span>
+                                                    <span class="schedule-label"><i class="dashicons dashicons-clock"></i> <?php _e( 'send at', 'erp-email-campaign' ) ?>: <?php echo date( 'm-d-Y g:i a', strtotime( $campaign->deliver_at ) ) ?></span>
                                                 </span>
                                         <?php else: ?>
                                             <span class="list-table-status <?php echo $campaign->status; ?>">

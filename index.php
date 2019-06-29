@@ -5,6 +5,10 @@
  * Author: Square 1 Group
 **/
 
+
+if ( file_exists( plugin_dir_path( __FILE__ ) . 'config.php' ) )
+    require_once( 'config.php' );
+
 require_once( 'functions.php' );
 require_once( 'global-shortcodes.php' );
 
