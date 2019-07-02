@@ -23,10 +23,16 @@ add_shortcode( 'import_contacts_from_csv', function() {
     if ( !current_user_can('administrator') ) {
         $args['created_by'] = get_current_user_id();
     }
-    $crm_users      = erp_crm_get_crm_user( $args );
 
+    $crm_users      = erp_crm_get_crm_user( $args );
     foreach ( $crm_users as $user ) {
         $users[ $user->ID ] = $user->display_name . ' &lt;' . $user->user_email . '&gt;';
+    }
+
+    if ( !current_user_can('administrator') ) {
+        $current_user = wp_get_current_user();
+        
+        $users[ get_current_user_id() ] = $current_user->display_name . ' &lt;' . $current_user->user_email . '&gt;';
     }
 
     $contact_groups = erp_crm_get_contact_groups( [ 'number' => '-1' ] );
