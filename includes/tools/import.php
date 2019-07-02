@@ -19,7 +19,11 @@ add_shortcode( 'import_contacts_from_csv', function() {
     $groups      = [];
 
     $life_stages    = erp_crm_get_life_stages_dropdown_raw();
-    $crm_users      = erp_crm_get_crm_user();
+
+    if ( !current_user_can('administrator') ) {
+        $args['created_by'] = get_current_user_id();
+    }
+    $crm_users      = erp_crm_get_crm_user( $args );
 
     foreach ( $crm_users as $user ) {
         $users[ $user->ID ] = $user->display_name . ' &lt;' . $user->user_email . '&gt;';
