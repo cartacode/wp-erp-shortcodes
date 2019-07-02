@@ -99,6 +99,13 @@ if ( !function_exists( 'wp_list_table_pagination' ) ) {
 // update user profile
 if ( !function_exists( 'update_user_profile' ) ) {
     function update_user_profile( $user_data, $avatar = null ) {
+        $current_user = wp_get_current_user();
+        /*$old_args = [
+            'first_name'    => $current_user->user_firstname,
+            'last_name'     => $current_user->user_lastname,
+            'user_email'    => $current_user->user_email,
+        ];*/
+
         $args = [
             'ID'            => get_current_user_id(), 
             'first_name'    => $user_data['first_name'],
@@ -117,8 +124,13 @@ if ( !function_exists( 'update_user_profile' ) ) {
 
         $user_id = wp_update_user( $args );
 
-        if ( is_wp_error( $user_id ) )
+        if ( is_wp_error( $user_id ) ) {
             return false;
+        } /*elseif ( isset( $user_data['password'] ) && !empty( $user_data['password'] ) ) {
+            $email_text = sprintf('
+                Hi, 
+            ');
+        }*/
 
         $wordpress_upload_dir = wp_upload_dir();
 
