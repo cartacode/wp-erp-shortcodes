@@ -100,11 +100,10 @@ if ( !function_exists( 'wp_list_table_pagination' ) ) {
 if ( !function_exists( 'update_user_profile' ) ) {
     function update_user_profile( $user_data, $avatar = null ) {
         $current_user = wp_get_current_user();
-        /*$old_args = [
-            'first_name'    => $current_user->user_firstname,
-            'last_name'     => $current_user->user_lastname,
+        $old_args = [
+            'display_name'    => $current_user->user_firstname . ' ' . $current_user->user_lastname,
             'user_email'    => $current_user->user_email,
-        ];*/
+        ];
 
         $args = [
             'ID'            => get_current_user_id(), 
@@ -122,11 +121,28 @@ if ( !function_exists( 'update_user_profile' ) ) {
 
         if ( is_wp_error( $user_id ) ) {
             return false;
-        } /*elseif ( isset( $user_data['password'] ) && !empty( $user_data['password'] ) ) {
-            $email_text = sprintf('
-                Hi, 
-            ');
-        }*/
+        }
+
+        if ( !current_wp_erp_user_is( 'broker' ) && !current_user_can( 'administrator' ) ) {
+            $broker_user_id = get_user_meta( get_current_user_id(), 'created_by', true );
+            $broker_user = get_user_by( 'id', $broker_user_id );
+            $admin_email = get_option( 'admin_email' );
+
+            wp_mail(
+                $admin_email,
+                'Profile is updated',
+                sprintf(
+                    'Hi, profile is updated for %s (%s). Updated profile is %s (%s).',
+                    $old_args['display_name'],
+                    $old_args['user_email'],
+                    $args['display_name'],
+                    $args['user_email']
+                ), [
+                    sprintf('Cc: %s <%s>', $broker_user->user_firstname . ' ' . $broker_user->user_lastname, $broker_user->user_email),
+                    'Content-Type: text/html; charset=UTF-8'
+                ]
+            );
+        }
 
         $wordpress_upload_dir = wp_upload_dir();
 
