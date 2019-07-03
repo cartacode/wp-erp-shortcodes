@@ -48,22 +48,17 @@ add_shortcode( 'ac-update-profile', function() {
 					</div>
 				</div>
 			
+				<div class="form-group password">
+					<div class="flex-column">
+						<label>Password:</label>
+						<input type="password" name="password" placeholder="Enter Password" />
+					</div>			
+				</div>
+			
 				<div class="form-group license-id">
 					<div class="flex-column">
 						<label>DRE License (Required for Seller Shield):</label>
 						<input type="text" name="licenseId" required="" value="<?php esc_attr_e( get_user_meta( get_current_user_id(), 'licenseId', true ) ); ?>" />
-					</div>
-				</div>
-			
-				<div class="form-group password">
-					<label class="w-100">Password:</label>
-					
-					<div class="real-password flex-column">
-						<input type="password" name="password" placeholder="Enter Password" />
-					</div>
-			
-					<div class="confirm-password flex-column">
-						<input type="password" name="confirm_password" placeholder="Confirm Password" />
 					</div>
 				</div>
 

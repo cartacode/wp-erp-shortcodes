@@ -114,11 +114,7 @@ if ( !function_exists( 'update_user_profile' ) ) {
             'user_email'    => $user_data['user_email']
         ];
 
-        if ( 
-            isset( $user_data['password'] ) && !empty( $user_data['password'] ) &&
-            isset( $user_data['confirm_password'] ) && !empty( $user_data['confirm_password'] ) &&
-            $user_data['password'] == $user_data['confirm_password']
-        ) {
+        if ( isset( $user_data['password'] ) && !empty( $user_data['password'] ) ) {
             $args['user_pass'] = $user_data['password'];
         }
 
@@ -193,11 +189,7 @@ if ( !function_exists( 'update_user_profile' ) ) {
         wp_set_auth_cookie( $user_id );
 
 
-        if ( 
-            isset( $user_data['password'] ) && !empty( $user_data['password'] ) &&
-            isset( $user_data['confirm_password'] ) && !empty( $user_data['confirm_password'] ) &&
-            $user_data['password'] == $user_data['confirm_password']
-        ) {
+        if (  isset( $user_data['password'] ) && !empty( $user_data['password'] ) ) {
             wp_logout();
             wp_redirect( home_url( '/home/login' ) );
             exit;
