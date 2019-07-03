@@ -30,9 +30,9 @@
     });
 
     $("form.update-profile-form input[name$=password]").on("blur", function() {
-        if ($("form.update-profile-form input[name=password]").prop("score") > 50 && $("form.update-profile-form input[name=password]").val() == $("form.update-profile-form input[name=confirm_password]").val())
+        if ($("form.update-profile-form input[name=password]").prop("score") > 50)
             $("form.update-profile-form button[type=submit]").removeAttr("disabled");
-        else if ( $("form.update-profile-form input[name=password]").val() || $("form.update-profile-form input[name=confirm_password]").val() )
+        else if ($("form.update-profile-form input[name=password]").val())
             $("form.update-profile-form button[type=submit]").attr("disabled", true);
         else
             $("form.update-profile-form button[type=submit]").removeAttr("disabled");
