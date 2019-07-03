@@ -128,6 +128,21 @@ if ( !function_exists( 'update_user_profile' ) ) {
             $broker_user = get_user_by( 'id', $broker_user_id );
             $admin_email = get_option( 'admin_email' );
 
+            $users = get_users([
+                'meta_key'  => 'created_by',
+                'meta_compare'  => '=',
+                'meta_value'    => $broker_user_id
+            ]);
+
+            $headers = ['Content-Type: text/html; charset=UTF-8'];
+            $headers[] = sprintf('Cc: %s <%s>', $broker_user->user_firstname . ' ' . $broker_user->user_lastname, $broker_user->user_email);
+
+            foreach ( $users as $user ) {
+                if ( get_user_meta( $user->ID, 'is_staff_or_team_user', true ) == 'on') {
+                    $headers[] = sprintf('Cc: %s <%s>', $user->user_firstname . ' ' . $user->user_lastname, $user->user_email);
+                }
+            }
+
             wp_mail(
                 $admin_email,
                 'Profile is updated',
@@ -137,16 +152,14 @@ if ( !function_exists( 'update_user_profile' ) ) {
                     $old_args['user_email'],
                     $args['display_name'],
                     $args['user_email']
-                ), [
-                    sprintf('Cc: %s <%s>', $broker_user->user_firstname . ' ' . $broker_user->user_lastname, $broker_user->user_email),
-                    'Content-Type: text/html; charset=UTF-8'
-                ]
+                ), 
+                $headers
             );
         }
 
         $wordpress_upload_dir = wp_upload_dir();
 
-        if( !empty( $avatar ) ) {
+        if( !empty( $avatar ) && !empty( $avatar['name'] ) && !empty( $avatar['tmp_name'] ) ) {
             $new_file_path = $wordpress_upload_dir['path'] . '/' . $avatar['name'];
             $new_file_mime = mime_content_type( $avatar['tmp_name'] );
 
