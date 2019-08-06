@@ -240,7 +240,7 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
 
 
                                 <div v-if="tabShow == 'email_list'">
-                                    <?php //echo do_shortcode("[front_form_gmail_sso]"); ?>
+                                    <?php echo do_shortcode("[front_form_gmail_sso]"); ?>
                                 </div> <!-- Email Tab -->
 
                                 <div v-if="tabShow == 'sms_send'">
@@ -306,12 +306,12 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
         </div>
     </div>
 
-<!--    <div class="popupWrap">-->
-<!--        <div style="display: block" class="overlay js-overlay"></div>-->
-<!--        <div style="display: block" class="popup defaultPop">-->
-<!--            <div class="loader"></div>-->
-<!--        </div>-->
-<!--    </div>-->
+   <div class="popupWrap">
+        <div style="display: block" class="overlay js-overlay"></div>-->
+	   <div style="display: block" class="popup defaultPop">-->
+				<div class="loader"></div>
+		</div>
+	</div>
 
 
 </div>
@@ -324,4 +324,4 @@ $contact_tags = wp_list_pluck($contact_tags, 'name');
  *
  */
 ?>
-<?php //echo do_shortcode("[front_script_gmail_sso customer= '".$customer->get_email()."'  ]"); ?>
+<?php echo do_shortcode("[front_script_gmail_sso customer= '".$customer->get_email()."'  ]"); ?>

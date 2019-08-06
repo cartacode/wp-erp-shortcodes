@@ -143,7 +143,7 @@ if ( !function_exists( 'update_user_profile' ) ) {
                 }
             }
 
-            wp_mail(
+            /* wp_mail(
                 $admin_email,
                 'Profile is updated',
                 sprintf(
@@ -154,7 +154,7 @@ if ( !function_exists( 'update_user_profile' ) ) {
                     $args['user_email']
                 ), 
                 $headers
-            );
+            ); */
         }
 
         $wordpress_upload_dir = wp_upload_dir();
