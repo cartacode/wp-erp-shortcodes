@@ -61,12 +61,12 @@ add_shortcode( 'ac-update-profile', function() {
 						<input type="text" name="licenseId" required="" value="<?php esc_attr_e( get_user_meta( get_current_user_id(), 'licenseId', true ) ); ?>" />
 					</div>
 					
-					<?php //if ( !current_wp_erp_user_is( 'broker' ) && !current_wp_erp_user_is( 'staff' ) && !current_user_can( 'administrator' ) ): ?>
+					<?php if ( !current_wp_erp_user_is( 'broker' ) && !current_wp_erp_user_is( 'staff' ) && !current_user_can( 'administrator' ) ): ?>
 						<div class="flex-column">
 							<label>DRE:</label>
 							<input type="text" name="dre_number" value="<?php esc_attr_e( get_user_meta( get_current_user_id(), 'dre_number', true ) ); ?>" />
 						</div>
-					<?php //endif; ?>
+					<?php endif; ?>
 				</div>
 
 				<div class="form-group">
