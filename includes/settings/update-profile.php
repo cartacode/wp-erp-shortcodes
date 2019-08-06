@@ -57,7 +57,7 @@ add_shortcode( 'ac-update-profile', function() {
 			
 				<div class="form-group license-id">
 					<div class="flex-column">
-						<label>DRE License (Required for Seller Shield):</label>
+						<label>DRE License (Required for Sellers Shield):</label>
 						<input type="text" name="licenseId" required="" value="<?php esc_attr_e( get_user_meta( get_current_user_id(), 'licenseId', true ) ); ?>" />
 					</div>
 					
